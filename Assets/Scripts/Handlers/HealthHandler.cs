@@ -14,8 +14,12 @@ public class HealthHandler : MonoBehaviour
     [SerializeField] float maxHealth = 100f;
     [SerializeField] float minhealth = 0f;
 
+    private void Awake()
+    {
+        playerManager = GetComponent<PlayerManager>();
+    }
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         health = maxHealth;
     }
@@ -26,36 +30,25 @@ public class HealthHandler : MonoBehaviour
         if(health - damage <= minhealth)
         {
             health = minhealth;
-            Die();
+            UpdateHealthBar();
+            playerManager.Die();
+            return;
         }
         else
         {
             health -= damage;
         }
         UpdateHealthBar();
-       /* if (health <= minhealth)
-        {
-            health = minhealth;
-            Die();
-        }*/
     }
 
-    void Die()
-    {
-        GetComponent<Collider2D>().enabled = false;
-        transform.Rotate(Vector3.forward, 90);
-        if (gameObject.name == "Player1")
-        {
-            GameObject.Find("GameplaySettings").GetComponent<GameplaySettings>().GameOver("Player 2 Wins!");
-        }
-        else if (gameObject.name == "Player2")
-        {
-            GameObject.Find("GameplaySettings").GetComponent<GameplaySettings>().GameOver("Player 1 Wins!");
-        }
-    }
+    
 
     void UpdateHealthBar()
     {
         playerManager.healthSlider.value = health;
     }
+   /* public void ResetHealth()
+    {
+        health = maxHealth;
+    }*/
 }

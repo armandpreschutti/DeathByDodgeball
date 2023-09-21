@@ -23,6 +23,7 @@ public class MeleeHandler : MonoBehaviour
 
     private void Awake()
     {
+        playerManager = GetComponent<PlayerManager>();
         playerInput = GetComponent<PlayerInput>();
         fireAction = playerInput.actions["Fire"];
         catchAction = playerInput.actions["Catch"];

@@ -34,6 +34,7 @@ public class PlayerManager : MonoBehaviour
     {
         playerInput = GetComponent<PlayerInput>();
         readyAction = playerInput.actions["Ready"];
+        SetPlayerComponents();
     }
 
     private void OnEnable()
@@ -86,7 +87,7 @@ public class PlayerManager : MonoBehaviour
         currentInventoryState = InventoryState.unequipped;
         equippedBall = null;
     }
-    public void ActivatePlayer()
+    public void SetPlayerComponents()
     {
         col = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
@@ -95,10 +96,11 @@ public class PlayerManager : MonoBehaviour
         locomotionHandler = GetComponent<LocomotionHandler>();
         meleeHandler = GetComponent<MeleeHandler>();
         healthHandler = GetComponent<HealthHandler>();
+    }
 
-        locomotionHandler.playerManager = this;
-        meleeHandler.playerManager = this;
-        healthHandler.playerManager = this;
+    public void ActivatePlayer()
+    {
+        anim.SetBool("Die", false);
         dodgeSlider = GameObject.Find($"{name}DodgeBar").GetComponent<Slider>();
         healthSlider = GameObject.Find($"{name}HealthBar").GetComponent<Slider>();
         switch (name)
@@ -121,5 +123,35 @@ public class PlayerManager : MonoBehaviour
         meleeHandler.enabled = true;
         healthHandler.enabled = true;
     }
-    
+
+    public void DeactivatePlayer()
+    {
+        col.enabled = false;
+        rb.simulated = false;
+        locomotionHandler.enabled = false;
+        meleeHandler.enabled = false;
+        healthHandler.enabled = false;
+    }
+    public void Die()
+    {
+        anim.SetBool("Die", true);
+        DeactivatePlayer();
+        GameObject.Find("GameplaySettings").GetComponent<GameplaySettings>().GameOver(winner);
+    }
+
+    public string winner
+    {
+        get
+        {
+            if (gameObject.name == "Player1")
+            {
+                return "Player 2 Wins!";
+            }
+            else
+            {
+                return "Player 1 Wins!";
+            }
+        }
+    }
+
 }

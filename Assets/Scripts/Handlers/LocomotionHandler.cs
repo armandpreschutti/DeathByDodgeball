@@ -24,7 +24,8 @@ public class LocomotionHandler : MonoBehaviour
     Vector2 moveDirection = Vector2.zero;
 
     private void Awake()
-    {        
+    {   
+        playerManager = GetComponent<PlayerManager>();  
         playerInput = GetComponent<PlayerInput>();
         moveAction = playerInput.actions["Move"];
         dashAction = playerInput.actions["Dash"];
@@ -115,5 +116,9 @@ public class LocomotionHandler : MonoBehaviour
         yield return new WaitForSeconds(dashRefillRate);
         totalDashes += 1;
         playerManager.dodgeSlider.value = totalDashes;
+    }
+    public void TestSub()
+    {
+        Debug.Log("Successfully subscribed to an event");
     }
 }
