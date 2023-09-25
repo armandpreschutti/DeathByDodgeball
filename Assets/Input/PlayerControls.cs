@@ -55,15 +55,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Block"",
-                    ""type"": ""Button"",
-                    ""id"": ""fcafa5c6-a044-4a58-8956-2e338e97d121"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Dash"",
                     ""type"": ""Button"",
                     ""id"": ""ad81f54d-c168-4333-90bf-598e1419eda0"",
@@ -82,27 +73,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Equip"",
-                    ""type"": ""Button"",
-                    ""id"": ""dd24bd45-42c8-491b-b801-49be6aa9ee41"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Ready"",
                     ""type"": ""Button"",
                     ""id"": ""09201830-fc26-40c2-949a-fd14687a8a09"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""SwitchTeam"",
-                    ""type"": ""Button"",
-                    ""id"": ""622c6733-97ff-44d9-86d2-450fa33f0850"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -288,39 +261,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""22044403-798b-46a6-85e1-ec314997d9f4"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Block"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""988def8b-a685-4985-8d0c-845b82886314"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Block"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""0ccad930-c6d9-4024-b762-e1e3f2ed0626"",
-                    ""path"": ""<Keyboard>/0"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard2"",
-                    ""action"": ""Block"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""c7bdd66a-764b-4b61-8084-ac1263b34d86"",
                     ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
@@ -387,39 +327,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""57f86a9c-2374-4347-9757-381111863e2d"",
-                    ""path"": ""<Keyboard>/f"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Equip"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""53fb36c7-2f5b-4b55-bfa3-f0e15f0ff66b"",
-                    ""path"": ""<Gamepad>/buttonEast"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Equip"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""de84804a-c322-44f0-bc29-b30ad23e6c6f"",
-                    ""path"": ""<Keyboard>/numpadMinus"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard2"",
-                    ""action"": ""Equip"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""3ed314db-3d94-42fb-bc8e-45b9c1eea5d1"",
                     ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
@@ -448,39 +355,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard2"",
                     ""action"": ""Ready"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a77e0605-f34f-4594-9531-537d38ba8dcb"",
-                    ""path"": ""<Keyboard>/r"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""SwitchTeam"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""7cce172a-3faa-4c2f-afc1-5da65346b025"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""SwitchTeam"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e5355bc5-d15a-46e1-a1c4-1f3aa274fc72"",
-                    ""path"": ""<Keyboard>/numpad6"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard2"",
-                    ""action"": ""SwitchTeam"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -528,12 +402,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
-        m_Player_Block = m_Player.FindAction("Block", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Catch = m_Player.FindAction("Catch", throwIfNotFound: true);
-        m_Player_Equip = m_Player.FindAction("Equip", throwIfNotFound: true);
         m_Player_Ready = m_Player.FindAction("Ready", throwIfNotFound: true);
-        m_Player_SwitchTeam = m_Player.FindAction("SwitchTeam", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -598,12 +469,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Fire;
-    private readonly InputAction m_Player_Block;
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Catch;
-    private readonly InputAction m_Player_Equip;
     private readonly InputAction m_Player_Ready;
-    private readonly InputAction m_Player_SwitchTeam;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -611,12 +479,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
-        public InputAction @Block => m_Wrapper.m_Player_Block;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @Catch => m_Wrapper.m_Player_Catch;
-        public InputAction @Equip => m_Wrapper.m_Player_Equip;
         public InputAction @Ready => m_Wrapper.m_Player_Ready;
-        public InputAction @SwitchTeam => m_Wrapper.m_Player_SwitchTeam;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -635,24 +500,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Fire.started += instance.OnFire;
             @Fire.performed += instance.OnFire;
             @Fire.canceled += instance.OnFire;
-            @Block.started += instance.OnBlock;
-            @Block.performed += instance.OnBlock;
-            @Block.canceled += instance.OnBlock;
             @Dash.started += instance.OnDash;
             @Dash.performed += instance.OnDash;
             @Dash.canceled += instance.OnDash;
             @Catch.started += instance.OnCatch;
             @Catch.performed += instance.OnCatch;
             @Catch.canceled += instance.OnCatch;
-            @Equip.started += instance.OnEquip;
-            @Equip.performed += instance.OnEquip;
-            @Equip.canceled += instance.OnEquip;
             @Ready.started += instance.OnReady;
             @Ready.performed += instance.OnReady;
             @Ready.canceled += instance.OnReady;
-            @SwitchTeam.started += instance.OnSwitchTeam;
-            @SwitchTeam.performed += instance.OnSwitchTeam;
-            @SwitchTeam.canceled += instance.OnSwitchTeam;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -666,24 +522,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Fire.started -= instance.OnFire;
             @Fire.performed -= instance.OnFire;
             @Fire.canceled -= instance.OnFire;
-            @Block.started -= instance.OnBlock;
-            @Block.performed -= instance.OnBlock;
-            @Block.canceled -= instance.OnBlock;
             @Dash.started -= instance.OnDash;
             @Dash.performed -= instance.OnDash;
             @Dash.canceled -= instance.OnDash;
             @Catch.started -= instance.OnCatch;
             @Catch.performed -= instance.OnCatch;
             @Catch.canceled -= instance.OnCatch;
-            @Equip.started -= instance.OnEquip;
-            @Equip.performed -= instance.OnEquip;
-            @Equip.canceled -= instance.OnEquip;
             @Ready.started -= instance.OnReady;
             @Ready.performed -= instance.OnReady;
             @Ready.canceled -= instance.OnReady;
-            @SwitchTeam.started -= instance.OnSwitchTeam;
-            @SwitchTeam.performed -= instance.OnSwitchTeam;
-            @SwitchTeam.canceled -= instance.OnSwitchTeam;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -733,11 +580,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
-        void OnBlock(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnCatch(InputAction.CallbackContext context);
-        void OnEquip(InputAction.CallbackContext context);
         void OnReady(InputAction.CallbackContext context);
-        void OnSwitchTeam(InputAction.CallbackContext context);
     }
 }

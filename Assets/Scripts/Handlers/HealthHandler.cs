@@ -1,16 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-
 
 public class HealthHandler : MonoBehaviour
 {
     public PlayerManager playerManager;
     [SerializeField] float health;
     [SerializeField] bool isDead;
-
     [SerializeField] float maxHealth = 100f;
     [SerializeField] float minhealth = 0f;
 
@@ -18,7 +12,7 @@ public class HealthHandler : MonoBehaviour
     {
         playerManager = GetComponent<PlayerManager>();
     }
-    // Start is called before the first frame update
+
     void OnEnable()
     {
         health = maxHealth;
@@ -41,14 +35,8 @@ public class HealthHandler : MonoBehaviour
         UpdateHealthBar();
     }
 
-    
-
     void UpdateHealthBar()
     {
         playerManager.healthSlider.value = health;
     }
-   /* public void ResetHealth()
-    {
-        health = maxHealth;
-    }*/
 }

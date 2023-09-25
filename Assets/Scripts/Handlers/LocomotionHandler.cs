@@ -10,10 +10,7 @@ public class LocomotionHandler : MonoBehaviour
 
     public PlayerManager playerManager;
     [SerializeField] float moveSpeed = 4f;
-    [SerializeField] float aimingSpeed = 2f;
-    [SerializeField] PlayerInput playerInput;
-    [SerializeField] InputAction moveAction;
-    [SerializeField] InputAction dashAction;
+    [SerializeField] float aimingSpeed = 2f;   
     [SerializeField] float dashSpeed;
     [SerializeField] float dashDuration;
     [SerializeField] int totalDashes;
@@ -26,17 +23,7 @@ public class LocomotionHandler : MonoBehaviour
     private void Awake()
     {   
         playerManager = GetComponent<PlayerManager>();  
-        playerInput = GetComponent<PlayerInput>();
-        moveAction = playerInput.actions["Move"];
-        dashAction = playerInput.actions["Dash"];
-    }
-    private void OnEnable()
-    {
-        dashAction.performed += Dash;
-    }
-    private void OnDisable()
-    {
-        dashAction.performed -= Dash;
+       
     }
     private void Start()
     {
@@ -50,7 +37,7 @@ public class LocomotionHandler : MonoBehaviour
     {
         if (!isDashing && !playerManager.meleeHandler.isCatching)
         {
-            moveDirection = moveAction.ReadValue<Vector2>();
+            moveDirection = playerManager.inputHandler.moveAction.ReadValue<Vector2>();
             playerManager.anim.SetFloat("MoveX", moveDirection.x);
             playerManager.anim.SetFloat("MoveY", moveDirection.y);
         }
@@ -72,12 +59,10 @@ public class LocomotionHandler : MonoBehaviour
             {
                 playerManager.rb.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
             }
-
-        }
-        
+        }        
     }
 
-    public void Dash(InputAction.CallbackContext context)
+    public void Dodge()
     {
         if(!isDashing 
             && !playerManager.meleeHandler.isAiming 

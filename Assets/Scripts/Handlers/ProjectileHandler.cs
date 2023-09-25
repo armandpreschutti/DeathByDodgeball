@@ -1,9 +1,5 @@
-using JetBrains.Annotations;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static PlayerManager;
-using static UnityEngine.GraphicsBuffer;
 
 public class ProjectileHandler : MonoBehaviour
 {

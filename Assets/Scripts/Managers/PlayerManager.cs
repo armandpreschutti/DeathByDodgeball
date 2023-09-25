@@ -6,9 +6,8 @@ using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
-    [SerializeField] PlayerInput playerInput;
-    [SerializeField] InputAction equipAction;
-    [SerializeField] InputAction readyAction;
+    
+
     [SerializeField] Canvas playerCanvas;
     public enum InventoryState { unequipped, equipped }
     public InventoryState currentInventoryState = InventoryState.unequipped;
@@ -23,25 +22,20 @@ public class PlayerManager : MonoBehaviour
     public Rigidbody2D rb;
     public SpriteRenderer spriteRenderer;
     public Animator anim;
+    public InputHandler inputHandler;
     public LocomotionHandler locomotionHandler;
     public MeleeHandler meleeHandler;
     public HealthHandler healthHandler;
     public GameObject throwPowerBar;
     public Slider dodgeSlider;
     public Slider healthSlider;
+    public PlayerInput playerInput;
 
     private void Awake()
     {
-        playerInput = GetComponent<PlayerInput>();
-        readyAction = playerInput.actions["Ready"];
+
         SetPlayerComponents();
     }
-
-    private void OnEnable()
-    {
-        readyAction.performed += Ready;
-    }
-
     public void Start()
     {
         InitializePlayer();
@@ -59,7 +53,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void Ready(InputAction.CallbackContext context)
+    public void Ready()
     {
         if (!isReady)
         {
@@ -87,16 +81,7 @@ public class PlayerManager : MonoBehaviour
         currentInventoryState = InventoryState.unequipped;
         equippedBall = null;
     }
-    public void SetPlayerComponents()
-    {
-        col = GetComponent<Collider2D>();
-        rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        anim = GetComponent<Animator>();
-        locomotionHandler = GetComponent<LocomotionHandler>();
-        meleeHandler = GetComponent<MeleeHandler>();
-        healthHandler = GetComponent<HealthHandler>();
-    }
+  
 
     public void ActivatePlayer()
     {
@@ -154,4 +139,16 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public void SetPlayerComponents()
+    {
+        playerInput = GetComponent<PlayerInput>();
+        col = GetComponent<Collider2D>();
+        rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
+        locomotionHandler = GetComponent<LocomotionHandler>();
+        meleeHandler = GetComponent<MeleeHandler>();
+        healthHandler = GetComponent<HealthHandler>();
+        inputHandler = GetComponent<InputHandler>();
+    }
 }

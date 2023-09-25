@@ -350,13 +350,14 @@ GameObject:
   - component: {fileID: 6713046106364812348}
   - component: {fileID: 9219999080004051878}
   - component: {fileID: -7471248872779374071}
-  - component: {fileID: 7772454449756503509}
-  - component: {fileID: -9029374529069754429}
-  - component: {fileID: -5424725125955390697}
-  - component: {fileID: 6184564987691608173}
+  - component: {fileID: 3896125258346239803}
   - component: {fileID: -6307540151518880645}
   - component: {fileID: 8856289868604818442}
   - component: {fileID: -3023569008544007998}
+  - component: {fileID: 7772454449756503509}
+  - component: {fileID: 6184564987691608173}
+  - component: {fileID: -5424725125955390697}
+  - component: {fileID: -9029374529069754429}
   m_Layer: 8
   m_Name: PlayerConfiguration
   m_TagString: Player
@@ -424,24 +425,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInput: {fileID: 9219999080004051878}
-  equipAction:
-    m_Name: Equip
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 7a17fecc-ce2c-4394-96f6-862c0ccb037a
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  readyAction:
-    m_Name: Ready
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 48fe2f8e-8513-48c8-a87c-14f84fb7000e
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
   playerCanvas: {fileID: 4709146562012521469}
   currentInventoryState: 0
   equippedBall: {fileID: 0}
@@ -453,12 +436,132 @@ MonoBehaviour:
   rb: {fileID: 0}
   spriteRenderer: {fileID: 0}
   anim: {fileID: 0}
+  inputHandler: {fileID: 0}
   locomotionHandler: {fileID: 0}
   meleeHandler: {fileID: 0}
   healthHandler: {fileID: 0}
   throwPowerBar: {fileID: 1370890662092231146}
   dodgeSlider: {fileID: 0}
   healthSlider: {fileID: 0}
+--- !u!114 &3896125258346239803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6709299416720101182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3dc13311180dff41aeaab0a6d7213c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerManager: {fileID: 0}
+  playerInput: {fileID: 0}
+  moveAction:
+    m_Name: Move
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: f9f14af4-fc46-40e8-9b71-268e2b87d49d
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  fireAction:
+    m_Name: Fire
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 601607dc-2e3e-4704-b5e8-c4cdc3c874f2
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  catchAction:
+    m_Name: Catch
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 084999ec-0ba5-4986-94ea-c27ddc806523
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  dashAction:
+    m_Name: Dash
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 2248029c-11e7-4f67-a81f-05d907927039
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  readyAction:
+    m_Name: Ready
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: f97f0ab7-4ebb-491e-bf0b-c918f69f7b50
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+--- !u!114 &-6307540151518880645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6709299416720101182}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25e8b9651f8dd9c4db7b61d31789058a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerManager: {fileID: -7471248872779374071}
+  moveSpeed: 3
+  aimingSpeed: 1.5
+  dashSpeed: 10
+  dashDuration: 0.2
+  totalDashes: 0
+  maxDashs: 3
+  isDashing: 0
+  dashRefillRate: 5
+--- !u!114 &8856289868604818442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6709299416720101182}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14d44b0777587124ea6ab7c436d7c135, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerManager: {fileID: 0}
+  aimPosition: {x: 0, y: 0, z: 0}
+  minThrowPower: 4
+  maxThrowPower: 20
+  currentThrowPower: 4
+  throwPowerIncreaseRate: 7.5
+  isAiming: 0
+  isCatching: 0
+  catchDuration: 0.5
+  aimingDirection: {x: 0, y: 0, z: 0}
+--- !u!114 &-3023569008544007998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6709299416720101182}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aca2edb808032b4cbae8d6190b0d66f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerManager: {fileID: 0}
+  health: 0
+  isDead: 0
+  maxHealth: 100
+  minhealth: 0
 --- !u!212 &7772454449756503509
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -511,33 +614,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &-9029374529069754429
-Rigidbody2D:
-  serializedVersion: 4
+--- !u!95 &6184564987691608173
+Animator:
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6709299416720101182}
-  m_BodyType: 0
-  m_Simulated: 0
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 1
-  m_SleepingMode: 0
-  m_CollisionDetection: 1
-  m_Constraints: 4
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e740ba8dbd9ff4e498b6378dfcebb0b8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!61 &-5424725125955390697
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -583,122 +680,30 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.60085654, y: 0.89550024}
   m_EdgeRadius: 0
---- !u!95 &6184564987691608173
-Animator:
-  serializedVersion: 5
+--- !u!50 &-9029374529069754429
+Rigidbody2D:
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6709299416720101182}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e740ba8dbd9ff4e498b6378dfcebb0b8, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!114 &-6307540151518880645
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6709299416720101182}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25e8b9651f8dd9c4db7b61d31789058a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerManager: {fileID: -7471248872779374071}
-  moveSpeed: 3
-  aimingSpeed: 1.5
-  playerInput: {fileID: 9219999080004051878}
-  moveAction:
-    m_Name: Move
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 218339d4-34b7-43e8-ac25-adf085b88599
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  dashAction:
-    m_Name: Dash
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 7cbeb360-d39f-4a0c-84a3-b95e1e28bb94
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  dashSpeed: 10
-  dashDuration: 0.2
-  totalDashes: 0
-  maxDashs: 3
-  isDashing: 0
-  dashRefillRate: 5
---- !u!114 &8856289868604818442
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6709299416720101182}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14d44b0777587124ea6ab7c436d7c135, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerManager: {fileID: 0}
-  playerInput: {fileID: 0}
-  fireAction:
-    m_Name: Fire
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 7a2a9ee1-ae77-4c6c-aeee-072464c675f8
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  catchAction:
-    m_Name: Catch
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: a98a6ebd-9d14-40b6-8943-982ce750dee1
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  aimPosition: {x: 0, y: 0, z: 0}
-  minThrowPower: 4
-  maxThrowPower: 20
-  currentThrowPower: 4
-  throwPowerIncreaseRate: 7.5
-  isAiming: 0
-  isCatching: 0
-  catchDuration: 0.5
-  aimingDirection: {x: 0, y: 0, z: 0}
---- !u!114 &-3023569008544007998
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6709299416720101182}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9aca2edb808032b4cbae8d6190b0d66f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerManager: {fileID: 0}
-  health: 0
-  isDead: 0
-  maxHealth: 100
-  minhealth: 0
+  m_BodyType: 0
+  m_Simulated: 0
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 1
+  m_SleepingMode: 0
+  m_CollisionDetection: 1
+  m_Constraints: 4

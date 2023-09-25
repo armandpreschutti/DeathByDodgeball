@@ -6,9 +6,6 @@ using UnityEngine.UI;
 public class MeleeHandler : MonoBehaviour
 {
     public PlayerManager playerManager;
-    [SerializeField] PlayerInput playerInput;
-    [SerializeField] InputAction fireAction;
-    [SerializeField] InputAction catchAction;
     [SerializeField] Vector3 aimPosition;
     [SerializeField] float minThrowPower = 1f;
     [SerializeField] float maxThrowPower = 40f;
@@ -20,34 +17,17 @@ public class MeleeHandler : MonoBehaviour
     [SerializeField] float catchDuration;
     [SerializeField] Vector3 aimingDirection;
 
-
     private void Awake()
     {
         playerManager = GetComponent<PlayerManager>();
-        playerInput = GetComponent<PlayerInput>();
-        fireAction = playerInput.actions["Fire"];
-        catchAction = playerInput.actions["Catch"];
     }
 
-    private void OnEnable()
-    {
-        fireAction.started += StartAiming;
-        fireAction.canceled += StopAiming;
-        catchAction.performed += Catch;
-    }
-
-    private void OnDisable()
-    {
-        fireAction.started -= StartAiming;
-        fireAction.canceled -= StopAiming;
-        catchAction.performed -= Catch;
-    }
     private void Start()
     {
         currentThrowPower = minThrowPower;
     }
 
-    public void StartAiming(InputAction.CallbackContext context)
+    public void StartAiming()
     {
         if(playerManager.currentInventoryState == PlayerManager.InventoryState.equipped)
         {
@@ -62,7 +42,7 @@ public class MeleeHandler : MonoBehaviour
         }
     }
 
-    public void StopAiming(InputAction.CallbackContext context)
+    public void StopAiming()
     {
         isAiming = false;
         playerManager.anim.SetBool("IsAiming", false);
@@ -75,8 +55,6 @@ public class MeleeHandler : MonoBehaviour
     {
         while (isAiming)
         {
-            //playerManager.equippedBall.transform.localPosition = - aimingDirection.normalized;
-
             if (currentThrowPower >= maxThrowPower)
             {
                 currentThrowPower = maxThrowPower;
@@ -109,7 +87,7 @@ public class MeleeHandler : MonoBehaviour
         }
     }
 
-    public void Catch(InputAction.CallbackContext context)
+    public void Catch()
     {
         StartCoroutine(CatchBall());
     }
