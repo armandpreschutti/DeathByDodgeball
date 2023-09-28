@@ -1,4 +1,3 @@
-using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -6,14 +5,11 @@ using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
-    
-
     [SerializeField] Canvas playerCanvas;
     public enum InventoryState { unequipped, equipped }
     public InventoryState currentInventoryState = InventoryState.unequipped;
     public GameObject equippedBall = null;
     public Transform holdPosition;
-    public bool canUnequip;
     public bool isReady;
     public Transform target;
 
@@ -33,9 +29,9 @@ public class PlayerManager : MonoBehaviour
 
     private void Awake()
     {
-
         SetPlayerComponents();
     }
+
     public void Start()
     {
         InitializePlayer();
@@ -45,7 +41,6 @@ public class PlayerManager : MonoBehaviour
     {
         if (playerInput != null)
         {
-            // Set the GameObject's name based on the player index
             GameManager.GetInstance().AddPlayer(this);
             name = $"Player{playerInput.playerIndex + 1}";
             DontDestroyOnLoad(gameObject);
@@ -81,7 +76,7 @@ public class PlayerManager : MonoBehaviour
         currentInventoryState = InventoryState.unequipped;
         equippedBall = null;
     }
-  
+    
 
     public void ActivatePlayer()
     {
@@ -109,7 +104,7 @@ public class PlayerManager : MonoBehaviour
         healthHandler.enabled = true;
     }
 
-    public void DeactivatePlayer()
+    public void DisablePlayer()
     {
         col.enabled = false;
         rb.simulated = false;
@@ -117,26 +112,12 @@ public class PlayerManager : MonoBehaviour
         meleeHandler.enabled = false;
         healthHandler.enabled = false;
     }
+
     public void Die()
     {
         anim.SetBool("Die", true);
-        DeactivatePlayer();
-        GameObject.Find("GameplaySettings").GetComponent<GameplaySettings>().GameOver(winner);
-    }
-
-    public string winner
-    {
-        get
-        {
-            if (gameObject.name == "Player1")
-            {
-                return "Player 2 Wins!";
-            }
-            else
-            {
-                return "Player 1 Wins!";
-            }
-        }
+        DisablePlayer();
+        GameObject.Find("GameplaySettings").GetComponent<GameplaySettings>().GameOver();
     }
 
     public void SetPlayerComponents()

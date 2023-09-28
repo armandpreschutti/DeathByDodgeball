@@ -424,7 +424,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 201b0e0c6ee915f458a5061e965fbbb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInput: {fileID: 9219999080004051878}
   playerCanvas: {fileID: 4709146562012521469}
   currentInventoryState: 0
   equippedBall: {fileID: 0}
@@ -443,6 +442,7 @@ MonoBehaviour:
   throwPowerBar: {fileID: 1370890662092231146}
   dodgeSlider: {fileID: 0}
   healthSlider: {fileID: 0}
+  playerInput: {fileID: 9219999080004051878}
 --- !u!114 &3896125258346239803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -456,7 +456,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerManager: {fileID: 0}
-  playerInput: {fileID: 0}
   moveAction:
     m_Name: Move
     m_Type: 0

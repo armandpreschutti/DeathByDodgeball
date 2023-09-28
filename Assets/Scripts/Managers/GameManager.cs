@@ -4,8 +4,10 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using UnityEngine.Timeline;
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager gameInstance;
@@ -16,13 +18,8 @@ public class GameManager : MonoBehaviour
     public int pregameCount;
     public List<PlayerManager> players; 
     public List<PlayerManager> readyPlayers;
-    public GameObject gameModes;
-    
+    public Animator anim;
 
-    /// <summary>
-    /// When called, this function returns the current singleton instance of the game manager
-    /// </summary>
-    /// <returns>game manager instance</returns>
     public static GameManager GetInstance()
     {
         return gameInstance;
@@ -53,13 +50,12 @@ public class GameManager : MonoBehaviour
         readyPlayers.Add(player);
         if(readyPlayers.Count == playerInputManager.maxPlayerCount && readyPlayers.All(player => player.isReady))
         {
-            // Start the countdown coroutine
             StartCoroutine(StartMatch());
         }
     }
-    public void NextScene()
+    public void LoadScene(string scene)
     {
-        SceneManager.LoadScene(nextScene);
+        SceneManager.LoadScene(scene);
     }
 
     private IEnumerator StartMatch()
@@ -73,8 +69,9 @@ public class GameManager : MonoBehaviour
             countdown -= 1f;
             yield return new WaitForSeconds(1f);
         }
-
-        NextScene();
+        StartSceneTransition();
+        yield return new WaitForSeconds(1);
+        LoadScene("GamePlay");
     }
 
 
@@ -82,10 +79,18 @@ public class GameManager : MonoBehaviour
     {
         players[0].transform.position = player1StartPoint.position;
         players[1].transform.position = player2StartPoint.position;
-        foreach(PlayerManager player in readyPlayers)
+        foreach (PlayerManager player in readyPlayers)
         {
             player.ActivatePlayer();
         }
     }
-    
+
+    public void StartSceneTransition()
+    {
+        anim.SetTrigger("Start");
+    }
+    public void EndSceneTransition()
+    {
+        anim.SetTrigger("End");
+    }
 }

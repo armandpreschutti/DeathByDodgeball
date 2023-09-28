@@ -6,12 +6,10 @@ using UnityEngine.UI;
 public class MeleeHandler : MonoBehaviour
 {
     public PlayerManager playerManager;
-    [SerializeField] Vector3 aimPosition;
     [SerializeField] float minThrowPower = 1f;
     [SerializeField] float maxThrowPower = 40f;
     [SerializeField] float currentThrowPower = 0f;
     [SerializeField] float throwPowerIncreaseRate;
-
     public bool isAiming;
     public bool isCatching;
     [SerializeField] float catchDuration;
@@ -26,7 +24,10 @@ public class MeleeHandler : MonoBehaviour
     {
         currentThrowPower = minThrowPower;
     }
-
+    public void Update()
+    {
+        aimingDirection = (playerManager.target.position - transform.position).normalized;
+    }
     public void StartAiming()
     {
         if(playerManager.currentInventoryState == PlayerManager.InventoryState.equipped)
@@ -55,8 +56,10 @@ public class MeleeHandler : MonoBehaviour
     {
         while (isAiming)
         {
+            
             if (currentThrowPower >= maxThrowPower)
             {
+               
                 currentThrowPower = maxThrowPower;
                 playerManager.throwPowerBar.GetComponent<Slider>().fillRect.GetComponent<Image>().color = Color.red;
             }
@@ -76,9 +79,9 @@ public class MeleeHandler : MonoBehaviour
     {
         if (playerManager.currentInventoryState == PlayerManager.InventoryState.equipped)
         {
-            aimingDirection = (playerManager.target.position - transform.position).normalized;
-            playerManager.equippedBall.GetComponent<Rigidbody2D>().AddForce(aimingDirection * currentThrowPower, ForceMode2D.Impulse);
-            playerManager.equippedBall.GetComponent<ProjectileHandler>().ActivateBall(currentThrowPower);
+            
+            
+            playerManager.equippedBall.GetComponent<ProjectileHandler>().ActivateBall(currentThrowPower, aimingDirection);
             playerManager.ActivateBall();
         }
         else

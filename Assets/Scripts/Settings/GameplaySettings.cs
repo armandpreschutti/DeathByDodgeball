@@ -1,29 +1,43 @@
-using JetBrains.Annotations;
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
-using static UnityEditor.Timeline.TimelinePlaybackControls;
+using UnityEngine.Timeline;
 
 public class GameplaySettings : MonoBehaviour
 {
+    public AudioClip music;
     public Transform player1StartPoint;
     public Transform player2StartPoint;
-    public GameObject gameOverPanel;
-    public TextMeshProUGUI winText;
+    public float postGameTime;
+
 
     private void Start()
     {
-        GameManager.GetInstance().InitializePlayers(player1StartPoint, player2StartPoint);
+        StartCoroutine(StartGame());
     }
-    public void GameOver(string winnerText)
+    public void GameOver()
     {
-        gameOverPanel.SetActive(true);
-        winText.text = winnerText;
+        StartCoroutine(EndGame());
     }
     public void ReplayGame()
     {
         SceneManager.LoadScene(1);
     }
+    IEnumerator EndGame()
+    {
+        yield return new WaitForSeconds(3);
+        GameManager.GetInstance().StartSceneTransition();
+        yield return new WaitForSeconds(1);
+        GameManager.GetInstance().LoadScene("GameOver");
+    }
+    IEnumerator StartGame()
+    {
+        GameManager.GetInstance().InitializePlayers(player1StartPoint, player2StartPoint);
+       // GameManager.GetInstance().GetComponent<AudioSource>().clip = music;
+        GameManager.GetInstance().EndSceneTransition();
+        yield return new WaitForSeconds(.5f);
+        //GameManager.GetInstance().GetComponent<AudioSource>().Play();
+    }
+   
 }

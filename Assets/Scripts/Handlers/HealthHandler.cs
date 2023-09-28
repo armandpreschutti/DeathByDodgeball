@@ -24,7 +24,7 @@ public class HealthHandler : MonoBehaviour
         if(health - damage <= minhealth)
         {
             health = minhealth;
-            UpdateHealthBar();
+            UpdateHealthBar(); 
             playerManager.Die();
             return;
         }
