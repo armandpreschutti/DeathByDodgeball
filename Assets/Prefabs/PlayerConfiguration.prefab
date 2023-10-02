@@ -428,7 +428,6 @@ MonoBehaviour:
   currentInventoryState: 0
   equippedBall: {fileID: 0}
   holdPosition: {fileID: 785663169938539943}
-  canUnequip: 0
   isReady: 0
   target: {fileID: 0}
   col: {fileID: 0}
@@ -535,11 +534,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerManager: {fileID: 0}
-  aimPosition: {x: 0, y: 0, z: 0}
   minThrowPower: 4
-  maxThrowPower: 20
+  maxThrowPower: 100
   currentThrowPower: 4
-  throwPowerIncreaseRate: 7.5
+  throwPowerIncreaseRate: 75
   isAiming: 0
   isCatching: 0
   catchDuration: 0.5
@@ -561,6 +559,8 @@ MonoBehaviour:
   isDead: 0
   maxHealth: 100
   minhealth: 0
+  isHit: 0
+  hitDuration: 0.5
 --- !u!212 &7772454449756503509
 SpriteRenderer:
   m_ObjectHideFlags: 0

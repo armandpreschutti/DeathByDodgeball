@@ -52,7 +52,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (!isReady)
         {
-            isReady= true;
+            isReady = true;
             GameManager.GetInstance().PlayerReady(this);
             GameObject.Find($"{name}Prompt").GetComponent<TextMeshProUGUI>().text = "Ready!";
         }
@@ -64,10 +64,10 @@ public class PlayerManager : MonoBehaviour
 
     public void EquipBall(GameObject ball)
     {
-        equippedBall= ball;
-        currentInventoryState= InventoryState.equipped;
-        equippedBall.GetComponent<Collider2D>().enabled= false;
-        equippedBall.GetComponent<Rigidbody2D>().simulated= false;
+        equippedBall = ball;
+        currentInventoryState = InventoryState.equipped;
+        equippedBall.GetComponent<Collider2D>().enabled = false;
+        equippedBall.GetComponent<Rigidbody2D>().simulated = false;
         equippedBall.transform.localPosition = holdPosition.localPosition;
     }
 
@@ -76,7 +76,7 @@ public class PlayerManager : MonoBehaviour
         currentInventoryState = InventoryState.unequipped;
         equippedBall = null;
     }
-    
+
 
     public void ActivatePlayer()
     {
@@ -97,7 +97,7 @@ public class PlayerManager : MonoBehaviour
 
         col.enabled = true;
         rb.simulated = true;
-        spriteRenderer.enabled = true;  
+        spriteRenderer.enabled = true;
         anim.enabled = true;
         locomotionHandler.enabled = true;
         meleeHandler.enabled = true;

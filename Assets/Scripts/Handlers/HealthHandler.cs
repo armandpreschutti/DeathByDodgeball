@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
+using System.Collections;
 
 public class HealthHandler : MonoBehaviour
 {
@@ -7,6 +9,9 @@ public class HealthHandler : MonoBehaviour
     [SerializeField] bool isDead;
     [SerializeField] float maxHealth = 100f;
     [SerializeField] float minhealth = 0f;
+    public bool isHit;
+
+    public float hitDuration;
 
     private void Awake()
     {
@@ -30,11 +35,23 @@ public class HealthHandler : MonoBehaviour
         }
         else
         {
+            StartCoroutine(HitCoroutine());
+            UpdateHealthBar();
             health -= damage;
         }
-        UpdateHealthBar();
+       
     }
 
+    IEnumerator HitCoroutine()
+    {
+
+        isHit = true;
+        playerManager.anim.SetBool("Hit", true);
+        playerManager.anim.Play("Hit");
+        yield return new WaitForSeconds(hitDuration);  
+        isHit = false;
+        playerManager.anim.SetBool("Hit", false);
+    }
     void UpdateHealthBar()
     {
         playerManager.healthSlider.value = health;

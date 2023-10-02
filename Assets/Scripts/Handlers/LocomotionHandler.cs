@@ -51,7 +51,8 @@ public class LocomotionHandler : MonoBehaviour
             {
                 playerManager.rb.velocity = new Vector2(moveDirection.x * aimingSpeed, moveDirection.y * aimingSpeed);
             }
-            else if (playerManager.meleeHandler.isCatching)
+            else if (playerManager.meleeHandler.isCatching 
+                    || playerManager.healthHandler.isHit)
             {
                 playerManager.rb.velocity = Vector2.zero;
             }
