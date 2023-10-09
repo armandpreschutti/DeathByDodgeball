@@ -24,7 +24,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Fire",
+                    "name": "Aim",
                     "type": "Button",
                     "id": "e6861322-976d-4388-8c8f-30186fdde78a",
                     "expectedControlType": "Button",
@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Dash",
+                    "name": "Dodge",
                     "type": "Button",
                     "id": "ad81f54d-c168-4333-90bf-598e1419eda0",
                     "expectedControlType": "Button",
@@ -145,7 +145,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Fire",
+                    "action": "Aim",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -156,7 +156,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Fire",
+                    "action": "Aim",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -167,7 +167,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Dash",
+                    "action": "Dodge",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -178,7 +178,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Dash",
+                    "action": "Dodge",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

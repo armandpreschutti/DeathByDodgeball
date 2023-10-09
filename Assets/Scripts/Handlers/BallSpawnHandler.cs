@@ -4,25 +4,30 @@ using UnityEngine;
 
 public class BallSpawnHandler : MonoBehaviour
 {
-    public GameObject projectilePrefab;
-    public float spawnRate = 1f;
-    public bool canSpawn;
-    public ProjectileHandler[] currentBalls;
-    public int maxBalls;
-
+    public GameObject _projectilePrefab;
+    public float _spawnRate = 1f;
+    public bool _spawnFull;
+    
     public void TriggerRespawn()
     {
-
-        StartCoroutine(SpawnProjectiles());
+        StartCoroutine(SpawnBall());
     }
 
-    private IEnumerator SpawnProjectiles()
+    private IEnumerator SpawnBall()
     {
-        // Wait for the specified spawn interval before spawning the next projectile
-        yield return new WaitForSeconds(spawnRate);
-        // Randomly select a spawn point
+        _spawnFull = false;
+        yield return new WaitForSeconds(_spawnRate);
+        GameObject ball = Instantiate(_projectilePrefab, transform.position, transform.rotation, this.transform);
+        _spawnFull= true;
+    }
 
-        // Instantiate the projectile at the selected spawn point
-        GameObject ball = Instantiate(projectilePrefab, transform.position, transform.rotation, this.transform);
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if(collider.CompareTag("Player")
+           && _spawnFull
+           && !collider.GetComponent<PlayerStateMachine>().IsEquipped)
+        {
+            TriggerRespawn();           
+        }
     }
 }

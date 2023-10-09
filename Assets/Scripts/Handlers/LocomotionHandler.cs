@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class LocomotionHandler : MonoBehaviour
-{
+{/*
     public enum LocomotionState  {Walking, Dashing};
 
     public PlayerManager playerManager;
@@ -106,5 +106,5 @@ public class LocomotionHandler : MonoBehaviour
     public void TestSub()
     {
         Debug.Log("Successfully subscribed to an event");
-    }
+    }*/
 }

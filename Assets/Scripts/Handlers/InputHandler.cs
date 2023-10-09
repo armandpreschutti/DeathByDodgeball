@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class InputHandler : MonoBehaviour
 {
-    [Header("Components")]
+   /* [Header("Components")]
     public PlayerManager playerManager;
 
     [Header("Actions")]
@@ -66,5 +66,6 @@ public class InputHandler : MonoBehaviour
     {
         Debug.Log($"{name} Ready pressed");
         playerManager.Ready();
-    }
+    }*/
+
 }

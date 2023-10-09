@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class MeleeHandler : MonoBehaviour
-{
+{/*
     public PlayerManager playerManager;
     [SerializeField] float minThrowPower = 1f;
     [SerializeField] float maxThrowPower = 40f;
@@ -81,8 +81,8 @@ public class MeleeHandler : MonoBehaviour
         {
             
             
-            playerManager.equippedBall.GetComponent<ProjectileHandler>().ActivateBall(currentThrowPower, aimingDirection);
-            playerManager.ActivateBall();
+            //playerManager.equippedBall.GetComponent<ProjectileHandler>().ActivateBall(currentThrowPower, aimingDirection);
+            //playerManager.ActivateBall();
         }
         else
         {
@@ -115,5 +115,5 @@ public class MeleeHandler : MonoBehaviour
    
 
 
-
+*/
 }

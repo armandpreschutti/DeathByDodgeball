@@ -46,7 +46,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Fire"",
+                    ""name"": ""Aim"",
                     ""type"": ""Button"",
                     ""id"": ""e6861322-976d-4388-8c8f-30186fdde78a"",
                     ""expectedControlType"": ""Button"",
@@ -55,7 +55,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Dash"",
+                    ""name"": ""Dodge"",
                     ""type"": ""Button"",
                     ""id"": ""ad81f54d-c168-4333-90bf-598e1419eda0"",
                     ""expectedControlType"": ""Button"",
@@ -167,7 +167,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Fire"",
+                    ""action"": ""Aim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -178,7 +178,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Fire"",
+                    ""action"": ""Aim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -189,7 +189,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Dash"",
+                    ""action"": ""Dodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -200,7 +200,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Dash"",
+                    ""action"": ""Dodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -399,8 +399,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
-        m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
-        m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
+        m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
+        m_Player_Dodge = m_Player.FindAction("Dodge", throwIfNotFound: true);
         m_Player_Catch = m_Player.FindAction("Catch", throwIfNotFound: true);
         m_Player_Ready = m_Player.FindAction("Ready", throwIfNotFound: true);
         // UI
@@ -470,8 +470,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Look;
-    private readonly InputAction m_Player_Fire;
-    private readonly InputAction m_Player_Dash;
+    private readonly InputAction m_Player_Aim;
+    private readonly InputAction m_Player_Dodge;
     private readonly InputAction m_Player_Catch;
     private readonly InputAction m_Player_Ready;
     public struct PlayerActions
@@ -480,8 +480,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public PlayerActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Look => m_Wrapper.m_Player_Look;
-        public InputAction @Fire => m_Wrapper.m_Player_Fire;
-        public InputAction @Dash => m_Wrapper.m_Player_Dash;
+        public InputAction @Aim => m_Wrapper.m_Player_Aim;
+        public InputAction @Dodge => m_Wrapper.m_Player_Dodge;
         public InputAction @Catch => m_Wrapper.m_Player_Catch;
         public InputAction @Ready => m_Wrapper.m_Player_Ready;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -499,12 +499,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
-            @Fire.started += instance.OnFire;
-            @Fire.performed += instance.OnFire;
-            @Fire.canceled += instance.OnFire;
-            @Dash.started += instance.OnDash;
-            @Dash.performed += instance.OnDash;
-            @Dash.canceled += instance.OnDash;
+            @Aim.started += instance.OnAim;
+            @Aim.performed += instance.OnAim;
+            @Aim.canceled += instance.OnAim;
+            @Dodge.started += instance.OnDodge;
+            @Dodge.performed += instance.OnDodge;
+            @Dodge.canceled += instance.OnDodge;
             @Catch.started += instance.OnCatch;
             @Catch.performed += instance.OnCatch;
             @Catch.canceled += instance.OnCatch;
@@ -521,12 +521,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
-            @Fire.started -= instance.OnFire;
-            @Fire.performed -= instance.OnFire;
-            @Fire.canceled -= instance.OnFire;
-            @Dash.started -= instance.OnDash;
-            @Dash.performed -= instance.OnDash;
-            @Dash.canceled -= instance.OnDash;
+            @Aim.started -= instance.OnAim;
+            @Aim.performed -= instance.OnAim;
+            @Aim.canceled -= instance.OnAim;
+            @Dodge.started -= instance.OnDodge;
+            @Dodge.performed -= instance.OnDodge;
+            @Dodge.canceled -= instance.OnDodge;
             @Catch.started -= instance.OnCatch;
             @Catch.performed -= instance.OnCatch;
             @Catch.canceled -= instance.OnCatch;
@@ -626,8 +626,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
-        void OnFire(InputAction.CallbackContext context);
-        void OnDash(InputAction.CallbackContext context);
+        void OnAim(InputAction.CallbackContext context);
+        void OnDodge(InputAction.CallbackContext context);
         void OnCatch(InputAction.CallbackContext context);
         void OnReady(InputAction.CallbackContext context);
     }

@@ -42,13 +42,12 @@ public class GameManager : MonoBehaviour
   
     public void AddPlayer(PlayerManager player)
     {
-        players.Add(player);
-        
+        players.Add(player);        
     }
     public void PlayerReady(PlayerManager player)
     {
         readyPlayers.Add(player);
-        if(readyPlayers.Count == playerInputManager.maxPlayerCount && readyPlayers.All(player => player.isReady))
+        if(readyPlayers.Count == playerInputManager.maxPlayerCount && readyPlayers.All(player => player.IsReady))
         {
             StartCoroutine(StartMatch());
         }
@@ -83,6 +82,8 @@ public class GameManager : MonoBehaviour
         {
             player.ActivatePlayer();
         }
+        players[0].GetComponent<PlayerStateMachine>().Target = players[1].transform;
+        players[1].GetComponent<PlayerStateMachine>().Target = players[0].transform;
     }
 
     public void StartSceneTransition()

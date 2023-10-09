@@ -5,31 +5,30 @@ using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
-    [SerializeField] Canvas playerCanvas;
-    public enum InventoryState { unequipped, equipped }
-    public InventoryState currentInventoryState = InventoryState.unequipped;
-    public GameObject equippedBall = null;
-    public Transform holdPosition;
-    public bool isReady;
-    public Transform target;
+    [SerializeField] bool _debugMode;
+    [SerializeField] bool _isReady;
 
     [Header("Components")]
-    public Collider2D col;
-    public Rigidbody2D rb;
-    public SpriteRenderer spriteRenderer;
-    public Animator anim;
-    public InputHandler inputHandler;
-    public LocomotionHandler locomotionHandler;
-    public MeleeHandler meleeHandler;
-    public HealthHandler healthHandler;
-    public GameObject throwPowerBar;
-    public Slider dodgeSlider;
-    public Slider healthSlider;
-    public PlayerInput playerInput;
+    public PlayerInput _playerInput;
+    public PlayerStateMachine _playerStateMachine;
+
+    [Header("Input")]
+    [SerializeField] InputAction _readyAction;
+
+    public bool IsReady { get { return _isReady; } set { _isReady = value; } }
+    public bool DebugMode { get { return _debugMode; } set { _debugMode= value; } }
 
     private void Awake()
     {
         SetPlayerComponents();
+    }
+    private void OnEnable()
+    {
+        _readyAction.performed += Ready;
+    }
+    private void OnDisable()
+    {
+        _readyAction.performed -= Ready;
     }
 
     public void Start()
@@ -39,97 +38,55 @@ public class PlayerManager : MonoBehaviour
 
     public void InitializePlayer()
     {
-        if (playerInput != null)
+        if (!_debugMode)
         {
-            GameManager.GetInstance().AddPlayer(this);
-            name = $"Player{playerInput.playerIndex + 1}";
-            DontDestroyOnLoad(gameObject);
-            GameObject.Find($"{name}Prompt").GetComponent<TextMeshProUGUI>().text = "Press LB or F when ready";
-        }
-    }
-
-    public void Ready()
-    {
-        if (!isReady)
-        {
-            isReady = true;
-            GameManager.GetInstance().PlayerReady(this);
-            GameObject.Find($"{name}Prompt").GetComponent<TextMeshProUGUI>().text = "Ready!";
+            if (_playerInput != null)
+            {
+                GameManager.GetInstance().AddPlayer(this);
+                name = $"Player{_playerInput.playerIndex + 1}";
+                DontDestroyOnLoad(gameObject);
+                GameObject.Find($"{name}Prompt").GetComponent<TextMeshProUGUI>().text = "Press LB or F when ready";
+            }
         }
         else
         {
             return;
         }
+        
     }
 
-    public void EquipBall(GameObject ball)
+    public void Ready(InputAction.CallbackContext context)
     {
-        equippedBall = ball;
-        currentInventoryState = InventoryState.equipped;
-        equippedBall.GetComponent<Collider2D>().enabled = false;
-        equippedBall.GetComponent<Rigidbody2D>().simulated = false;
-        equippedBall.transform.localPosition = holdPosition.localPosition;
+        if (!_debugMode)
+        {
+            if (!_isReady)
+            {
+                _isReady = true;
+                GameManager.GetInstance().PlayerReady(this);
+                GameObject.Find($"{name}Prompt").GetComponent<TextMeshProUGUI>().text = "Ready!";
+            }
+            else
+            {
+                return;
+            }
+        }
+        else
+        {
+            return;
+        }
+        
     }
-
-    public void ActivateBall()
-    {
-        currentInventoryState = InventoryState.unequipped;
-        equippedBall = null;
-    }
-
 
     public void ActivatePlayer()
     {
-        anim.SetBool("Die", false);
-        dodgeSlider = GameObject.Find($"{name}DodgeBar").GetComponent<Slider>();
-        healthSlider = GameObject.Find($"{name}HealthBar").GetComponent<Slider>();
-        switch (name)
-        {
-            case "Player1":
-                target = GameObject.Find("Player2").transform;
-                break;
-            case "Player2":
-                target = GameObject.Find("Player1").transform;
-                break;
-            default:
-                break;
-        }
-
-        col.enabled = true;
-        rb.simulated = true;
-        spriteRenderer.enabled = true;
-        anim.enabled = true;
-        locomotionHandler.enabled = true;
-        meleeHandler.enabled = true;
-        healthHandler.enabled = true;
-    }
-
-    public void DisablePlayer()
-    {
-        col.enabled = false;
-        rb.simulated = false;
-        locomotionHandler.enabled = false;
-        meleeHandler.enabled = false;
-        healthHandler.enabled = false;
-    }
-
-    public void Die()
-    {
-        anim.SetBool("Die", true);
-        DisablePlayer();
-        GameObject.Find("GameplaySettings").GetComponent<GameplaySettings>().GameOver();
+        _playerStateMachine.enabled = true;
     }
 
     public void SetPlayerComponents()
     {
-        playerInput = GetComponent<PlayerInput>();
-        col = GetComponent<Collider2D>();
-        rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        anim = GetComponent<Animator>();
-        locomotionHandler = GetComponent<LocomotionHandler>();
-        meleeHandler = GetComponent<MeleeHandler>();
-        healthHandler = GetComponent<HealthHandler>();
-        inputHandler = GetComponent<InputHandler>();
+        DontDestroyOnLoad(gameObject);
+        _playerInput = GetComponent<PlayerInput>();
+        _playerStateMachine = GetComponent<PlayerStateMachine>();
+        _readyAction = _playerInput.actions["Ready"];
     }
 }

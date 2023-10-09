@@ -4,7 +4,7 @@ using System.Collections;
 
 public class HealthHandler : MonoBehaviour
 {
-    public PlayerManager playerManager;
+    /*public PlayerManager playerManager;
     [SerializeField] float health;
     [SerializeField] bool isDead;
     [SerializeField] float maxHealth = 100f;
@@ -55,5 +55,5 @@ public class HealthHandler : MonoBehaviour
     void UpdateHealthBar()
     {
         playerManager.healthSlider.value = health;
-    }
+    }*/
 }

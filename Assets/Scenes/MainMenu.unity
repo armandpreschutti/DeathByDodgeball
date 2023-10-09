@@ -948,7 +948,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1390574208786186208, guid: 9d75c95ea8874184287a5a372bec9b83, type: 3}
       propertyPath: pregameCount
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5298344005680597871, guid: 9d75c95ea8874184287a5a372bec9b83, type: 3}
       propertyPath: m_RootOrder
@@ -998,6 +998,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6423143175055626820, guid: 9d75c95ea8874184287a5a372bec9b83, type: 3}
+      propertyPath: m_PlayerPrefab
+      value: 
+      objectReference: {fileID: 2230309673918977745, guid: f617b1bcefaf11e449ae9362db106249, type: 3}
     - target: {fileID: 7073141511996758645, guid: 9d75c95ea8874184287a5a372bec9b83, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
