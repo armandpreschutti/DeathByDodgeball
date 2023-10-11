@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,17 +24,7 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] GameObject _equippedBall = null;
     [SerializeField] Transform _holdPosition;
     [SerializeField] Transform _target;
-
-    [Header("UI")]
-    [SerializeField] Slider _dodgeSlider;
-    [SerializeField] Slider _healthSlider;
     [SerializeField] Slider _playerBar;
-
-    [Header("Health")]
-    [SerializeField] float _currentHealth;
-    [SerializeField] float _maxHealth = 100f;
-    [SerializeField] float _minhealth = 0f;
-    [SerializeField] float _hitDuration;
 
     [Header("Melee")]
     [SerializeField] Vector3 _aimDirection;
@@ -42,6 +33,7 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] float _currentThrowPower= 4f;
     [SerializeField] float _throwPowerIncreaseRate = 7.5f;
     [SerializeField] float _catchDuration = .5f;
+    [SerializeField] float _hurtDuration;
 
     [Header("Locomotion")]
     [SerializeField] Vector2 _moveDirection = Vector2.zero;
@@ -59,7 +51,6 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] bool _isDodging;
     [SerializeField] bool _isEquipped;
     [SerializeField] bool _isHurt;
-    [SerializeField] bool _isReady;
     [SerializeField] bool _isAiming;
     [SerializeField] bool _isThrowing;
     [SerializeField] bool _isCatching;
@@ -70,13 +61,32 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] InputAction _catchAction;
     [SerializeField] InputAction _dodgeAction;
 
-
     [Header("Input Booleans")]
     [SerializeField] bool _isMovePressed;
     [SerializeField] bool _isAimPressed;
     [SerializeField] bool _isCatchPressed;
     [SerializeField] bool _isDodgePressed;
     [SerializeField] bool _isReadyPressed;
+
+    [SerializeField] event Action _onDeath;
+    [SerializeField] event Action _onDodge;
+    [SerializeField] event Action _onDodgeRefill;
+    [SerializeField] event Action _onEquip;
+    [SerializeField] event Action _onHurt;
+    [SerializeField] event Action _onAim;
+    [SerializeField] event Action _onThrow;
+    [SerializeField] event Action _onCatch;
+
+    //public Action OnHurt { get { return _onHurt; } set { _onHurt = value; } }
+
+    public Action OnDeath { get { return _onDeath; } set { _onDeath = value; } }
+    public Action OnDodge { get { return _onDodge; } set { _onDodge = value; } }
+    public Action OnDodgeRefill { get { return _onDodgeRefill; } set { _onDodgeRefill = value; } }
+    public Action OnEquip { get { return _onEquip; } set { _onEquip = value; } }
+    public Action OnHurt { get { return _onHurt; } set { _onHurt = value; } }
+    public Action OnAim { get { return _onAim; } set { _onAim = value; } }
+    public Action OnThrow { get { return _onThrow; } set { _onThrow = value; } }
+    public Action OnCatch { get { return _onCatch; } set { _onCatch = value; } }
 
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
 
@@ -89,15 +99,7 @@ public class PlayerStateMachine : MonoBehaviour
     public GameObject EquippedBall { get {return _equippedBall;} set { _equippedBall = value; } }
     public Transform HoldPosition { get { return _holdPosition; } set { _holdPosition = value; } }
     public Transform Target { get { return _target; } set { _target = value; } }
-
-    public Slider DodgeSlider { get { return _dodgeSlider; } set { _dodgeSlider = value; } }
-    public Slider HealthSlider { get { return _healthSlider; } set { _healthSlider = value; } }
-    public Slider PlayerBar { get { return _playerBar; } set { _healthSlider = value; } }
-
-    public float CurrentHealth { get {return _currentHealth; } set { _currentHealth= value; } }
-    public float MaxHealth { get {return _maxHealth;} set { _maxHealth = value; } } 
-    public float Minhealth { get {return _minhealth; } set { _minhealth = value; } } 
-    public float HitDuration { get {return _hitDuration;} set { _hitDuration = value; } }
+    public Slider PlayerBar { get { return _playerBar; } set { _playerBar = value; } }
 
     public Vector3 AimDirection { get { return _aimDirection; } set { _aimDirection = value; } }
     public float MinThrowPower { get { return _minThrowPower; } set { _minThrowPower = value; } }
@@ -105,6 +107,7 @@ public class PlayerStateMachine : MonoBehaviour
     public float CurrentThrowPower { get { return _currentThrowPower; } set { _currentThrowPower = value; } }
     public float ThrowPowerIncreaseRate { get { return _throwPowerIncreaseRate; } set { _throwPowerIncreaseRate = value; } }
     public float CatchDuration { get { return _catchDuration; } set { _catchDuration = value; } }
+    public float HurtDuration { get { return _hurtDuration; } set { _hurtDuration = value; } }
 
     public Vector2 MoveDirection { get { return _moveDirection; } set { _moveDirection = value; } }
     public float IdleSpeed { get {return _idleSpeed;} set { _idleSpeed = value; } } 
@@ -119,7 +122,6 @@ public class PlayerStateMachine : MonoBehaviour
     public bool IsDodging { get {return _isDodging;} set { _isDodging = value; } }
     public bool IsEquipped { get { return _isEquipped; } set { _isEquipped = value; } }
     public bool IsHurt { get { return _isHurt; } set { _isHurt = value; } }
-    
     public bool IsAiming { get { return _isAiming; } set { _isAiming = value; } }
     public bool IsThrowing { get { return _isThrowing; } set { _isThrowing= value; } }
     public bool IsCatching { get { return _isCatching; } set { _isCatching = value; } }
@@ -143,11 +145,13 @@ public class PlayerStateMachine : MonoBehaviour
     private void OnEnable()
     {
         EnableInputActions();
+        OnHurt += Test;
     }
 
     private void OnDisable()
     {
         DisableInputActions();
+        OnHurt -= Test;
     }
     
     void Start()
@@ -260,30 +264,29 @@ public class PlayerStateMachine : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damage)
+    /*public void TakeDamage(float damage)
     {
         _isHurt = true;
         _currentHealth -= damage;
-    }
+    }*/
     
 
-    public void UpdateHealthBar()
+   /* public void UpdateHealthBar()
     {
         _healthSlider.value = _currentHealth;
-    }
+    }*/
 
     public void SetPlayerInitialVariables()
     {
         _totalDodges = _maxDodges;
         _currentThrowPower = _minThrowPower;
-        _currentHealth = _maxHealth;
-        _dodgeSlider = GameObject.Find($"{name}DodgeBar").GetComponent<Slider>();
-        _healthSlider = GameObject.Find($"{name}HealthBar").GetComponent<Slider>();
+        //_currentHealth = _maxHealth;
+        /*_dodgeSlider = GameObject.Find($"{name}DodgeBar").GetComponent<Slider>();
+        _healthSlider = GameObject.Find($"{name}HealthBar").GetComponent<Slider>();*/
         _isDead = false;
         _isDodging =false;
         _isEquipped =false;
         _isHurt =false;
-        _isReady =false;
         _isAiming =false;
         _isThrowing =false;
         _isCatching =false;
@@ -313,5 +316,9 @@ public class PlayerStateMachine : MonoBehaviour
         _catchAction.performed -= StartCatching;
         _catchAction.canceled -= StopCatching;
         _dodgeAction.performed -= Dodge;
+    }
+    public void Test()
+    {
+        Debug.Log("Player has been hurt");
     }
 }

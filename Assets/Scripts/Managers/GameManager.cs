@@ -1,24 +1,27 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
-using UnityEngine.Timeline;
 
 public class GameManager : MonoBehaviour
 {
+
+    [SerializeField] PlayerInputManager _playerInputManager;
+    [SerializeField] Animator _anim;
+    [SerializeField] UIManager _uiManager;
+
+    public PlayerInputManager PlayerInputManager { get; private set; }
+    public Animator Anim { get; private set; }
+    public UIManager UIManager { get; private set; }
+
+    public event Action onTransitionStart;
+    public event Action onTransitionEnd;
+
     public static GameManager gameInstance;
-    public PlayerInputManager playerInputManager;
-    public int playerCount = 0;
-    public int playerRedayCount = 0;
-    public int nextScene = 0;
-    public int pregameCount;
-    public List<PlayerManager> players; 
-    public List<PlayerManager> readyPlayers;
-    public Animator anim;
 
     public static GameManager GetInstance()
     {
@@ -30,68 +33,54 @@ public class GameManager : MonoBehaviour
         if (gameInstance == null)
         {
             gameInstance = this;
-
             DontDestroyOnLoad(gameObject);
+            SetGameComponents();
         }
         else
         {
             Destroy(gameObject);
         }
     }
-
-  
-    public void AddPlayer(PlayerManager player)
+    private void OnEnable()
     {
-        players.Add(player);        
+        onTransitionStart += StartSceneTransition;
+        onTransitionEnd += EndSceneTransition;
     }
-    public void PlayerReady(PlayerManager player)
+
+    private void OnDisable()
     {
-        readyPlayers.Add(player);
-        if(readyPlayers.Count == playerInputManager.maxPlayerCount && readyPlayers.All(player => player.IsReady))
+        onTransitionStart -= StartSceneTransition;
+        onTransitionEnd -= EndSceneTransition;
+    }
+
+    public void Start()
+    {
+
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            StartCoroutine(StartMatch());
+            onTransitionStart?.Invoke();
+        }
+        else if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            onTransitionEnd?.Invoke();
         }
     }
-    public void LoadScene(string scene)
-    {
-        SceneManager.LoadScene(scene);
-    }
-
-    private IEnumerator StartMatch()
-    {
-        float countdown = pregameCount;
-        GameObject.Find("StartPrompt").GetComponent<TextMeshProUGUI>().text = "Match Starting!";
-
-        while (countdown > 0f)
-        {
-            GameObject.Find("Count").GetComponent<TextMeshProUGUI>().text = countdown.ToString();
-            countdown -= 1f;
-            yield return new WaitForSeconds(1f);
-        }
-        StartSceneTransition();
-        yield return new WaitForSeconds(1);
-        LoadScene("GamePlay");
-    }
-
-
-    public void InitializePlayers(Transform player1StartPoint, Transform player2StartPoint)
-    {
-        players[0].transform.position = player1StartPoint.position;
-        players[1].transform.position = player2StartPoint.position;
-        foreach (PlayerManager player in readyPlayers)
-        {
-            player.ActivatePlayer();
-        }
-        players[0].GetComponent<PlayerStateMachine>().Target = players[1].transform;
-        players[1].GetComponent<PlayerStateMachine>().Target = players[0].transform;
-    }
-
     public void StartSceneTransition()
     {
-        anim.SetTrigger("Start");
+        _anim.Play("Start");
     }
     public void EndSceneTransition()
     {
-        anim.SetTrigger("End");
+        _anim.Play("End");
+    }
+    public void SetGameComponents()
+    {
+        _playerInputManager = GetComponent<PlayerInputManager>();
+        _anim = GetComponentInChildren<Animator>();   
+        _uiManager = GetComponent<UIManager>(); 
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.Playables;
 public class GameOverSettings : MonoBehaviour
 {
     public AudioClip music;
-
+/*
     private void Start()
     {
         GameManager.GetInstance().GetComponent<AudioSource>().clip = music;
@@ -21,5 +21,5 @@ public class GameOverSettings : MonoBehaviour
     public void ReturnToMenu()
     {
         GameManager.GetInstance().LoadScene("MainMenu");
-    }
+    }*/
 }

@@ -33,7 +33,7 @@ public class BallActiveState : BallBaseState
             }
             else
             {
-                collider.transform.GetComponent<PlayerStateMachine>().TakeDamage(_ctx.BallDamage);
+                collider.transform.GetComponent<PlayerManager>().GetComponent<HealthHandler>().TakeDamage(_ctx.BallDamage);
                 GameObject.Destroy(_ctx.gameObject);
             }                
         }

@@ -214,13 +214,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4747675520440633601}
+  - component: {fileID: 7951667184184956394}
+  - component: {fileID: 1627544658323214681}
   - component: {fileID: 868135169106175682}
   - component: {fileID: 957770178004703269}
   - component: {fileID: 1719316581579537401}
   - component: {fileID: 7754080829793167634}
   - component: {fileID: 3223174439667077122}
   - component: {fileID: 2619317501389014449}
-  - component: {fileID: 7951667184184956394}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -245,6 +246,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7951667184184956394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2230309673918977745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 201b0e0c6ee915f458a5061e965fbbb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerInput: {fileID: 0}
+  _playerStateMachine: {fileID: 0}
+  _healthHandler: {fileID: 0}
+  _currentHealth: 0
+  _maxHealth: 100
+  _minhealth: 0
+--- !u!114 &1627544658323214681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2230309673918977745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aca2edb808032b4cbae8d6190b0d66f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &868135169106175682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,13 +299,10 @@ MonoBehaviour:
   _dodgeSlider: {fileID: 0}
   _healthSlider: {fileID: 0}
   _playerBar: {fileID: 1841370808386378652}
-  _currentHealth: 0
-  _maxHealth: 100
-  _minhealth: 0
   _hitDuration: 0.5
   _aimDirection: {x: 0, y: 0, z: 0}
   _minThrowPower: 4
-  _maxThrowPower: 20
+  _maxThrowPower: 25
   _currentThrowPower: 0
   _throwPowerIncreaseRate: 7.5
   _catchDuration: 10
@@ -291,7 +319,6 @@ MonoBehaviour:
   _isDodging: 0
   _isEquipped: 0
   _isHurt: 0
-  _isReady: 0
   _isAiming: 0
   _isThrowing: 0
   _isCatching: 0
@@ -501,29 +528,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7951667184184956394
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2230309673918977745}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 201b0e0c6ee915f458a5061e965fbbb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isReady: 0
-  _playerInput: {fileID: 0}
-  _readyAction:
-    m_Name: Ready
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 49fa9180-6b67-4d87-bde7-e8964814f8e7
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
 --- !u!1 &4914712929626277695
 GameObject:
   m_ObjectHideFlags: 0

@@ -965,6 +965,7 @@ GameObject:
   - component: {fileID: 300781966}
   - component: {fileID: 300781965}
   - component: {fileID: 300781964}
+  - component: {fileID: 300781967}
   m_Layer: 5
   m_Name: Player1HealthBar
   m_TagString: Untagged
@@ -1083,6 +1084,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 300781962}
   m_CullTransparentMesh: 1
+--- !u!114 &300781967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300781962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a77347be8d62d1b479b8b5d39e13b9f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _subject: {fileID: 0}
+  _subjectId: 0
+  _heathSlider: {fileID: 0}
 --- !u!1 &311739650
 GameObject:
   m_ObjectHideFlags: 0
@@ -1095,6 +1111,7 @@ GameObject:
   - component: {fileID: 311739654}
   - component: {fileID: 311739653}
   - component: {fileID: 311739652}
+  - component: {fileID: 311739655}
   m_Layer: 5
   m_Name: Player2HealthBar
   m_TagString: Untagged
@@ -1213,6 +1230,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 311739650}
   m_CullTransparentMesh: 1
+--- !u!114 &311739655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 311739650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a77347be8d62d1b479b8b5d39e13b9f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _subject: {fileID: 0}
+  _subjectId: 0
+  _heathSlider: {fileID: 0}
 --- !u!1 &326031830
 GameObject:
   m_ObjectHideFlags: 0
@@ -1679,6 +1711,7 @@ GameObject:
   - component: {fileID: 598971762}
   - component: {fileID: 598971761}
   - component: {fileID: 598971760}
+  - component: {fileID: 598971763}
   m_Layer: 5
   m_Name: Player1DodgeBar
   m_TagString: Untagged
@@ -1797,6 +1830,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 598971758}
   m_CullTransparentMesh: 1
+--- !u!114 &598971763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598971758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c847c72d8186e274484aab1ecec9a433, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _subject: {fileID: 0}
+  _observerId: 1
+  _dodgeSlider: {fileID: 598971760}
 --- !u!1 &617959057
 GameObject:
   m_ObjectHideFlags: 0
@@ -1923,6 +1971,7 @@ GameObject:
   - component: {fileID: 648414497}
   - component: {fileID: 648414496}
   - component: {fileID: 648414495}
+  - component: {fileID: 648414498}
   m_Layer: 5
   m_Name: Player2DodgeBar
   m_TagString: Untagged
@@ -2041,6 +2090,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 648414493}
   m_CullTransparentMesh: 1
+--- !u!114 &648414498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 648414493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c847c72d8186e274484aab1ecec9a433, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _subject: {fileID: 0}
+  _observerId: 2
+  _dodgeSlider: {fileID: 648414495}
 --- !u!4 &659896310 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 613414467392065834, guid: 57a8a4c6e3b52804b8e84c99a9c4e29c, type: 3}
@@ -5817,7 +5881,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 957770178004703269, guid: f617b1bcefaf11e449ae9362db106249, type: 3}
       propertyPath: m_DefaultControlScheme
-      value: Gamepad
+      value: Keyboard
       objectReference: {fileID: 0}
     - target: {fileID: 2230309673918977745, guid: f617b1bcefaf11e449ae9362db106249, type: 3}
       propertyPath: m_Name

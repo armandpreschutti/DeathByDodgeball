@@ -9,7 +9,7 @@ public class MainMenuSettings : MonoBehaviour
 
     private void Start()
     {
-        GameManager.GetInstance().GetComponent<AudioSource>().clip = music;
-        GameManager.GetInstance().GetComponent<AudioSource>().Play();
+     /*   GameManager.GetInstance().GetComponent<AudioSource>().clip = music;
+        GameManager.GetInstance().GetComponent<AudioSource>().Play();*/
     }
 }

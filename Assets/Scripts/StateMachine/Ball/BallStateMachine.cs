@@ -9,7 +9,6 @@ public class BallStateMachine : MonoBehaviour
     public BallActiveState ActiveState = new BallActiveState();
     public BallEquippedState EquippedState = new BallEquippedState();
     public BallUnequippedState UnequippedState = new BallUnequippedState();
-    public BallSelfDestructState SelfDestructState = new BallSelfDestructState();
 
     [Header("Components")]
     [SerializeField] Collider2D _col;
@@ -74,12 +73,6 @@ public class BallStateMachine : MonoBehaviour
     {
         _ballDamage = ballDamage;
         _currentState = ActiveState;
-        _currentState.EnterState(this);
-    }
-
-    public void EnterSelfDestructState()
-    {
-        _currentState = SelfDestructState;
         _currentState.EnterState(this);
     }
 

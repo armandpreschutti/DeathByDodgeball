@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHurtState : PlayerBaseState
 {
+
+
     public PlayerHurtState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory) : base(currentContext, playerStateFactory) 
     {
 
@@ -11,17 +14,11 @@ public class PlayerHurtState : PlayerBaseState
 
     public override void EnterState() 
     {
-        
+        Ctx.OnHurt?.Invoke();
         Ctx.Rb.velocity = Vector2.zero;
         Ctx.StartCoroutine(Hurt());
-        Ctx.UpdateHealthBar();
         Ctx.Anim.SetBool("Hit", true);
         Ctx.Anim.Play("Hit");
-        if (Ctx.CurrentHealth <= Ctx.Minhealth)
-        {
-            Ctx.CurrentHealth = Ctx.Minhealth;
-            Die();
-        }
     }
 
     public override void UpdateState()
@@ -50,7 +47,7 @@ public class PlayerHurtState : PlayerBaseState
 
     IEnumerator Hurt()
     {
-        yield return new WaitForSeconds(Ctx.HitDuration);
+        yield return new WaitForSeconds(Ctx.HurtDuration);
         Ctx.IsHurt = false;
     }
     public void Die()

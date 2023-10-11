@@ -12,7 +12,7 @@ public class PlayerDodgeState : PlayerBaseState
 
     public override void EnterState()
     {
-        //Debug.Log("Entered Dodge State");
+
         Ctx.IsDodgePressed = false;
         Ctx.StartCoroutine(Dodge());
         Ctx.StartCoroutine(RefillDodge());
@@ -46,8 +46,8 @@ public class PlayerDodgeState : PlayerBaseState
         Ctx.IsDodging = true;
         Ctx.Anim.SetBool("IsDodging", true);
         Ctx.TotalDodges -= 1;
+        Ctx.OnDodge?.Invoke();
         Vector2 direction = Ctx.MoveDirection.normalized * Ctx.DodgeSpeed;
-        Ctx.DodgeSlider.value = Ctx.TotalDodges;
         float startTime = Time.time;
 
         while (Time.time < startTime + Ctx.DodgeDuration)
@@ -69,8 +69,10 @@ public class PlayerDodgeState : PlayerBaseState
 
     IEnumerator RefillDodge()
     {
+
         yield return new WaitForSeconds(Ctx.DodgeRefillRate);
         Ctx.TotalDodges += 1;
-        Ctx.DodgeSlider.value = Ctx.TotalDodges;
+        Ctx.OnDodgeRefill?.Invoke();
+        //Ctx.DodgeSlider.value = Ctx.TotalDodges;
     }
 }
