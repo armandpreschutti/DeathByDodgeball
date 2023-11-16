@@ -22,6 +22,12 @@ public class PlayerUnequippedState : PlayerBaseState
         CheckSwitchState();
     }
 
+    public override void FixedUpdateState()
+    {
+
+    }
+
+
     public override void ExitState() 
     {
 
@@ -33,13 +39,10 @@ public class PlayerUnequippedState : PlayerBaseState
         {
             SwitchState(Factory.Equipped());
         }
-        
     }
 
     public override void InitializeSubState()
     {
-        //Debug.Log("Idle is SubState");
         SetSubState(Factory.Idle());
     }
-
 }

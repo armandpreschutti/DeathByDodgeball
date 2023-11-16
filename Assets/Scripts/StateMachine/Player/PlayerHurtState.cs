@@ -24,19 +24,29 @@ public class PlayerHurtState : PlayerBaseState
     public override void UpdateState()
     {
         CheckSwitchState();
-        Ctx.Rb.velocity = new Vector2(Ctx.MoveDirection.x * 0f, Ctx.MoveDirection.y * 0f);
     }
+
+    public override void FixedUpdateState()
+    {
+
+    }
+
 
     public override void ExitState() 
     {
         Ctx.Anim.SetBool("Hit", false);
+        Ctx.Rb.velocity = Vector2.zero;
     }
 
     public override void CheckSwitchState() 
     {
-        if(Ctx.IsHurt == false)
+      /*  if(!Ctx.IsHurt)
         {
             SwitchState(Factory.Idle());
+        }*/
+        if (Ctx.IsDead)
+        {
+            SwitchState(Factory.Death());
         }
     }
 
@@ -49,11 +59,5 @@ public class PlayerHurtState : PlayerBaseState
     {
         yield return new WaitForSeconds(Ctx.HurtDuration);
         Ctx.IsHurt = false;
-    }
-    public void Die()
-    {
-        Ctx.Anim.SetBool("Die", true);
-        Ctx.UnequipBall(Ctx.EquippedBall);
-        Ctx.IsDead = true;
     }
 }

@@ -13,18 +13,23 @@ public class BallStateMachine : MonoBehaviour
     [Header("Components")]
     [SerializeField] Collider2D _col;
     [SerializeField] Rigidbody2D _rb;
+    [SerializeField] ParticleSystem _normalBallVFX;
+    [SerializeField] ParticleSystem _superBallVFX;
 
     [Header("Variables")]
     [SerializeField] Transform _parent;
     [SerializeField] float _ballDamage;
-    [SerializeField] float _collsionReactivationTime;    
+    [SerializeField] float _collsionReactivationTime;
+    [SerializeField] float _knockBackPower;
     
     public Collider2D Col { get { return _col; } set { _col = value; } }
     public Rigidbody2D Rb { get { return _rb; } set { _rb = value; } }
-
+    public ParticleSystem NormalBallVFX {get { return _normalBallVFX; } set { _normalBallVFX = value; } } 
+    public ParticleSystem SuperBallVFX { get { return _superBallVFX; } set { _superBallVFX = value; } }
     public Transform Parent { get { return _parent; } set { _parent = value; } }   
     public float BallDamage { get { return _ballDamage; } set { _ballDamage = value; } }
     public float CollsionReactivationTime { get { return _collsionReactivationTime; } set { _collsionReactivationTime = value; } }
+    public float KnockBackPower { get { return _knockBackPower; } set { _knockBackPower= value; } }
 
     private void Awake()
     {

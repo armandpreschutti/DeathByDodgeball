@@ -12,14 +12,27 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void EnterState()
     {
-       //Debug.Log("Entered Idle State");
+
     }
 
     public override void UpdateState()
     {
         CheckSwitchState();
+
+        if (Ctx.MoveDirection.magnitude > .65 && !Ctx.IsThrowing)
+        {
+            bool flipped = Ctx.MoveDirection.x < 0f;
+
+            Ctx.GetComponent<SpriteRenderer>().flipX = flipped;
+        }
+        
+    }
+
+    public override void FixedUpdateState()
+    { 
         Ctx.Rb.velocity = new Vector2(Ctx.MoveDirection.x * Ctx.IdleSpeed, Ctx.MoveDirection.y * Ctx.IdleSpeed);
     }
+
     public override void ExitState()
     {
 

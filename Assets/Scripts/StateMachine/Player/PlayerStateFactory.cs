@@ -10,6 +10,10 @@ public class PlayerStateFactory
     {
         return new PlayerAimState(_context, this);
     }
+    public PlayerBaseState Throw()
+    {
+        return new PlayerThrowState(_context, this);
+    }
     public PlayerBaseState Catch()
     {
         return new PlayerCatchState(_context, this);
@@ -34,8 +38,9 @@ public class PlayerStateFactory
     {
         return new PlayerUnequippedState(_context, this);
     }
-    public PlayerBaseState Walk()
+
+    public PlayerBaseState Death()
     {
-        return new PlayerWalkState(_context, this);
+        return new PlayerDeathState(_context, this);
     }
 }

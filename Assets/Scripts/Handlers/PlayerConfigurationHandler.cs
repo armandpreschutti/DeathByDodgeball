@@ -1,8 +1,148 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
+using TMPro;
+using UnityEngine.UI;
 
 public class PlayerConfigurationHandler : MonoBehaviour
 {
-   
+    [Header("General")]
+    [SerializeField] int _playerId;
+    [SerializeField] bool _playerReady = false;
+    [SerializeField] PlayerManager _playerManager;
+
+    [Header("UI")]
+    [SerializeField] TextMeshProUGUI _playerTeamPrompt;
+    [SerializeField] TextMeshProUGUI _playerReadyPrompt;
+    [SerializeField] GameObject _configurationCover;
+
+    [Header("Input")]
+    [SerializeField] PlayerInput _playerInput;
+    [SerializeField] InputAction _switchTeamAction;
+    [SerializeField] InputAction _playerReadyAction;
+    [SerializeField] InputAction _exitAction;
+
+    public bool PlayerReady { get { return _playerReady; } }
+    public PlayerManager PlayerManager { get { return _playerManager; } }
+
+    public static event Action<PlayerConfigurationHandler, bool> onPlayerReady;
+    public static event Action<PlayerConfigurationHandler> onPlayerToggleTeam;
+    public static event Action<PlayerConfigurationHandler> onPlayerJoinedSession;
+    public static event Action onPlayerExit;
+
+
+    private void OnEnable()
+    {
+        GameManager.onPlayerFound += InitializePlayerConfiguration;
+        PlayerReadyObserver.onPrimePlayer += PrimePlayerForMatch;
+        PlayerExitObserver.onPlayerExit += PromptPlayerExit; 
+    }
+    private void OnDisable()
+    {
+        GameManager.onPlayerFound -= InitializePlayerConfiguration;
+        PlayerReadyObserver.onPrimePlayer -= PrimePlayerForMatch;
+        PlayerExitObserver.onPlayerExit -= PromptPlayerExit;
+        _switchTeamAction.performed -= TogglePlayerTeam;
+        _playerReadyAction.performed -= TogglePlayerReady;
+        _exitAction.performed -= ExitToMenu;
+    }
+
+    public void InitializePlayerConfiguration(PlayerInput playerInput)
+    {
+        if(playerInput.playerIndex +1 == _playerId)
+        {
+            Vector3 randomVector = new Vector3(UnityEngine.Random.Range(-6f, 6f), UnityEngine.Random.Range(-2f, 2f), 0f);
+            playerInput.transform.position = randomVector;
+            playerInput.name = $"Player{_playerId}";
+            _playerManager = playerInput.GetComponent<PlayerManager>();
+            _playerManager.ConfigurePlayerInstance(_playerId);
+            UpdateUIText(_playerTeamPrompt, _playerManager.TeamId.ToString());
+            _configurationCover.SetActive(false);
+            InitializePlayerConfigurationControl(playerInput);
+            onPlayerJoinedSession?.Invoke(this);
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    public void TogglePlayerTeam(InputAction.CallbackContext context)
+    {
+        switch (_playerManager.TeamId)
+        {
+            case 1:
+                _playerManager.TeamId = 2;
+                break;
+            case 2:
+                _playerManager.TeamId = 1;
+                break;
+        }
+        onPlayerToggleTeam?.Invoke(this);
+        UpdateUIText(_playerTeamPrompt, _playerManager.TeamId.ToString());
+    }
+    public void InitializePlayerConfigurationControl(PlayerInput playerInput)
+    {
+        _playerInput = playerInput;
+        _switchTeamAction = _playerInput.actions["SwitchTeam"];
+        _playerReadyAction = _playerInput.actions["PlayerReady"];
+        _exitAction = _playerInput.actions["BackButton"];
+        _switchTeamAction.performed += TogglePlayerTeam;
+    }
+
+    public void UpdateUIText(TextMeshProUGUI prompt, string message)
+    {
+        prompt.text = message ;
+    }
+    public void PrimePlayerForMatch(PlayerManager playerManager, bool value)
+    {
+        if(playerManager == _playerManager)
+        {
+            if (value)
+            {
+
+                _playerReadyAction.performed += TogglePlayerReady;
+
+            }
+            else
+            {
+                _playerReadyAction.performed -= TogglePlayerReady;
+                return;
+            }
+        }
+        else
+        {
+            return;
+        }
+       
+    }
+    public void TogglePlayerReady(InputAction.CallbackContext context)
+    {
+        _playerReady = !_playerReady;
+        onPlayerReady?.Invoke(this, _playerReady);
+        if(_playerReady)
+        {
+            _switchTeamAction.performed -= TogglePlayerTeam;
+        }
+        else
+        {
+            _switchTeamAction.performed += TogglePlayerTeam;
+        }
+    }
+    public void PromptPlayerExit(PlayerManager playerManager, bool value)
+    {
+        if (value)
+        {
+            _exitAction.performed += ExitToMenu;
+        }
+        else
+        {
+            _exitAction.performed -= ExitToMenu;
+        }
+    }
+    public void ExitToMenu(InputAction.CallbackContext context)
+    {
+        onPlayerExit?.Invoke();
+    }
 }

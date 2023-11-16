@@ -19,11 +19,24 @@ public class PlayerEquippedState : PlayerBaseState
     public override void UpdateState()
     {
         CheckSwitchState();
+       
     }
+
+    public override void FixedUpdateState()
+    {
+        if (!Ctx.IsAiming &&  !Ctx.IsThrowing && Ctx.MoveDirection.magnitude > .65f)
+        {
+            bool flipped = Ctx.MoveDirection.x < 0f;
+            Ctx.HoldPosition = flipped ? Ctx.HoldRightPosition : Ctx.HoldLeftPosition;
+            Ctx.ChangeBallPosition(Ctx.EquippedBall);
+        }       
+    }
+
 
     public override void ExitState()
     {
         Ctx.IsEquipped = false;
+        Ctx.HoldPosition = null;
     }
 
     public override void CheckSwitchState() 

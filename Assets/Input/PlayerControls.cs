@@ -37,7 +37,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Look"",
+                    ""name"": ""Aim"",
                     ""type"": ""Value"",
                     ""id"": ""eafa5aca-d4cc-4d15-ab9f-c12e55f2e394"",
                     ""expectedControlType"": ""Vector2"",
@@ -46,7 +46,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Aim"",
+                    ""name"": ""Throw"",
                     ""type"": ""Button"",
                     ""id"": ""e6861322-976d-4388-8c8f-30186fdde78a"",
                     ""expectedControlType"": ""Button"",
@@ -76,6 +76,33 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""Ready"",
                     ""type"": ""Button"",
                     ""id"": ""09201830-fc26-40c2-949a-fd14687a8a09"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchTeam"",
+                    ""type"": ""Button"",
+                    ""id"": ""d6c8b7e0-e065-408f-beca-b77fd7366778"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PlayerReady"",
+                    ""type"": ""Button"",
+                    ""id"": ""16ad0483-5722-404c-bbb3-ae4589a70a67"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""BackButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""ac51b97a-32b6-4d87-a831-42c58979db58"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -211,7 +238,18 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Look"",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""45a33b92-c0b7-40d1-aaf7-3fd9e8c4e5c6"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Aim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -222,7 +260,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Aim"",
+                    ""action"": ""Throw"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -233,7 +271,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Aim"",
+                    ""action"": ""Throw"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -244,7 +282,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KeyboardAlternate"",
-                    ""action"": ""Aim"",
+                    ""action"": ""Throw"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -346,6 +384,72 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Ready"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""66d494bc-f410-4bab-9d43-5d42b3a14a59"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""SwitchTeam"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""22afc858-1469-4006-b900-53838a64fb27"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""SwitchTeam"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2bbb23cd-a4b4-47ef-823e-404299226ae2"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad;Keyboard"",
+                    ""action"": ""PlayerReady"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f4c5d321-eda5-4352-9efe-b9abc14b06cb"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlayerReady"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""48617546-9779-4c2b-a328-05bf0f3c2e4a"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""BackButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""18d3e031-e070-4e26-959e-200eaa27ce99"",
+                    ""path"": ""<Keyboard>/backspace"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""BackButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -370,9 +474,62 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""StartButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""ea8e35b6-f88f-4ac1-8e7d-f8d33e1125a1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""0618df0a-f505-45a0-b521-885c13094200"",
+                    ""path"": ""<Keyboard>/numpadEnter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e5891018-0b89-4d13-866b-274d3b0e00f2"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fa503b77-3422-4c94-bc9d-5fa529276310"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""StartButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6187baed-74d2-4d7a-a990-a6bc918b54a9"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""StartButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
                 {
                     ""name"": ""WASD"",
                     ""id"": ""5791e115-ff6b-46c4-bd3a-56d352b7ae9c"",
@@ -390,7 +547,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Gamepad"",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Navigate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -401,7 +558,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Gamepad"",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Navigate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -412,7 +569,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Gamepad"",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Navigate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -423,7 +580,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Gamepad"",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Navigate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -436,28 +593,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Navigate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""0618df0a-f505-45a0-b521-885c13094200"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Select"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e5891018-0b89-4d13-866b-274d3b0e00f2"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Select"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -508,15 +643,19 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
-        m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
+        m_Player_Throw = m_Player.FindAction("Throw", throwIfNotFound: true);
         m_Player_Dodge = m_Player.FindAction("Dodge", throwIfNotFound: true);
         m_Player_Catch = m_Player.FindAction("Catch", throwIfNotFound: true);
         m_Player_Ready = m_Player.FindAction("Ready", throwIfNotFound: true);
+        m_Player_SwitchTeam = m_Player.FindAction("SwitchTeam", throwIfNotFound: true);
+        m_Player_PlayerReady = m_Player.FindAction("PlayerReady", throwIfNotFound: true);
+        m_Player_BackButton = m_Player.FindAction("BackButton", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
         m_UI_Select = m_UI.FindAction("Select", throwIfNotFound: true);
+        m_UI_StartButton = m_UI.FindAction("StartButton", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -579,21 +718,27 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
-    private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Aim;
+    private readonly InputAction m_Player_Throw;
     private readonly InputAction m_Player_Dodge;
     private readonly InputAction m_Player_Catch;
     private readonly InputAction m_Player_Ready;
+    private readonly InputAction m_Player_SwitchTeam;
+    private readonly InputAction m_Player_PlayerReady;
+    private readonly InputAction m_Player_BackButton;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
         public PlayerActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
-        public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Aim => m_Wrapper.m_Player_Aim;
+        public InputAction @Throw => m_Wrapper.m_Player_Throw;
         public InputAction @Dodge => m_Wrapper.m_Player_Dodge;
         public InputAction @Catch => m_Wrapper.m_Player_Catch;
         public InputAction @Ready => m_Wrapper.m_Player_Ready;
+        public InputAction @SwitchTeam => m_Wrapper.m_Player_SwitchTeam;
+        public InputAction @PlayerReady => m_Wrapper.m_Player_PlayerReady;
+        public InputAction @BackButton => m_Wrapper.m_Player_BackButton;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -606,12 +751,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
-            @Look.started += instance.OnLook;
-            @Look.performed += instance.OnLook;
-            @Look.canceled += instance.OnLook;
             @Aim.started += instance.OnAim;
             @Aim.performed += instance.OnAim;
             @Aim.canceled += instance.OnAim;
+            @Throw.started += instance.OnThrow;
+            @Throw.performed += instance.OnThrow;
+            @Throw.canceled += instance.OnThrow;
             @Dodge.started += instance.OnDodge;
             @Dodge.performed += instance.OnDodge;
             @Dodge.canceled += instance.OnDodge;
@@ -621,6 +766,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Ready.started += instance.OnReady;
             @Ready.performed += instance.OnReady;
             @Ready.canceled += instance.OnReady;
+            @SwitchTeam.started += instance.OnSwitchTeam;
+            @SwitchTeam.performed += instance.OnSwitchTeam;
+            @SwitchTeam.canceled += instance.OnSwitchTeam;
+            @PlayerReady.started += instance.OnPlayerReady;
+            @PlayerReady.performed += instance.OnPlayerReady;
+            @PlayerReady.canceled += instance.OnPlayerReady;
+            @BackButton.started += instance.OnBackButton;
+            @BackButton.performed += instance.OnBackButton;
+            @BackButton.canceled += instance.OnBackButton;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -628,12 +782,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
-            @Look.started -= instance.OnLook;
-            @Look.performed -= instance.OnLook;
-            @Look.canceled -= instance.OnLook;
             @Aim.started -= instance.OnAim;
             @Aim.performed -= instance.OnAim;
             @Aim.canceled -= instance.OnAim;
+            @Throw.started -= instance.OnThrow;
+            @Throw.performed -= instance.OnThrow;
+            @Throw.canceled -= instance.OnThrow;
             @Dodge.started -= instance.OnDodge;
             @Dodge.performed -= instance.OnDodge;
             @Dodge.canceled -= instance.OnDodge;
@@ -643,6 +797,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Ready.started -= instance.OnReady;
             @Ready.performed -= instance.OnReady;
             @Ready.canceled -= instance.OnReady;
+            @SwitchTeam.started -= instance.OnSwitchTeam;
+            @SwitchTeam.performed -= instance.OnSwitchTeam;
+            @SwitchTeam.canceled -= instance.OnSwitchTeam;
+            @PlayerReady.started -= instance.OnPlayerReady;
+            @PlayerReady.performed -= instance.OnPlayerReady;
+            @PlayerReady.canceled -= instance.OnPlayerReady;
+            @BackButton.started -= instance.OnBackButton;
+            @BackButton.performed -= instance.OnBackButton;
+            @BackButton.canceled -= instance.OnBackButton;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -666,12 +829,14 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
     private readonly InputAction m_UI_Navigate;
     private readonly InputAction m_UI_Select;
+    private readonly InputAction m_UI_StartButton;
     public struct UIActions
     {
         private @PlayerControls m_Wrapper;
         public UIActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Navigate => m_Wrapper.m_UI_Navigate;
         public InputAction @Select => m_Wrapper.m_UI_Select;
+        public InputAction @StartButton => m_Wrapper.m_UI_StartButton;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -687,6 +852,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Select.started += instance.OnSelect;
             @Select.performed += instance.OnSelect;
             @Select.canceled += instance.OnSelect;
+            @StartButton.started += instance.OnStartButton;
+            @StartButton.performed += instance.OnStartButton;
+            @StartButton.canceled += instance.OnStartButton;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -697,6 +865,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Select.started -= instance.OnSelect;
             @Select.performed -= instance.OnSelect;
             @Select.canceled -= instance.OnSelect;
+            @StartButton.started -= instance.OnStartButton;
+            @StartButton.performed -= instance.OnStartButton;
+            @StartButton.canceled -= instance.OnStartButton;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -744,15 +915,19 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
-        void OnLook(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
+        void OnThrow(InputAction.CallbackContext context);
         void OnDodge(InputAction.CallbackContext context);
         void OnCatch(InputAction.CallbackContext context);
         void OnReady(InputAction.CallbackContext context);
+        void OnSwitchTeam(InputAction.CallbackContext context);
+        void OnPlayerReady(InputAction.CallbackContext context);
+        void OnBackButton(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
         void OnNavigate(InputAction.CallbackContext context);
         void OnSelect(InputAction.CallbackContext context);
+        void OnStartButton(InputAction.CallbackContext context);
     }
 }
