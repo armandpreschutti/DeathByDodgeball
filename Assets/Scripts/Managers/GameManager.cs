@@ -1,8 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,14 +12,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] PreMatchManager _preMatchManager;
     [SerializeField] Animator _anim;
     [SerializeField] AudioSource _gameManagerAudio;
+    [SerializeField] GameObject _musicManager;
     public Color team1Color;
     public Color team2Color;
     public string sceneName;
+    public bool musicEnabled;
+    public bool sfxEnabled;
+    public bool gamePaused;
     public PlayerInputManager PlayerInputManager { get { return _playerInputManager; } }
     public PreMatchManager PreMatchManager { get { return _preMatchManager; } set { _preMatchManager = value; } }
-
     public Animator Anim { get { return _anim; } }
     public AudioSource GameManagerAudio { get { return _gameManagerAudio; } }   
+    public GameObject MusicManager {get { return _musicManager; } }
 
     public static event Action<PlayerInput> onPlayerFound;
     public static event Action onStartSceneTransition;
@@ -52,11 +53,13 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         SceneManager.sceneLoaded += InitializeScene;
+        PlayerManager.OnPlayerPause += PauseGame;
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= InitializeScene;
+        PlayerManager.OnPlayerPause += PauseGame;
     }
 
     public void Start()
@@ -66,10 +69,42 @@ public class GameManager : MonoBehaviour
 
     public void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKey(KeyCode.X))
         {
-            SwitchScene("Gameplay");
+            if (Input.GetKeyDown(KeyCode.F1))
+            {
+                SwitchScene("TitleMenu");
+            }
+            if (Input.GetKeyDown(KeyCode.F2))
+            {
+                SwitchScene("MainMenu");
+            }
+            if (Input.GetKeyDown(KeyCode.F3))
+            {
+                SwitchScene("OptionsMenu");
+            }
+            if (Input.GetKeyDown(KeyCode.F4))
+            {
+                SwitchScene("MatchConfiguration");
+            }
+            if (Input.GetKeyDown(KeyCode.F5))
+            {
+                SwitchScene("Gameplay");
+            }
+            if (Input.GetKeyDown(KeyCode.F11))
+            {
+                Screen.fullScreen = !Screen.fullScreen;
+            }
+            if (Input.GetKeyDown(KeyCode.F12))
+            {
+                Application.Quit();
+            }
         }
+        else
+        {
+            return;
+        }
+        
     }
 
     public void DisableJoining()
@@ -144,5 +179,57 @@ public class GameManager : MonoBehaviour
 
         // If no matching object is found, return null.
         return null;
+    }
+    public void EnablePlayerControllers()
+    {
+        // Get all the PlayerInput instances in the scene
+        PlayerInput[] playerInputs = FindObjectsOfType<PlayerInput>();
+
+        // Disable all of them
+        foreach (PlayerInput playerInput in playerInputs)
+        {
+            playerInput.enabled = true;
+        }
+    }
+    public void DisablePlayerControllers()
+    {
+        // Get all the PlayerInput instances in the scene
+        PlayerInput[] playerInputs = FindObjectsOfType<PlayerInput>();
+
+        // Disable all of them
+        foreach (PlayerInput playerInput in playerInputs)
+        {
+            playerInput.enabled = false;
+        }
+    }
+    public void ToggleMusic(bool value)
+    {
+        MusicManager.SetActive(value);
+    }
+    public void PauseGame()
+    {
+        if (SceneManager.GetActiveScene().name == "Gameplay")
+        {
+            gamePaused = !gamePaused;
+            foreach (GameObject player in GetComponent<LocalMatchManager>().currentPlayers)
+            {
+                player.GetComponent<Animator>().speed = gamePaused ? 0f : 1f;
+                player.GetComponent<PlayerStateMachine>().enabled = gamePaused ? false : true;
+            }
+            Time.timeScale = gamePaused ? 0f : 1f;
+            if (gamePaused)
+            {
+                MusicManager.GetComponent<AudioSource>().Pause();
+            }
+            else
+            {
+                MusicManager.GetComponent<AudioSource>().Play();
+            }
+        }
+        else
+        {
+            return;
+        }
+       
     }
 }

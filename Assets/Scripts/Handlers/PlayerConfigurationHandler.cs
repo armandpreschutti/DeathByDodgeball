@@ -11,6 +11,8 @@ public class PlayerConfigurationHandler : MonoBehaviour
     [SerializeField] int _playerId;
     [SerializeField] bool _playerReady = false;
     [SerializeField] PlayerManager _playerManager;
+    [SerializeField] PlayerCostumizationSO _playerCostumizationSO;
+    [SerializeField] Image _previewImage;
 
     [Header("UI")]
     [SerializeField] TextMeshProUGUI _playerTeamPrompt;
@@ -21,7 +23,8 @@ public class PlayerConfigurationHandler : MonoBehaviour
     [SerializeField] PlayerInput _playerInput;
     [SerializeField] InputAction _switchTeamAction;
     [SerializeField] InputAction _playerReadyAction;
-    [SerializeField] InputAction _exitAction;
+    [SerializeField] InputAction _exitToMainAction;
+    [SerializeField] InputAction _switchSkinAction;
 
     public bool PlayerReady { get { return _playerReady; } }
     public PlayerManager PlayerManager { get { return _playerManager; } }
@@ -38,6 +41,7 @@ public class PlayerConfigurationHandler : MonoBehaviour
         PlayerReadyObserver.onPrimePlayer += PrimePlayerForMatch;
         PlayerExitObserver.onPlayerExit += PromptPlayerExit; 
     }
+
     private void OnDisable()
     {
         GameManager.onPlayerFound -= InitializePlayerConfiguration;
@@ -45,7 +49,8 @@ public class PlayerConfigurationHandler : MonoBehaviour
         PlayerExitObserver.onPlayerExit -= PromptPlayerExit;
         _switchTeamAction.performed -= TogglePlayerTeam;
         _playerReadyAction.performed -= TogglePlayerReady;
-        _exitAction.performed -= ExitToMenu;
+        _exitToMainAction.performed -= ExitToMenu;
+        _switchSkinAction.performed -= TogglePlayerSkin;
     }
 
     public void InitializePlayerConfiguration(PlayerInput playerInput)
@@ -58,6 +63,8 @@ public class PlayerConfigurationHandler : MonoBehaviour
             _playerManager = playerInput.GetComponent<PlayerManager>();
             _playerManager.ConfigurePlayerInstance(_playerId);
             UpdateUIText(_playerTeamPrompt, _playerManager.TeamId.ToString());
+            _playerCostumizationSO.GetRandomSkin(_playerManager);
+            _previewImage.sprite = _playerManager.GetComponent<SpriteRenderer>().sprite;
             _configurationCover.SetActive(false);
             InitializePlayerConfigurationControl(playerInput);
             onPlayerJoinedSession?.Invoke(this);
@@ -79,22 +86,34 @@ public class PlayerConfigurationHandler : MonoBehaviour
                 _playerManager.TeamId = 1;
                 break;
         }
+        _playerCostumizationSO.ToggleTeamSkin(_playerManager);
+        _previewImage.sprite = _playerManager.GetComponent<SpriteRenderer>().sprite;
         onPlayerToggleTeam?.Invoke(this);
         UpdateUIText(_playerTeamPrompt, _playerManager.TeamId.ToString());
     }
+
+    public void TogglePlayerSkin(InputAction.CallbackContext context)
+    {
+        _playerCostumizationSO.TogglePlayerSkin(_playerManager);
+        _previewImage.sprite = _playerManager.GetComponent<SpriteRenderer>().sprite;
+    }
+
     public void InitializePlayerConfigurationControl(PlayerInput playerInput)
     {
         _playerInput = playerInput;
         _switchTeamAction = _playerInput.actions["SwitchTeam"];
+        _switchSkinAction = _playerInput.actions["SwitchSkin"];
         _playerReadyAction = _playerInput.actions["PlayerReady"];
-        _exitAction = _playerInput.actions["BackButton"];
+        _exitToMainAction = _playerInput.actions["BackButton"];
         _switchTeamAction.performed += TogglePlayerTeam;
+        _switchSkinAction.performed += TogglePlayerSkin;
     }
 
     public void UpdateUIText(TextMeshProUGUI prompt, string message)
     {
         prompt.text = message ;
     }
+
     public void PrimePlayerForMatch(PlayerManager playerManager, bool value)
     {
         if(playerManager == _playerManager)
@@ -134,11 +153,11 @@ public class PlayerConfigurationHandler : MonoBehaviour
     {
         if (value)
         {
-            _exitAction.performed += ExitToMenu;
+            _exitToMainAction.performed += ExitToMenu;
         }
         else
         {
-            _exitAction.performed -= ExitToMenu;
+            _exitToMainAction.performed -= ExitToMenu;
         }
     }
     public void ExitToMenu(InputAction.CallbackContext context)

@@ -6,6 +6,7 @@ public class BallEquippedState : BallBaseState
 {
     public override void EnterState(BallStateMachine _ctx)
     {
+        _ctx.SetSprite(0f);
         _ctx.NormalBallVFX.Stop();
         _ctx.SuperBallVFX.Stop();
         _ctx.Rb.velocity = Vector3.zero;

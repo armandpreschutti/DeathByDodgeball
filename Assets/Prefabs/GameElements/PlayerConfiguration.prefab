@@ -1121,11 +1121,11 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  _returnToMenu:
-    m_Name: Return To Menu
+  _exitAction:
+    m_Name: Exit
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: bb9f8b27-a6f3-4284-816d-ea9f422fbd8a
+    m_Id: 00074a87-c496-4220-bf7b-c801ad3e8dcc
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []

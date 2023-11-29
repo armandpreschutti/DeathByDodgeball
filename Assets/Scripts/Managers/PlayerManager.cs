@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using TMPro;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class PlayerManager : MonoBehaviour
 {
     [SerializeField] int _playerId;
     [SerializeField] int _teamId;
+    [SerializeField] int _skinId;
     [SerializeField] bool _isInvicible;
     [SerializeField] Color _teamColor;
 
@@ -16,31 +18,37 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] PlayerStateMachine _playerStateMachine;
     [SerializeField] HealthHandler _healthHandler;
     [SerializeField] AudioSource _playerAudio;
+    public Animator anim;
     public GameObject readyPrompt;
     public GameObject exitPrompt;
 
     public PlayerStateMachine PlayerStateMachine { get { return _playerStateMachine; } }
     public HealthHandler HealthHandler { get { return _healthHandler; } }  
     public AudioSource PlayerAudio { get { return _playerAudio; } }
+
     public int PlayerId { get { return _playerId;} set { _playerId = value; } }
     public int TeamId { get { return _teamId; } set { _teamId = value; } }
+    public int SkinId { get { return _skinId; } set { _skinId = value; } }
     public bool IsInvicible { get { return _isInvicible; } set {  _isInvicible = value; } }
     public Color TeamColor { get { return _teamColor; } set { _teamColor = value; } }
 
     public static event Action<PlayerManager> OnPlayerDeath;
-
+    public static event Action OnPlayerPause;
+    public InputAction _pauseAction;
     
     private void OnEnable()
     {
         LocalMatchManager.onActivatePlayers += ActivatePlayer;
         LocalMatchManager.onDeactivatePlayers+= DeactivatePlayer;
         LocalMatchManager.onResetPlayers += ResetPlayer;
+        _pauseAction.performed += PauseGame;
     }
     private void OnDisable()
     {
         LocalMatchManager.onActivatePlayers -= ActivatePlayer;
         LocalMatchManager.onDeactivatePlayers -= DeactivatePlayer;
         LocalMatchManager.onResetPlayers -= ResetPlayer;
+        _pauseAction.performed -= PauseGame;
     }
     private void Awake()
     {
@@ -90,6 +98,8 @@ public class PlayerManager : MonoBehaviour
         _playerStateMachine = GetComponent<PlayerStateMachine>();
         _healthHandler = GetComponent<HealthHandler>();
         _playerAudio = GetComponent<AudioSource>();
+        _pauseAction = _playerInput.actions["Pause"];
+        anim = GetComponent<Animator>();
     }
 
     public void ConfigurePlayerInstance(int playerId)
@@ -130,5 +140,10 @@ public class PlayerManager : MonoBehaviour
         {
             ActivatePlayer();
         }
+    }
+    public void PauseGame(InputAction.CallbackContext context)
+    {
+        Debug.Log("Pause logged in PlayerManager");
+        OnPlayerPause?.Invoke();
     }
 }

@@ -6,6 +6,7 @@ public class BallUnequippedState : BallBaseState
 {
     public override void EnterState(BallStateMachine _ctx)
     {
+        _ctx.SetSprite(0f);
         _ctx.Col.enabled = true;
         _ctx.Rb.simulated = true;
     }

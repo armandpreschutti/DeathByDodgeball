@@ -11,10 +11,6 @@ public class MusicObserver : MonoBehaviour
     [SerializeField] AudioClip _preMatchMusic;
     [SerializeField] AudioClip _localMatchMusic;
 
-    private void Awake()
-    {
-        _audioSource = GetComponent<AudioSource>();
-    }
     private void OnEnable()
     {
 
@@ -47,6 +43,14 @@ public class MusicObserver : MonoBehaviour
     }
     public void StopMenuMusic(Scene scene, LoadSceneMode mode)
     {
-        _audioSource.Stop();
+        if (scene.name == "Gameplay")
+        {
+            _audioSource.Stop();
+        }
+        else
+        {
+            return;
+        }
+        
     }
 }

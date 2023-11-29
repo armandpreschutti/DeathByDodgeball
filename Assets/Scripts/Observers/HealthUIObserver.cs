@@ -13,6 +13,7 @@ public class HealthUIObserver : MonoBehaviour
     [SerializeField] Image _heart3;
     [SerializeField] TextMeshProUGUI _lastChanceText;
     [SerializeField] Image _backGround;
+    [SerializeField] Image _playerIcon;
 
     private void Awake()
     {
@@ -73,6 +74,7 @@ public class HealthUIObserver : MonoBehaviour
         if (GameObject.Find($"Player{_subjectId}") != null)
         {
             _playerManager = GameObject.Find($"Player{_subjectId}").GetComponent<PlayerManager>();
+            _playerIcon.sprite =  _playerManager.GetComponent<SpriteRenderer>().sprite;
             if(_playerManager.TeamId == 1)
             {
                 _backGround.color = GameManager.GetInstance().team1Color;

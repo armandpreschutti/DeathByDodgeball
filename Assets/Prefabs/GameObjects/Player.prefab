@@ -643,12 +643,12 @@ GameObject:
   - component: {fileID: 868135169106175682}
   - component: {fileID: 957770178004703269}
   - component: {fileID: 7916458362483835583}
+  - component: {fileID: 1431805394071870456}
   - component: {fileID: 1719316581579537401}
   - component: {fileID: 7754080829793167634}
   - component: {fileID: 3223174439667077122}
   - component: {fileID: 2619317501389014449}
   - component: {fileID: 7912552293992239797}
-  - component: {fileID: 1431805394071870456}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -692,14 +692,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerId: 0
   _teamId: 0
+  _skinId: 0
   _isInvicible: 0
   _teamColor: {r: 0, g: 0, b: 0, a: 0}
   _playerInput: {fileID: 957770178004703269}
   _playerStateMachine: {fileID: 868135169106175682}
   _healthHandler: {fileID: 1627544658323214681}
   _playerAudio: {fileID: 0}
+  anim: {fileID: 2619317501389014449}
   readyPrompt: {fileID: 6216876483851425496}
   exitPrompt: {fileID: 6417561895730489500}
+  _pauseAction:
+    m_Name: Pause
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 292843e1-cc4a-4b02-adec-f0b31110da9c
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!114 &1627544658323214681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -716,6 +727,7 @@ MonoBehaviour:
   _remainingLives: 3
   _maxLives: 3
   _isInvincible: 1
+  _respawnDelay: 3
   _fullColor: {r: 1, g: 1, b: 1, a: 1}
   _halfColor: {r: 1, g: 1, b: 1, a: 0.5019608}
 --- !u!114 &868135169106175682
@@ -870,6 +882,21 @@ MonoBehaviour:
   _catchSFX: {fileID: 8300000, guid: 077e2f011edbf784da3d376c36038411, type: 3}
   _dodgeSFX: {fileID: 8300000, guid: 1e112e21d48c54240a25b61e463ba230, type: 3}
   _deathSFX: {fileID: 8300000, guid: 1c94bb3568e384e459898a68e539af3f, type: 3}
+--- !u!114 &1431805394071870456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2230309673918977745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a15e16fe41e6ad644b793a449860d75b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerManager: {fileID: 7951667184184956394}
+  _dodgeVFX: {fileID: 382600406287701481}
+  _hurtVFX: {fileID: 154402230140536040}
 --- !u!212 &1719316581579537401
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1101,21 +1128,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1431805394071870456
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2230309673918977745}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a15e16fe41e6ad644b793a449860d75b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerManager: {fileID: 7951667184184956394}
-  _dodgeVFX: {fileID: 382600406287701481}
-  _hurtVFX: {fileID: 154402230140536040}
 --- !u!1 &2792073127483478630
 GameObject:
   m_ObjectHideFlags: 0
@@ -1688,7 +1700,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5604407272122694164}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.304, y: 0.286, z: 0}
+  m_LocalPosition: {x: 0.23, y: 0.22, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1875,7 +1887,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6431683722610227287}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.304, y: 0.286, z: 0}
+  m_LocalPosition: {x: -0.23, y: 0.22, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

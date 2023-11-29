@@ -11,6 +11,7 @@ public class HealthHandler : MonoBehaviour
     [SerializeField] int _remainingLives;
     [SerializeField] int _maxLives;
     [SerializeField] bool _isInvincible;
+    [SerializeField] float _respawnDelay;
 
     [SerializeField] Color _fullColor;
     [SerializeField] Color _halfColor;
@@ -19,6 +20,7 @@ public class HealthHandler : MonoBehaviour
     public float RemainingLives { get { return _remainingLives; } }
     public float MaxLives { get { return _maxLives; } }
     public bool IsInvicible { get { return _isInvincible; } set { _isInvincible = value; } }
+    public float RespawnDelay { get { return _respawnDelay; } set { _respawnDelay = value; } }
 
     public static Action<GameObject> OnRespawn { get { return _onRespawn; } set { _onRespawn = value; } }
 
@@ -80,7 +82,7 @@ public class HealthHandler : MonoBehaviour
     }
     public IEnumerator RespawnPlayer()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(_respawnDelay);
         _playerManager.PlayerStateMachine.IsDead = false;
         _playerManager.PlayerStateMachine.CurrentStamina = _playerManager.PlayerStateMachine.MaxStamina;
         _onRespawn.Invoke(this.gameObject);

@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0f57972d0c21494281e5a3f5b096779, type: 3}
+  m_Name: PlayerSkins
+  m_EditorClassIdentifier: 
+  team1Skins:
+  - {fileID: 22100000, guid: cd200438146f14b409ee3113654bdd69, type: 2}
+  - {fileID: 22100000, guid: 139fc57ad05d390429d5f5ba8ea8d090, type: 2}
+  - {fileID: 22100000, guid: e58f9b3865d180042b6c812929ca78df, type: 2}
+  - {fileID: 22100000, guid: 83295d5cc5fef19429c6c274b3303cf7, type: 2}
+  - {fileID: 22100000, guid: 4028170b4e4335445a7a6721ad2f70cd, type: 2}
+  - {fileID: 22100000, guid: d287bb900cf23ae4ca1491dc2752351e, type: 2}
+  - {fileID: 22100000, guid: d429b49474b3b274a9f8021882cf78e1, type: 2}
+  - {fileID: 22100000, guid: dd420e9555ab2f94295bd8e0654b9cb0, type: 2}
+  team2Skins:
+  - {fileID: 22100000, guid: 789cbef4640e26d4b90dfef52586bdb3, type: 2}
+  - {fileID: 22100000, guid: 00f7915267989ab47ad164309a4a646b, type: 2}
+  - {fileID: 22100000, guid: 96a0f4a4ebf8a0a4eb0aa33570b14c24, type: 2}
+  - {fileID: 22100000, guid: 9c3a16995cb185741b74f4d7bb0653b6, type: 2}
+  - {fileID: 22100000, guid: 41b3613bd31d3184e988fc01cc739a92, type: 2}
+  - {fileID: 22100000, guid: 0ed415927c0f7b742abac62f00e37688, type: 2}
+  - {fileID: 22100000, guid: 94da47e20eaa70248bcdee753ff53776, type: 2}
+  - {fileID: 22100000, guid: 3e14877e618140742a2823ca5bef26a1, type: 2}
+  team1Sprites:
+  - {fileID: -2044490215, guid: 06f7c6fcf7ec3e5419b3fb0d72d4438b, type: 3}
+  - {fileID: 1982217436, guid: 7a5ec9d3a5cb6de4f970c3100c2d613a, type: 3}
+  - {fileID: 1582230491, guid: 81b09fd9e8f12ee46a0a0c385a7adfdc, type: 3}
+  - {fileID: 739307272, guid: 7b960938f36119e43ad589866f9657ca, type: 3}
+  - {fileID: -1508235381, guid: eed149091ae413142b2076e87a4b28bf, type: 3}
+  - {fileID: -1789551768, guid: b4ddb2b8fe2012948bac8de0e6b6466d, type: 3}
+  - {fileID: -1175922371, guid: d59b7e273ef95bd4fb0ba968467beb68, type: 3}
+  - {fileID: -1499550553, guid: f73086f99aa0fc7498e4189a317f2b8f, type: 3}
+  team2Sprites:
+  - {fileID: -310363610, guid: ce45441c001a32c42873b435c7c6c02a, type: 3}
+  - {fileID: 1741811515, guid: 01a29f72492aca2488615c35142805b5, type: 3}
+  - {fileID: 1014408575, guid: 76c1529e3b960c84695847b64b2286cc, type: 3}
+  - {fileID: 43783073, guid: 9af1a817e5fbfae4aaf0bd5a4476e30a, type: 3}
+  - {fileID: -1010095844, guid: df0937989d3df184481fd9d9843ee999, type: 3}
+  - {fileID: 1568262671, guid: b34c618f6035ef747a266e269ba031f8, type: 3}
+  - {fileID: 1813690759, guid: 53b7e01856e52184c8c6a2e05a62f875, type: 3}
+  - {fileID: -1023456139, guid: 42da370e1b29b3845b2876388649706a, type: 3}

@@ -10,12 +10,12 @@ public class PlayerDeathState: PlayerBaseState
         InitializeSubState();
     }
 
-    public override void EnterState() 
-    {
+    public override void EnterState()
+    { 
         Ctx.DestroyBall();
         Ctx.StartCoroutine(StopVelocityCoroutine());
         Ctx.Anim.SetBool("Die", true);
-        Ctx.Rb.velocity = Vector2.zero;
+        //Ctx.Rb.velocity = Vector2.zero;
     }
 
     public override void UpdateState()

@@ -105,6 +105,7 @@ public class PlayerAimState : PlayerBaseState
         }
         Ctx.GetComponent<SpriteRenderer>().flipX = flipped;
         Ctx.HoldPosition = flipped ? Ctx.HoldRightPosition : Ctx.HoldLeftPosition;
+        Ctx.EquippedBall.GetComponent<SpriteRenderer>().flipX = flipped;
         Ctx.AimDirection = new Vector3(flipped ? -1 : 1, 0, 0);
         Ctx.AimingObject.transform.localPosition = Ctx.AimDirection + new Vector3(flipped ? - 10f : 10f, .25f, 0);
         Ctx.PlayerThrowBar.transform.localPosition = new Vector3(flipped ? 400 : -400, 0, 0);
@@ -124,6 +125,7 @@ public class PlayerAimState : PlayerBaseState
             {
                 Ctx.CurrentThrowPower = Ctx.SuperThrowPower;
                 Ctx.PlayerThrowBar.fillRect.GetComponent<Image>().color = Color.red;
+                Ctx.EquippedBall.GetComponent<BallStateMachine>().SetSprite(Ctx.CurrentThrowPower);
             }
 
             if (Ctx.CurrentThrowPower >= Ctx.CurrentStamina)

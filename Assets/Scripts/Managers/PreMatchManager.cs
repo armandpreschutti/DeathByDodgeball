@@ -109,13 +109,14 @@ public class PreMatchManager : MonoBehaviour
     }
     IEnumerator StartGame()
     {
-        Debug.LogWarning("Game starting in ...");
-        yield return new WaitForSeconds(1);
-        Debug.LogWarning("3");
-        yield return new WaitForSeconds(1);
-        Debug.LogWarning("2");
-        yield return new WaitForSeconds(1);
-        Debug.LogWarning("1");
+        /*        Debug.LogWarning("Game starting in ...");
+                yield return new WaitForSeconds(1);
+                Debug.LogWarning("3");
+                yield return new WaitForSeconds(1);
+                Debug.LogWarning("2");
+                yield return new WaitForSeconds(1);
+                Debug.LogWarning("1");
+                yield return new WaitForSeconds(1);*/
         yield return new WaitForSeconds(1);
         CreateLocalMatchInstance();
         GameManager.GetInstance().SwitchScene("Gameplay");
