@@ -19,7 +19,7 @@ public class LocalMatchManager : MonoBehaviour
     public static event Action onActivatePlayers;
     public static event Action onDeactivatePlayers;
     public static event Action onResetPlayers;
-
+    public int winningTeam;
 
     private void OnEnable()
     {
@@ -106,20 +106,26 @@ public class LocalMatchManager : MonoBehaviour
 
     public void CheckForWinner()
     {
-        if(team1Alive.Count <= 0) 
+        winPrompt = GameObject.Find("WinPrompt");
+        winPrompt.GetComponent<TextMeshProUGUI>().text = "Game!";
+        if (team1Alive.Count <= 0) 
         {
-            winPrompt = GameObject.Find("WinPrompt");
-            winPrompt.GetComponent<TextMeshProUGUI>().text = "Team 2 wins!";
+            winningTeam = 2;
         }
         else if (team2Alive.Count <= 0)
         {
-            winPrompt = GameObject.Find("WinPrompt");
-            winPrompt.GetComponent<TextMeshProUGUI>().text = "Team 1 wins!";
+            winningTeam = 1;
         }
         else
         {
             return;
         }
+        StartCoroutine(ContinueToPostGame());
+    }
+    public IEnumerator ContinueToPostGame()
+    {
+        yield return new WaitForSeconds(2f);
+        GameManager.GetInstance().SwitchScene("PostGameplay");
     }
 
 }

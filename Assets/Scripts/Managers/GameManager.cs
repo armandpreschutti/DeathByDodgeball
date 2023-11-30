@@ -180,6 +180,7 @@ public class GameManager : MonoBehaviour
         // If no matching object is found, return null.
         return null;
     }
+
     public void EnablePlayerControllers()
     {
         // Get all the PlayerInput instances in the scene
@@ -191,6 +192,7 @@ public class GameManager : MonoBehaviour
             playerInput.enabled = true;
         }
     }
+
     public void DisablePlayerControllers()
     {
         // Get all the PlayerInput instances in the scene
@@ -202,10 +204,12 @@ public class GameManager : MonoBehaviour
             playerInput.enabled = false;
         }
     }
+
     public void ToggleMusic(bool value)
     {
         MusicManager.SetActive(value);
     }
+
     public void PauseGame()
     {
         if (SceneManager.GetActiveScene().name == "Gameplay")
