@@ -688,7 +688,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 1164974912730101085}
-  _menuMusic: {fileID: 8300000, guid: 8c012ec57e83893409d97107b2d37b91, type: 3}
+  _menuMusic: {fileID: 8300000, guid: fab8cb39e73abd740a9cd715015b79f3, type: 3}
   _preMatchMusic: {fileID: 0}
   _localMatchMusic: {fileID: 8300000, guid: 2919369632138c74f9b88d524afe329d, type: 3}
 --- !u!82 &1164974912730101085
