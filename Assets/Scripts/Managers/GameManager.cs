@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Animator _anim;
     [SerializeField] AudioSource _gameManagerAudio;
     [SerializeField] GameObject _musicManager;
+    [SerializeField] GameObject _pauseBackground;
     public Color team1Color;
     public Color team2Color;
     public string sceneName;
@@ -223,10 +224,12 @@ public class GameManager : MonoBehaviour
             Time.timeScale = gamePaused ? 0f : 1f;
             if (gamePaused)
             {
+                _pauseBackground.SetActive(true);
                 MusicManager.GetComponent<AudioSource>().Pause();
             }
             else
             {
+                _pauseBackground.SetActive(false);
                 MusicManager.GetComponent<AudioSource>().Play();
             }
         }

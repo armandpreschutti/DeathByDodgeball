@@ -18,12 +18,14 @@ public class GameManagerUIObserver : MonoBehaviour
         GameManager.onStartSceneTransition+= StartSceneTransition;
         GameManager.onEndSceneTransition += EndSceneTransition;
         LocalMatchManager.onMatchCountdown += StartMatchCountdown;
+        LocalMatchManager.onMatchOver += PlayStartMatchSFX;
     }
     private void OnDisable()
     {
         GameManager.onStartSceneTransition-= StartSceneTransition;
         GameManager.onEndSceneTransition -= EndSceneTransition;
         LocalMatchManager.onMatchCountdown -= StartMatchCountdown;
+        LocalMatchManager.onMatchOver -= PlayStartMatchSFX;
     }
 
     public void StartSceneTransition()

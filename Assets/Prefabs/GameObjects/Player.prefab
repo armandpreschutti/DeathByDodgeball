@@ -761,7 +761,7 @@ MonoBehaviour:
   _superThrowPower: 35
   _currentThrowPower: 0
   _throwPowerIncreaseRate: 10
-  _catchDuration: 0.5
+  _catchDuration: 0.65
   _hurtDuration: 0.4
   _moveDirection: {x: 0, y: 0}
   _currentSpeed: 0

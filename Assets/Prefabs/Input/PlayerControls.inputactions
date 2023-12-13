@@ -350,6 +350,17 @@
                 },
                 {
                     "name": "",
+                    "id": "2556cbbd-1e40-4fca-8321-d5ba555a8f51",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Throw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "c7bdd66a-764b-4b61-8084-ac1263b34d86",
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "",

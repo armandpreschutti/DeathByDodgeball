@@ -77,8 +77,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: c65319c2744bfeb49be55b793507614e, type: 3}
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: d303eee9b114007488fdd22799d094a6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -174,7 +174,6 @@ MonoBehaviour:
   _bombSprite: {fileID: 21300000, guid: d8c2dc95ba6a65b48b7805002724a353, type: 3}
   _parent: {fileID: 0}
   _ballDamage: 0
-  _collsionReactivationTime: 0.3
   _knockBackPower: 10
 --- !u!1 &3091680637538156359
 GameObject:

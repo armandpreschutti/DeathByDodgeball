@@ -17,12 +17,20 @@ public class PlayerSFXHandler : MonoBehaviour
     {
         SetComponents();
         _playerManager.GetComponent<PlayerStateMachine>().OnThrow += PlayThrowSFX;
-        _playerManager.GetComponent<PlayerStateMachine>().OnEquip+= PlayEquipSFX;
+        _playerManager.GetComponent<PlayerStateMachine>().OnEquip += PlayEquipSFX;
+        _playerManager.GetComponent<PlayerStateMachine>().OnDeath += PlayDeathSFX;
+        _playerManager.GetComponent<PlayerStateMachine>().OnHurt += PlayHurtSFX;
+        _playerManager.GetComponent<PlayerStateMachine>().OnDodge += PlayDodgeSFX;
+        _playerManager.GetComponent<PlayerStateMachine>().OnCatch += PlayCatchSFX;
     }
     private void OnDisable()
     {
         _playerManager.GetComponent<PlayerStateMachine>().OnThrow -= PlayThrowSFX;
         _playerManager.GetComponent<PlayerStateMachine>().OnEquip -= PlayEquipSFX;
+        _playerManager.GetComponent<PlayerStateMachine>().OnDeath -= PlayDeathSFX;
+        _playerManager.GetComponent<PlayerStateMachine>().OnHurt -= PlayHurtSFX;
+        _playerManager.GetComponent<PlayerStateMachine>().OnDodge -= PlayDodgeSFX;
+        _playerManager.GetComponent<PlayerStateMachine>().OnCatch -= PlayCatchSFX;
     }
 
     public void PlayHurtSFX()

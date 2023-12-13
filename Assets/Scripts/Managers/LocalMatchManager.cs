@@ -19,8 +19,9 @@ public class LocalMatchManager : MonoBehaviour
     public static event Action onActivatePlayers;
     public static event Action onDeactivatePlayers;
     public static event Action onResetPlayers;
+    public static event Action onMatchOver;
     public int winningTeam;
-
+    
     private void OnEnable()
     {
         SceneManager.sceneLoaded += InitializeScene;
@@ -106,15 +107,20 @@ public class LocalMatchManager : MonoBehaviour
 
     public void CheckForWinner()
     {
-        winPrompt = GameObject.Find("WinPrompt");
-        winPrompt.GetComponent<TextMeshProUGUI>().text = "Game!";
+        
         if (team1Alive.Count <= 0) 
         {
+            winPrompt = GameObject.Find("WinPrompt");
+            winPrompt.GetComponent<TextMeshProUGUI>().text = "Game!";
             winningTeam = 2;
+            onMatchOver?.Invoke();
         }
         else if (team2Alive.Count <= 0)
         {
+            winPrompt = GameObject.Find("WinPrompt");
+            winPrompt.GetComponent<TextMeshProUGUI>().text = "Game!";
             winningTeam = 1;
+            onMatchOver?.Invoke();
         }
         else
         {

@@ -15,6 +15,7 @@ public class PlayerDeathState: PlayerBaseState
         Ctx.DestroyBall();
         Ctx.StartCoroutine(StopVelocityCoroutine());
         Ctx.Anim.SetBool("Die", true);
+        Ctx.OnDeath?.Invoke();
         //Ctx.Rb.velocity = Vector2.zero;
     }
 

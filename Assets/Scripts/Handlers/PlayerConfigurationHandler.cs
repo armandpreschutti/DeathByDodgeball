@@ -18,6 +18,7 @@ public class PlayerConfigurationHandler : MonoBehaviour
     [SerializeField] TextMeshProUGUI _playerTeamPrompt;
     [SerializeField] TextMeshProUGUI _playerReadyPrompt;
     [SerializeField] GameObject _configurationCover;
+    
 
     [Header("Input")]
     [SerializeField] PlayerInput _playerInput;
