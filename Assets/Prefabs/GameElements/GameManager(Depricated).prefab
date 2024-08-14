@@ -322,7 +322,7 @@ GameObject:
   - component: {fileID: 8424498244344500644}
   - component: {fileID: 7645515465426796593}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: GameManager(Depricated)
   m_TagString: GameElement
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
