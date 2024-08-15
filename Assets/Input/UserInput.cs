@@ -53,6 +53,33 @@ public partial class @UserInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PreviousSkin"",
+                    ""type"": ""Button"",
+                    ""id"": ""8664c18e-c718-4734-8c59-4a1a59590fd6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NextSkin"",
+                    ""type"": ""Button"",
+                    ""id"": ""8dfb6d1a-872a-41cc-85de-a848733d9d59"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""JoinGame"",
+                    ""type"": ""Button"",
+                    ""id"": ""d97c0edb-6607-44b7-b3cd-b9301783864c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -123,61 +150,6 @@ public partial class @UserInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""ArrowKeys"",
-                    ""id"": ""14dbc874-1686-4ceb-aa3f-62f585ff08c1"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Navigate"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""bfffbd5d-397e-4951-8196-e25d191e6143"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KeyboardAlt"",
-                    ""action"": ""Navigate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""9d644437-e887-4df2-a2c6-6f09f570fb9b"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KeyboardAlt"",
-                    ""action"": ""Navigate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""a10da2d1-39ef-41b0-ae4c-169314323048"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KeyboardAlt"",
-                    ""action"": ""Navigate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""616f1b9a-68cb-4165-b3f0-3a90de8a554a"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KeyboardAlt"",
-                    ""action"": ""Navigate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": """",
                     ""id"": ""56a899ea-caf4-46fa-9d0f-fca1213dadc7"",
                     ""path"": ""<Keyboard>/enter"",
@@ -201,17 +173,6 @@ public partial class @UserInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""d725cdec-8516-4428-ae44-03cdb5447e92"",
-                    ""path"": ""<Keyboard>/numpadEnter"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KeyboardAlt"",
-                    ""action"": ""Select"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""60b672e2-d6a2-49df-b107-235e079c2e3f"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
@@ -229,6 +190,72 @@ public partial class @UserInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Start"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bd37fa59-385f-4651-a7e3-ba47121b3f80"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""PreviousSkin"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""95ded931-6ae5-4463-8ac7-c87c6b7ea32a"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""PreviousSkin"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3d3187fd-4dca-4e20-a8ba-62d5a114d670"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""NextSkin"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4e1cf56f-c194-47cf-818f-2a124ce79dbc"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""NextSkin"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d84f0868-4426-4adb-b3d1-dd93bfd66c62"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""JoinGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d17e0375-1e86-4685-8c81-35dff3974301"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""JoinGame"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -268,22 +295,6 @@ public partial class @UserInput: IInputActionCollection2, IDisposable
                     ""isOR"": false
                 }
             ]
-        },
-        {
-            ""name"": ""KeyboardAlt"",
-            ""bindingGroup"": ""KeyboardAlt"",
-            ""devices"": [
-                {
-                    ""devicePath"": ""<Keyboard>"",
-                    ""isOptional"": false,
-                    ""isOR"": false
-                },
-                {
-                    ""devicePath"": ""<Mouse>"",
-                    ""isOptional"": true,
-                    ""isOR"": false
-                }
-            ]
         }
     ]
 }");
@@ -292,6 +303,9 @@ public partial class @UserInput: IInputActionCollection2, IDisposable
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
         m_UI_Select = m_UI.FindAction("Select", throwIfNotFound: true);
         m_UI_Start = m_UI.FindAction("Start", throwIfNotFound: true);
+        m_UI_PreviousSkin = m_UI.FindAction("PreviousSkin", throwIfNotFound: true);
+        m_UI_NextSkin = m_UI.FindAction("NextSkin", throwIfNotFound: true);
+        m_UI_JoinGame = m_UI.FindAction("JoinGame", throwIfNotFound: true);
         // Gameplay
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
     }
@@ -358,6 +372,9 @@ public partial class @UserInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_Navigate;
     private readonly InputAction m_UI_Select;
     private readonly InputAction m_UI_Start;
+    private readonly InputAction m_UI_PreviousSkin;
+    private readonly InputAction m_UI_NextSkin;
+    private readonly InputAction m_UI_JoinGame;
     public struct UIActions
     {
         private @UserInput m_Wrapper;
@@ -365,6 +382,9 @@ public partial class @UserInput: IInputActionCollection2, IDisposable
         public InputAction @Navigate => m_Wrapper.m_UI_Navigate;
         public InputAction @Select => m_Wrapper.m_UI_Select;
         public InputAction @Start => m_Wrapper.m_UI_Start;
+        public InputAction @PreviousSkin => m_Wrapper.m_UI_PreviousSkin;
+        public InputAction @NextSkin => m_Wrapper.m_UI_NextSkin;
+        public InputAction @JoinGame => m_Wrapper.m_UI_JoinGame;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -383,6 +403,15 @@ public partial class @UserInput: IInputActionCollection2, IDisposable
             @Start.started += instance.OnStart;
             @Start.performed += instance.OnStart;
             @Start.canceled += instance.OnStart;
+            @PreviousSkin.started += instance.OnPreviousSkin;
+            @PreviousSkin.performed += instance.OnPreviousSkin;
+            @PreviousSkin.canceled += instance.OnPreviousSkin;
+            @NextSkin.started += instance.OnNextSkin;
+            @NextSkin.performed += instance.OnNextSkin;
+            @NextSkin.canceled += instance.OnNextSkin;
+            @JoinGame.started += instance.OnJoinGame;
+            @JoinGame.performed += instance.OnJoinGame;
+            @JoinGame.canceled += instance.OnJoinGame;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -396,6 +425,15 @@ public partial class @UserInput: IInputActionCollection2, IDisposable
             @Start.started -= instance.OnStart;
             @Start.performed -= instance.OnStart;
             @Start.canceled -= instance.OnStart;
+            @PreviousSkin.started -= instance.OnPreviousSkin;
+            @PreviousSkin.performed -= instance.OnPreviousSkin;
+            @PreviousSkin.canceled -= instance.OnPreviousSkin;
+            @NextSkin.started -= instance.OnNextSkin;
+            @NextSkin.performed -= instance.OnNextSkin;
+            @NextSkin.canceled -= instance.OnNextSkin;
+            @JoinGame.started -= instance.OnJoinGame;
+            @JoinGame.performed -= instance.OnJoinGame;
+            @JoinGame.canceled -= instance.OnJoinGame;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -469,20 +507,14 @@ public partial class @UserInput: IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_GamepadSchemeIndex];
         }
     }
-    private int m_KeyboardAltSchemeIndex = -1;
-    public InputControlScheme KeyboardAltScheme
-    {
-        get
-        {
-            if (m_KeyboardAltSchemeIndex == -1) m_KeyboardAltSchemeIndex = asset.FindControlSchemeIndex("KeyboardAlt");
-            return asset.controlSchemes[m_KeyboardAltSchemeIndex];
-        }
-    }
     public interface IUIActions
     {
         void OnNavigate(InputAction.CallbackContext context);
         void OnSelect(InputAction.CallbackContext context);
         void OnStart(InputAction.CallbackContext context);
+        void OnPreviousSkin(InputAction.CallbackContext context);
+        void OnNextSkin(InputAction.CallbackContext context);
+        void OnJoinGame(InputAction.CallbackContext context);
     }
     public interface IGameplayActions
     {

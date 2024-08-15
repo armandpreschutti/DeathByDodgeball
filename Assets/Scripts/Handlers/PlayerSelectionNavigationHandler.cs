@@ -25,7 +25,7 @@ public class PlayerSelectionNavigationHandler : MonoBehaviour
         thisButton = GetComponent<Button>();
         observer = GameObject.Find($"Slot{slotId}Panel").GetComponent<PlayerSelectionPanelObserver>();
         controller = GetComponentInParent<PlayerConfigurationController>();
-        playerId = controller.playerID;
+        playerId = controller.playerId;
         gameObject.SetActive(observer.isAvailible);
         SpriteState spriteState = thisButton.spriteState;
         spriteState.selectedSprite = PlayerIDSprite();
@@ -43,11 +43,8 @@ public class PlayerSelectionNavigationHandler : MonoBehaviour
 
     public void SetNeighbors(int id)
     {
-        // Debug.Log($"P{controller.playerID} Button {slotId} wants a new neighbor");
-        // Debug.Log(controller.availibleSlots.Length);
         SetLeftNeighbor();
         SetRightNeighbor();
-        //SetNeighbors();
     }
 
     public void SetLeftNeighbor()
@@ -57,8 +54,10 @@ public class PlayerSelectionNavigationHandler : MonoBehaviour
         {
             if (controller.availibleSlots[i] != null && controller.availibleSlots[i].isAvailible)
             {
-                Debug.Log($"P{controller.playerID} Button {slotId} wants button {i+ 1} to be left neighbor");
+                // Debug.Log($"P{controller.playerID} Button {slotId} wants button {i+ 1} to be left neighbor");
+                
                 leftNeighbor = i + 1;
+                
                 // Get the current Navigation settings of the button
                 Navigation navigation = thisButton.navigation;
 
@@ -66,14 +65,13 @@ public class PlayerSelectionNavigationHandler : MonoBehaviour
                 navigation.mode = Navigation.Mode.Explicit;
 
                 // Set the selectOnUp to the button above
-                navigation.selectOnLeft = GameObject.Find($"P{controller.playerID}PanelButton{i + 1}").GetComponent<Button>();
+                navigation.selectOnLeft = GameObject.Find($"P{controller.playerId}PanelButton{i + 1}").GetComponent<Button>();
 
                 // Apply the modified navigation back to the button
                 thisButton.navigation = navigation;
 
             }
         }
-       // Debug.Log($"P{controller.playerID} No available left neighbor found");
     }
 
     public void SetRightNeighbor()
@@ -83,8 +81,10 @@ public class PlayerSelectionNavigationHandler : MonoBehaviour
         {
             if (controller.availibleSlots[i] != null && controller.availibleSlots[i].isAvailible)
             {
+                // Debug.Log($"P{controller.playerID} Button {slotId} wants button {i + 1} to be right neighbor");
+
                 rightNeighbor = i + 1;
-                Debug.Log($"P{controller.playerID} Button {slotId} wants button {i + 1} to be right neighbor");
+               
                 // Get the current Navigation settings of the button
                 Navigation navigation = thisButton.navigation;
 
@@ -92,18 +92,17 @@ public class PlayerSelectionNavigationHandler : MonoBehaviour
                 navigation.mode = Navigation.Mode.Explicit;
 
                 // Set the selectOnUp to the button above
-                navigation.selectOnRight = GameObject.Find($"P{controller.playerID}PanelButton{i+1}").GetComponent<Button>();
+                navigation.selectOnRight = GameObject.Find($"P{controller.playerId}PanelButton{i+1}").GetComponent<Button>();
 
                 // Apply the modified navigation back to the button
                 thisButton.navigation = navigation;
             }
         }
-        // Debug.Log($"P{controller.playerID} No available left neighbor found");
     }
 
     public Sprite PlayerIDSprite()
     {
-        switch (controller.playerID)
+        switch (controller.playerId)
         {
             case 1:
                 return p1Sprite;

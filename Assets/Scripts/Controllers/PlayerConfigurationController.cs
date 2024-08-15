@@ -12,7 +12,7 @@ public class PlayerConfigurationController : MonoBehaviour
 {
     public PlayerInput playerInput;
     public PlayerSelectionManager playerSelectionManager;
-    public int playerID;
+    public int playerId;
     public MultiplayerEventSystem eventSystem;
     public InputSystemUIInputModule inputModule;
     public GameObject Slot1;
@@ -21,6 +21,14 @@ public class PlayerConfigurationController : MonoBehaviour
     public GameObject Slot4;
     public PlayerSelectionPanelObserver[] availibleSlots;
     public int currentSlot;
+    public int currentSkin;
+    public bool isPlayerSelected;
+    public Action onCycleNextSkin;
+    public Action onCyclePreviousSkin;
+    public static Action<int, int, int> onSubmit;
+    public static Action<int> onAddAi;
+    public static Action onSubmitAi;
+
     //public static Action onNewPlayer;
 
     private void Awake()
@@ -30,29 +38,42 @@ public class PlayerConfigurationController : MonoBehaviour
 
     private void OnEnable()
     {
+        //SetInitialPlayerValues();
+        PlayerSelectionPanelBroadcaster.onSelected += SetCurrentSelection;
+        playerInput.actions["NextSkin"].performed += ctx => CycleNextSkin();
+        playerInput.actions["PreviousSkin"].performed += ctx => CyclePreviousSkin();
+        //playerInput.actions["JoinGame"].performed += ctx => AddAI();
+        Slot1.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked += Submit;
+        Slot2.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked += Submit;
+        Slot3.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked += Submit;
+        Slot4.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked += Submit;
         
     }
     private void OnDisable()
     {
-        
+        PlayerSelectionPanelBroadcaster.onSelected -= SetCurrentSelection;
+        playerInput.actions["NextSkin"].performed -= ctx => CycleNextSkin();
+        playerInput.actions["PreviousSkin"].performed -= ctx => CyclePreviousSkin();
+       // playerInput.actions["JoinGame"].performed -= ctx => AddAI();
+        Slot1.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked -= Submit;
+        Slot2.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked -= Submit;
+        Slot3.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked -= Submit;
+        Slot4.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked -= Submit;
     }
 
     public void SetInitialPlayerValues()
     {
         playerSelectionManager = FindObjectOfType<PlayerSelectionManager>();
         playerInput = GetComponent<PlayerInput>();
-        playerID = playerInput.playerIndex + 1 ;
-        Slot1.name = $"P{playerID}Button1";
-        Slot2.name = $"P{playerID}Button2";
-        Slot3.name = $"P{playerID}Button3";
-        Slot4.name = $"P{playerID}Button4";
-        //eventSystem.firstSelectedGameObject = GameObject.Find($"P{playerID}Button{playerID}");
-
+        playerId = playerInput.playerIndex + 1 ;
+        Slot1.name = $"P{playerId}Button1";
+        Slot2.name = $"P{playerId}Button2";
+        Slot3.name = $"P{playerId}Button3";
+        Slot4.name = $"P{playerId}Button4";
         eventSystem.playerRoot = gameObject;
         inputModule.actionsAsset = playerInput.actions;
         GetButtonAvailibility();
         SetInitialSlot();
-        // onNewPlayer?.Invoke();
     }
 
     public void GetButtonAvailibility()
@@ -62,25 +83,32 @@ public class PlayerConfigurationController : MonoBehaviour
         // Sort the array based on the name property
         Array.Sort(availibleSlots, (a, b) => a.name.CompareTo(b.name));
     }
-    private void Update()
+
+    private void SetCurrentSelection(int id)
     {
-        currentSlot = GetSlotNumber(eventSystem.currentSelectedGameObject.gameObject.name);
+        if(eventSystem.currentSelectedGameObject != null)
+        {
+            currentSlot = GetSlotNumber(eventSystem.currentSelectedGameObject.gameObject.name);
+        }
     }
+
     public void SetSelection()
     {
         Debug.Log(eventSystem.currentSelectedGameObject.gameObject.name);
     }
+
     public void SetInitialSlot()
     {
         for(int i = 0;i < availibleSlots.Length; i++)
         {
             if (availibleSlots[i].isAvailible)
             {
-                eventSystem.firstSelectedGameObject = availibleSlots[i].gameObject;
+                eventSystem.firstSelectedGameObject = GameObject.Find($"P{playerId}Button{i +1}");
+                return;
             }
         }
-        eventSystem.firstSelectedGameObject = GameObject.Find($"P{playerID}Button{playerID}");
     }
+
     public int GetSlotNumber(string input)
     {
         // Define the regular expression pattern to find all numbers in the string
@@ -97,5 +125,35 @@ public class PlayerConfigurationController : MonoBehaviour
 
         // Return -1 or another value indicating no number was found
         return -1;
+    }
+
+    public void Submit()
+    {
+        if (!isPlayerSelected)
+        {
+            isPlayerSelected = true;
+            onSubmit?.Invoke(playerId, currentSlot, currentSkin);
+        }
+    }
+
+   /* public void AddAI()
+    {
+        if(isPlayerSelected)
+        {
+            onAddAi?.Invoke(currentSlot);
+        }
+
+    }
+*/
+    public void CycleNextSkin()
+    {
+        //Debug.Log($"Player {playerID} is cycling next skin");        
+        onCycleNextSkin?.Invoke();
+    }
+
+    public void CyclePreviousSkin()
+    {
+        //Debug.Log($"Player {playerID} is cycling previous skin");
+        onCyclePreviousSkin?.Invoke();
     }
 }
