@@ -19,6 +19,7 @@ public class PlayerSelectionPanelObserver : MonoBehaviour
     public TextMeshProUGUI playerTagText;
     public Sprite selectedSprite;
     public Sprite unselectedSprite;
+    public Sprite emptyImage;
     public static Action<int> onEnableButton;
     public static Action<int> onDisableButton;
     public static Action<int, bool> onUpdateButton;
@@ -30,7 +31,7 @@ public class PlayerSelectionPanelObserver : MonoBehaviour
         PlayerSelectionPanelBroadcaster.onSelected += DisableAvailibility;
         PlayerSelectionPanelBroadcaster.onDeselected += EnableAvailibility;
         PlayerSelectionManager.onSetMatchSlot += PreviewMatchConfigurationSlot;
-
+        PlayerSelectionManager.onRemoveMatchSlot += RemoveMatchConfigurationSlot;
     }
     private void OnDisable()
     {
@@ -38,7 +39,7 @@ public class PlayerSelectionPanelObserver : MonoBehaviour
         PlayerSelectionPanelBroadcaster.onSelected -= DisableAvailibility;
         PlayerSelectionPanelBroadcaster.onDeselected -= EnableAvailibility;
         PlayerSelectionManager.onSetMatchSlot -= PreviewMatchConfigurationSlot;
-
+        PlayerSelectionManager.onRemoveMatchSlot -= RemoveMatchConfigurationSlot;
     }
 
     public void EnableAvailibility(int id)
@@ -98,31 +99,18 @@ public class PlayerSelectionPanelObserver : MonoBehaviour
     {
         if (matchSlot == slotId)
         {
-            previewImage.sprite = previewSkins.skins[skinId];
-            panel.sprite = selectedSprite;
-            buttonImage.enabled = false;
-            promptText.text = "Ready!";
-            if (playerId != 0)
-            {
-                playerTagText.text = $"P{playerId}";
-            }
-            else
-            {
-                playerTagText.text = $"CPU";
-            }
+            previewImage.sprite = emptyImage;
+            panel.sprite = unselectedSprite;
+            buttonImage.enabled = true;
+            playerTagText.text = null;
+            isFilled = false;
 
-            isFilled = true;
+            SendAvailibility(slotId);
         }
-        else
+        if (!isFilled)
         {
-            if (!isFilled)
-            {
-                promptText.text = "Add AI";
-            }
-
-
+            promptText.text = "Add AI";
         }
 
     }
-
 }

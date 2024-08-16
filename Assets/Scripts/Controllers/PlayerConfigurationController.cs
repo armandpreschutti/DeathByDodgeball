@@ -41,7 +41,7 @@ public class PlayerConfigurationController : MonoBehaviour
 
     private void OnEnable()
     {
-        //SetInitialPlayerValues();
+        PlayerSelectionManager.onResetPlayer += ResetPlayer;
         PlayerSelectionPanelBroadcaster.onSelected += SetCurrentSelection;
         playerInput.actions["NextSkin"].performed += ctx => CycleNextSkin();
         playerInput.actions["PreviousSkin"].performed += ctx => CyclePreviousSkin();
@@ -51,10 +51,12 @@ public class PlayerConfigurationController : MonoBehaviour
         Slot2.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked += Submit;
         Slot3.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked += Submit;
         Slot4.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked += Submit;
+
         
     }
     private void OnDisable()
     {
+        PlayerSelectionManager.onResetPlayer -= ResetPlayer;
         PlayerSelectionPanelBroadcaster.onSelected -= SetCurrentSelection;
         playerInput.actions["NextSkin"].performed -= ctx => CycleNextSkin();
         playerInput.actions["PreviousSkin"].performed -= ctx => CyclePreviousSkin();
@@ -64,6 +66,7 @@ public class PlayerConfigurationController : MonoBehaviour
         Slot2.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked -= Submit;
         Slot3.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked -= Submit;
         Slot4.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked -= Submit;
+
     }
 
     public void SetInitialPlayerValues()
@@ -165,16 +168,24 @@ public class PlayerConfigurationController : MonoBehaviour
     {
         onRemoveSelection?.Invoke(playerId,currentSlot,currentSkin);
     }
-
-    public void CycleNextSkin()
+    public void ResetPlayer(int id, bool selection)
     {
-        //Debug.Log($"Player {playerID} is cycling next skin");        
+        if (playerId == id)
+        {
+            isPlayerSelected = selection;
+        }
+        else if(id == 0)
+        {
+            canSelectAI = selection;
+        }
+    }
+    public void CycleNextSkin()
+    {      
         onCycleNextSkin?.Invoke();
     }
 
     public void CyclePreviousSkin()
     {
-        //Debug.Log($"Player {playerID} is cycling previous skin");
         onCyclePreviousSkin?.Invoke();
     }
 }

@@ -1018,6 +1018,7 @@ MonoBehaviour:
   playerTagText: {fileID: 1767859991}
   selectedSprite: {fileID: 21300000, guid: cfb6ce3e9c09f5543972f2ab59116a20, type: 3}
   unselectedSprite: {fileID: 21300000, guid: d14fd0b52fc273f4491f41bbb0f5953a, type: 3}
+  emptyImage: {fileID: 21300000, guid: 1f21d066142baba46950394ae07c15fe, type: 3}
   isFilled: 0
 --- !u!1 &553528227
 GameObject:
@@ -2291,6 +2292,7 @@ MonoBehaviour:
   playerTagText: {fileID: 1029047558}
   selectedSprite: {fileID: 21300000, guid: cfb6ce3e9c09f5543972f2ab59116a20, type: 3}
   unselectedSprite: {fileID: 21300000, guid: d14fd0b52fc273f4491f41bbb0f5953a, type: 3}
+  emptyImage: {fileID: 21300000, guid: 1f21d066142baba46950394ae07c15fe, type: 3}
   isFilled: 0
 --- !u!1 &1228763335
 GameObject:
@@ -2650,6 +2652,7 @@ MonoBehaviour:
   playerTagText: {fileID: 79004384}
   selectedSprite: {fileID: 21300000, guid: cfb6ce3e9c09f5543972f2ab59116a20, type: 3}
   unselectedSprite: {fileID: 21300000, guid: d14fd0b52fc273f4491f41bbb0f5953a, type: 3}
+  emptyImage: {fileID: 21300000, guid: 1f21d066142baba46950394ae07c15fe, type: 3}
   isFilled: 0
 --- !u!1 &1649551818
 GameObject:
@@ -2901,6 +2904,7 @@ MonoBehaviour:
   playerTagText: {fileID: 89746009}
   selectedSprite: {fileID: 21300000, guid: cfb6ce3e9c09f5543972f2ab59116a20, type: 3}
   unselectedSprite: {fileID: 21300000, guid: d14fd0b52fc273f4491f41bbb0f5953a, type: 3}
+  emptyImage: {fileID: 21300000, guid: 1f21d066142baba46950394ae07c15fe, type: 3}
   isFilled: 0
 --- !u!1 &1732126274
 GameObject:

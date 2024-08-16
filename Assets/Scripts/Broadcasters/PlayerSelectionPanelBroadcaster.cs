@@ -36,6 +36,7 @@ public class PlayerSelectionPanelBroadcaster : MonoBehaviour
         PlayerConfigurationController.onAddAi += SetAIPanelState;
         PlayerConfigurationController.onSubmitAi += SetAIPanelSelection;
         PlayerSelectionManager.onSetMatchSlot += SetPanelSelection;
+        PlayerSelectionManager.onRemoveMatchSlot += ResetPanelSelection;
     }
 
     private void OnDisable()
@@ -47,6 +48,7 @@ public class PlayerSelectionPanelBroadcaster : MonoBehaviour
         PlayerConfigurationController.onAddAi -= SetAIPanelState;
         PlayerConfigurationController.onSubmitAi -= SetAIPanelSelection;
         PlayerSelectionManager.onSetMatchSlot -= SetPanelSelection;
+        PlayerSelectionManager.onRemoveMatchSlot -= ResetPanelSelection;
     }
 
     public void SelectSlot()
@@ -131,9 +133,22 @@ public class PlayerSelectionPanelBroadcaster : MonoBehaviour
     }
     public void UpdateButtonAvailibility(int id, bool availibility)
     {
-        if(id == slotId)
+        if (id == slotId)
         {
             isFilled = availibility;
         }
+    }
+
+    public void ResetPanelSelection(int pId, int currentSlot, int currentSkin)
+    {
+        if(currentSlot == slotId)
+        {
+            if (playerConfigurationController.canSelectAI || !playerConfigurationController.isPlayerSelected)
+            {
+                panel.SetActive(true);
+            }
+
+        }
+        
     }
 }

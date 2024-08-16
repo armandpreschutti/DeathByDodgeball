@@ -9,14 +9,10 @@ public class PlayerConfigurationSO : ScriptableObject
     public int teamId;
     public int skinID;
 
-    private void OnValidate()
-    {
-        Debug.Log("SO Function was called correctly");
-    }
-
     public void SetTeam(int slot)
     {
-        if(slot == 1 || slot == 2)
+        Debug.Log("SO Function was called correctly");
+        if (slot == 1 || slot == 2)
         {
             teamId = 1;
         }
