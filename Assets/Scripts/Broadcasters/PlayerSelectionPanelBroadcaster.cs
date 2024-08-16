@@ -12,30 +12,41 @@ public class PlayerSelectionPanelBroadcaster : MonoBehaviour
     public int playerId;
     public static Action<int> onSelected;
     public static Action<int> onDeselected;
+    public static Action<int> onJoinSelection;
     public Action onButtonClicked;
     public Action onUpdateButtons;
     public Button panelButton;
     public GameObject panel;
     public MultiplayerEventSystem eventSystem;
     public PlayerConfigurationController playerConfigurationController;
+    public bool isFilled;
 
     private void Awake()
     {
         panelButton.gameObject.name = $"P{playerConfigurationController.playerId}PanelButton{slotId}";
         playerId = playerConfigurationController.playerId;
+        onJoinSelection?.Invoke(slotId);
     }
     private void OnEnable()
     {
+        PlayerSelectionPanelObserver.onUpdateButton += UpdateButtonAvailibility;
         PlayerSelectionPanelObserver.onEnableButton += EnableButton;
         PlayerSelectionPanelObserver.onDisableButton += DisableButton;
-        PlayerConfigurationController.onSubmit += SetPanelState;
+        PlayerConfigurationController.onSubmit += SetPanelSelection;
+        PlayerConfigurationController.onAddAi += SetAIPanelState;
+        PlayerConfigurationController.onSubmitAi += SetAIPanelSelection;
+        PlayerSelectionManager.onSetMatchSlot += SetPanelSelection;
     }
 
     private void OnDisable()
     {
+        PlayerSelectionPanelObserver.onUpdateButton -= UpdateButtonAvailibility;
         PlayerSelectionPanelObserver.onEnableButton -= EnableButton;
         PlayerSelectionPanelObserver.onDisableButton -= DisableButton;
-        PlayerConfigurationController.onSubmit -= SetPanelState;
+        PlayerConfigurationController.onSubmit -= SetPanelSelection;
+        PlayerConfigurationController.onAddAi -= SetAIPanelState;
+        PlayerConfigurationController.onSubmitAi -= SetAIPanelSelection;
+        PlayerSelectionManager.onSetMatchSlot -= SetPanelSelection;
     }
 
     public void SelectSlot()
@@ -52,7 +63,10 @@ public class PlayerSelectionPanelBroadcaster : MonoBehaviour
 
     public void SlotButtonPressed()
     {
-        onButtonClicked?.Invoke();
+        if(!isFilled)
+        {
+            playerConfigurationController.Submit();
+        }
     }
 
     public void EnableButton(int id)
@@ -74,11 +88,11 @@ public class PlayerSelectionPanelBroadcaster : MonoBehaviour
         }
     }
 
-    public void SetPanelState(int Id, int currentSlot, int currentSkin)
+    public void SetPanelState(int pId, int currentSlot, int currentSkin)
     {
-        if(currentSlot == slotId && Id ==  playerId)
+        if(currentSlot == slotId && pId ==  playerId)
         {
-            if (!playerConfigurationController.isPlayerSelected /*&& playerConfigurationController.eventSystem.currentSelectedGameObject == panelButton*/)
+            if (!playerConfigurationController.isPlayerSelected && !isFilled)
             {
                 panel.SetActive(true);
             }
@@ -88,12 +102,38 @@ public class PlayerSelectionPanelBroadcaster : MonoBehaviour
             }
         }
     }
-    public void SetAISelection(int id)
+    public void SetAIPanelState(int playerId, int currentSlot, int currentSkin, int selectedSlot)
+    {
+        if(currentSlot == slotId && selectedSlot != slotId && eventSystem.currentSelectedGameObject == panelButton.gameObject && !isFilled)
+        {
+            panel.SetActive(true);
+        }
+    }
+
+    public void SetAIPanelSelection(int pId, int currentSlot, int currentSkin)
+    {
+       
+        if(currentSlot == slotId && !isFilled)
+        {
+            panel.SetActive(false);
+            DisableButton(slotId);
+        }
+    }
+    public void SetPanelSelection(int pId, int currentSlot, int currentSkin)
+    {
+
+        if (currentSlot == slotId)
+        {
+            panel.SetActive(false);
+            DisableButton(slotId);
+            isFilled = true;
+        }
+    }
+    public void UpdateButtonAvailibility(int id, bool availibility)
     {
         if(id == slotId)
         {
-            Debug.Log($"P{playerConfigurationController.playerId} wants to add an AI at slot {playerConfigurationController.currentSlot}");
+            isFilled = availibility;
         }
-        
     }
 }

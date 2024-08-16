@@ -276,11 +276,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotId: 4
+  playerId: 0
   panelButton: {fileID: 8797605784250732448}
   panel: {fileID: 4435043979303830398}
   eventSystem: {fileID: 8569190321618534355}
-  availibleButtons: []
   playerConfigurationController: {fileID: -4605070213423293015}
+  isFilled: 0
 --- !u!1 &407720971624369894
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,11 +343,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotId: 2
+  playerId: 0
   panelButton: {fileID: 5497423486538909472}
   panel: {fileID: 3299008465556407978}
   eventSystem: {fileID: 8569190321618534355}
-  availibleButtons: []
   playerConfigurationController: {fileID: -4605070213423293015}
+  isFilled: 0
 --- !u!1 &571852662182149342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1012,11 +1014,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotId: 3
+  playerId: 0
   panelButton: {fileID: 1096853639726505011}
   panel: {fileID: 8543318627873604190}
   eventSystem: {fileID: 8569190321618534355}
-  availibleButtons: []
   playerConfigurationController: {fileID: -4605070213423293015}
+  isFilled: 0
 --- !u!1 &1837887249973122523
 GameObject:
   m_ObjectHideFlags: 0
@@ -1583,9 +1586,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: -4605070213423293015}
-        m_TargetAssemblyTypeName: PlayerConfigurationController, Assembly-CSharp
-        m_MethodName: Submit
+      - m_Target: {fileID: 3651122233527275361}
+        m_TargetAssemblyTypeName: PlayerSelectionPanelBroadcaster, Assembly-CSharp
+        m_MethodName: SlotButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1800,11 +1803,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotId: 1
+  playerId: 0
   panelButton: {fileID: 2164146097164017404}
   panel: {fileID: 2639955202787707728}
   eventSystem: {fileID: 8569190321618534355}
-  availibleButtons: []
   playerConfigurationController: {fileID: -4605070213423293015}
+  isFilled: 0
 --- !u!1 &4213662775411442465
 GameObject:
   m_ObjectHideFlags: 0
@@ -2352,9 +2356,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: -4605070213423293015}
-        m_TargetAssemblyTypeName: PlayerConfigurationController, Assembly-CSharp
-        m_MethodName: Submit
+      - m_Target: {fileID: 7101989713677113077}
+        m_TargetAssemblyTypeName: PlayerSelectionPanelBroadcaster, Assembly-CSharp
+        m_MethodName: SlotButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2631,9 +2635,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: -4605070213423293015}
-        m_TargetAssemblyTypeName: PlayerConfigurationController, Assembly-CSharp
-        m_MethodName: Submit
+      - m_Target: {fileID: 8954790510294040608}
+        m_TargetAssemblyTypeName: PlayerSelectionPanelBroadcaster, Assembly-CSharp
+        m_MethodName: SlotButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3096,8 +3100,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   currentSlot: 0
+  selectedSlot: 0
   currentSkin: 0
   isPlayerSelected: 0
+  canSelectAI: 0
 --- !u!1 &6047913360395266730
 GameObject:
   m_ObjectHideFlags: 0
@@ -3297,9 +3303,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: -4605070213423293015}
-        m_TargetAssemblyTypeName: PlayerConfigurationController, Assembly-CSharp
-        m_MethodName: Submit
+      - m_Target: {fileID: 5379142753999867983}
+        m_TargetAssemblyTypeName: PlayerSelectionPanelBroadcaster, Assembly-CSharp
+        m_MethodName: SlotButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

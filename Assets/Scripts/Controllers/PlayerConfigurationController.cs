@@ -21,13 +21,16 @@ public class PlayerConfigurationController : MonoBehaviour
     public GameObject Slot4;
     public PlayerSelectionPanelObserver[] availibleSlots;
     public int currentSlot;
+    public int selectedSlot;
     public int currentSkin;
     public bool isPlayerSelected;
     public Action onCycleNextSkin;
     public Action onCyclePreviousSkin;
+    public static Action<int, int, int> onRemoveSelection;
     public static Action<int, int, int> onSubmit;
-    public static Action<int> onAddAi;
-    public static Action onSubmitAi;
+    public static Action<int, int, int, int> onAddAi;
+    public static Action<int, int, int> onSubmitAi;
+    public bool canSelectAI;
 
     //public static Action onNewPlayer;
 
@@ -42,7 +45,8 @@ public class PlayerConfigurationController : MonoBehaviour
         PlayerSelectionPanelBroadcaster.onSelected += SetCurrentSelection;
         playerInput.actions["NextSkin"].performed += ctx => CycleNextSkin();
         playerInput.actions["PreviousSkin"].performed += ctx => CyclePreviousSkin();
-        //playerInput.actions["JoinGame"].performed += ctx => AddAI();
+        playerInput.actions["JoinGame"].performed += ctx => AddAI();
+        playerInput.actions["Remove"].performed += ctx => RemoveSelection();
         Slot1.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked += Submit;
         Slot2.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked += Submit;
         Slot3.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked += Submit;
@@ -54,7 +58,8 @@ public class PlayerConfigurationController : MonoBehaviour
         PlayerSelectionPanelBroadcaster.onSelected -= SetCurrentSelection;
         playerInput.actions["NextSkin"].performed -= ctx => CycleNextSkin();
         playerInput.actions["PreviousSkin"].performed -= ctx => CyclePreviousSkin();
-       // playerInput.actions["JoinGame"].performed -= ctx => AddAI();
+        playerInput.actions["JoinGame"].performed -= ctx => AddAI();
+        playerInput.actions["Remove"].performed -= ctx => RemoveSelection();
         Slot1.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked -= Submit;
         Slot2.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked -= Submit;
         Slot3.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked -= Submit;
@@ -101,7 +106,7 @@ public class PlayerConfigurationController : MonoBehaviour
     {
         for(int i = 0;i < availibleSlots.Length; i++)
         {
-            if (availibleSlots[i].isAvailible)
+            if (availibleSlots[i].isAvailible && !availibleSlots[i].isFilled)
             {
                 eventSystem.firstSelectedGameObject = GameObject.Find($"P{playerId}Button{i +1}");
                 return;
@@ -133,18 +138,34 @@ public class PlayerConfigurationController : MonoBehaviour
         {
             isPlayerSelected = true;
             onSubmit?.Invoke(playerId, currentSlot, currentSkin);
+            selectedSlot = currentSlot;
         }
-    }
-
-   /* public void AddAI()
-    {
-        if(isPlayerSelected)
+        else if(canSelectAI)
         {
-            onAddAi?.Invoke(currentSlot);
+            int oldId = playerId;
+            playerId = 0;
+            onSubmitAi?.Invoke(playerId, currentSlot, currentSkin);
+            playerId = oldId;
+            canSelectAI = false;
+        }
+    }
+
+    public void AddAI()
+    {
+        if (isPlayerSelected)
+        {
+            canSelectAI = true;
+            currentSkin = 0;
+            onAddAi?.Invoke(playerId, currentSlot, currentSkin, selectedSlot);
         }
 
     }
-*/
+
+    public void RemoveSelection()
+    {
+        onRemoveSelection?.Invoke(playerId,currentSlot,currentSkin);
+    }
+
     public void CycleNextSkin()
     {
         //Debug.Log($"Player {playerID} is cycling next skin");        

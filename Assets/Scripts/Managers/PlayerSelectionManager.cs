@@ -19,13 +19,15 @@ public class PlayerSelectionManager : MonoBehaviour
     private void OnEnable()
     {
         PlayerConfigurationController.onSubmit += AddPlayerToMatchConfiguration;
-
+        PlayerConfigurationController.onSubmitAi += AddPlayerToMatchConfiguration;
+        PlayerConfigurationController.onRemoveSelection += RemovePlayerFromMatchConfiguration;
     }
 
     private void OnDisable()
     {
         PlayerConfigurationController.onSubmit -= AddPlayerToMatchConfiguration;
-
+        PlayerConfigurationController.onSubmitAi -= AddPlayerToMatchConfiguration;
+        PlayerConfigurationController.onRemoveSelection -= RemovePlayerFromMatchConfiguration;
     }
 
     public void AddPlayerToMatchConfiguration(int playerId, int slotId, int skinId)
@@ -46,5 +48,25 @@ public class PlayerSelectionManager : MonoBehaviour
         // Assign the new object to the specified slot
         playerConfigurations[slotId - 1] = newPlayerConfig;
         onSetMatchSlot?.Invoke(playerId, slotId, skinId);
+    }
+    public void RemovePlayerFromMatchConfiguration(int playerId, int slotId, int skinId)
+    {
+        /*// Create a new PlayerConfigurationSO object
+        PlayerConfigurationSO newPlayerConfig = ScriptableObject.CreateInstance<PlayerConfigurationSO>();
+
+        // Assign values to the new object (replace with actual properties)
+        newPlayerConfig.playerId = playerId;
+        newPlayerConfig.skinID = skinId;
+
+        // Ensure the array has enough space
+        if (playerConfigurations.Length <= slotId)
+        {
+            Array.Resize(ref playerConfigurations, slotId);
+        }
+
+        // Assign the new object to the specified slot
+        playerConfigurations[slotId - 1] = newPlayerConfig;
+        onSetMatchSlot?.Invoke(playerId, slotId, skinId);*/
+        Debug.Log($"P{playerId}trying to remove Slot{slotId}");
     }
 }

@@ -80,6 +80,15 @@ public partial class @UserInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Remove"",
+                    ""type"": ""Button"",
+                    ""id"": ""bfd8f846-bc70-4ecb-9bdb-460fd0b99bc5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -258,6 +267,28 @@ public partial class @UserInput: IInputActionCollection2, IDisposable
                     ""action"": ""JoinGame"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bd85e8c6-f8a8-470a-b4bd-9d50527a40b1"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Remove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""880bbe6f-32e5-49b5-876d-a1b727cd820f"",
+                    ""path"": ""<Keyboard>/backspace"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Remove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -306,6 +337,7 @@ public partial class @UserInput: IInputActionCollection2, IDisposable
         m_UI_PreviousSkin = m_UI.FindAction("PreviousSkin", throwIfNotFound: true);
         m_UI_NextSkin = m_UI.FindAction("NextSkin", throwIfNotFound: true);
         m_UI_JoinGame = m_UI.FindAction("JoinGame", throwIfNotFound: true);
+        m_UI_Remove = m_UI.FindAction("Remove", throwIfNotFound: true);
         // Gameplay
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
     }
@@ -375,6 +407,7 @@ public partial class @UserInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_PreviousSkin;
     private readonly InputAction m_UI_NextSkin;
     private readonly InputAction m_UI_JoinGame;
+    private readonly InputAction m_UI_Remove;
     public struct UIActions
     {
         private @UserInput m_Wrapper;
@@ -385,6 +418,7 @@ public partial class @UserInput: IInputActionCollection2, IDisposable
         public InputAction @PreviousSkin => m_Wrapper.m_UI_PreviousSkin;
         public InputAction @NextSkin => m_Wrapper.m_UI_NextSkin;
         public InputAction @JoinGame => m_Wrapper.m_UI_JoinGame;
+        public InputAction @Remove => m_Wrapper.m_UI_Remove;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -412,6 +446,9 @@ public partial class @UserInput: IInputActionCollection2, IDisposable
             @JoinGame.started += instance.OnJoinGame;
             @JoinGame.performed += instance.OnJoinGame;
             @JoinGame.canceled += instance.OnJoinGame;
+            @Remove.started += instance.OnRemove;
+            @Remove.performed += instance.OnRemove;
+            @Remove.canceled += instance.OnRemove;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -434,6 +471,9 @@ public partial class @UserInput: IInputActionCollection2, IDisposable
             @JoinGame.started -= instance.OnJoinGame;
             @JoinGame.performed -= instance.OnJoinGame;
             @JoinGame.canceled -= instance.OnJoinGame;
+            @Remove.started -= instance.OnRemove;
+            @Remove.performed -= instance.OnRemove;
+            @Remove.canceled -= instance.OnRemove;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -515,6 +555,7 @@ public partial class @UserInput: IInputActionCollection2, IDisposable
         void OnPreviousSkin(InputAction.CallbackContext context);
         void OnNextSkin(InputAction.CallbackContext context);
         void OnJoinGame(InputAction.CallbackContext context);
+        void OnRemove(InputAction.CallbackContext context);
     }
     public interface IGameplayActions
     {

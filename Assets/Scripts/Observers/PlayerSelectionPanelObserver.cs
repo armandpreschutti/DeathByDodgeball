@@ -21,25 +21,29 @@ public class PlayerSelectionPanelObserver : MonoBehaviour
     public Sprite unselectedSprite;
     public static Action<int> onEnableButton;
     public static Action<int> onDisableButton;
-    public static Action<int> onUpdateButton;
+    public static Action<int, bool> onUpdateButton;
     public bool isFilled;
 
     private void OnEnable()
     {
+        PlayerSelectionPanelBroadcaster.onJoinSelection += SendAvailibility;
         PlayerSelectionPanelBroadcaster.onSelected += DisableAvailibility;
         PlayerSelectionPanelBroadcaster.onDeselected += EnableAvailibility;
         PlayerSelectionManager.onSetMatchSlot += PreviewMatchConfigurationSlot;
+
     }
     private void OnDisable()
     {
+        PlayerSelectionPanelBroadcaster.onJoinSelection -= SendAvailibility;
         PlayerSelectionPanelBroadcaster.onSelected -= DisableAvailibility;
         PlayerSelectionPanelBroadcaster.onDeselected -= EnableAvailibility;
         PlayerSelectionManager.onSetMatchSlot -= PreviewMatchConfigurationSlot;
+
     }
 
     public void EnableAvailibility(int id)
     {
-        if(id == slotId && !isFilled)
+        if(id == slotId)
         {
             isAvailible = true;
             onEnableButton?.Invoke(slotId);
@@ -63,15 +67,59 @@ public class PlayerSelectionPanelObserver : MonoBehaviour
             panel.sprite = selectedSprite;
             buttonImage.enabled = false;
             promptText.text = "Ready!";
-            playerTagText.text = $"P{playerId}";
+            if(playerId != 0)
+            {
+                playerTagText.text = $"P{playerId}";
+            }
+            else
+            {
+                playerTagText.text = $"CPU";
+            }
+
             isFilled = true;
         }
         else
         {
-            if(isAvailible)
+            if (!isFilled)
             {
                 promptText.text = "Add AI";
             }
+
+
+        }
+
+    }
+    public void SendAvailibility(int id)
+    {
+        onUpdateButton?.Invoke(slotId, isFilled);
+    }
+
+    public void RemoveMatchConfigurationSlot(int playerId, int matchSlot, int skinId)
+    {
+        if (matchSlot == slotId)
+        {
+            previewImage.sprite = previewSkins.skins[skinId];
+            panel.sprite = selectedSprite;
+            buttonImage.enabled = false;
+            promptText.text = "Ready!";
+            if (playerId != 0)
+            {
+                playerTagText.text = $"P{playerId}";
+            }
+            else
+            {
+                playerTagText.text = $"CPU";
+            }
+
+            isFilled = true;
+        }
+        else
+        {
+            if (!isFilled)
+            {
+                promptText.text = "Add AI";
+            }
+
 
         }
 
