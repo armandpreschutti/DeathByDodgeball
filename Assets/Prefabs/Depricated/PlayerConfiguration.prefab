@@ -1099,6 +1099,8 @@ MonoBehaviour:
   _playerId: 1
   _playerReady: 0
   _playerManager: {fileID: 0}
+  _playerCostumizationSO: {fileID: 0}
+  _previewImage: {fileID: 0}
   _playerTeamPrompt: {fileID: 6438145151313172508}
   _playerReadyPrompt: {fileID: 5796442899533866054}
   _configurationCover: {fileID: 4098231824045680692}
@@ -1121,11 +1123,20 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  _exitAction:
-    m_Name: Exit
+  _exitToMainAction:
+    m_Name: Exit To Main
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 00074a87-c496-4220-bf7b-c801ad3e8dcc
+    m_Id: 7ef4ac0f-724b-4ec5-836a-7634e92a604b
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  _switchSkinAction:
+    m_Name: Switch Skin
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 7eef87ea-e8e9-4035-9f9a-deda3f55ce41
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []

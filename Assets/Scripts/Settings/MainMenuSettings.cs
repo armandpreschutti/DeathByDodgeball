@@ -14,19 +14,19 @@ public class MainMenuSettings : MonoBehaviour
     private void Start()
     {
         _eventSystem.firstSelectedGameObject = _playButton.gameObject;
-        GameManager.GetInstance().DisableJoining();
+        GameManager_Depricated.GetInstance().DisableJoining();
     }
 
     public void PlayButton()
     {
         StartCoroutine(ButtonFlash(_playButton));
-        GameManager.GetInstance().SwitchScene("MatchConfiguration");
+        GameManager_Depricated.GetInstance().SwitchScene("MatchConfiguration");
     }
     
     public void OptionsButton()
     {
         StartCoroutine(ButtonFlash(_optionsButton));
-        GameManager.GetInstance().SwitchScene("GameOptions");
+        GameManager_Depricated.GetInstance().SwitchScene("GameOptions");
     }
 
     public void ExitButton()

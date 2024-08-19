@@ -30,6 +30,7 @@ public class PlayerConfigurationController : MonoBehaviour
     public static Action<int, int, int> onSubmit;
     public static Action<int, int, int, int> onAddAi;
     public static Action<int, int, int> onSubmitAi;
+    public static Action onInitiateMatchStart;
     public bool canSelectAI;
 
     //public static Action onNewPlayer;
@@ -47,6 +48,7 @@ public class PlayerConfigurationController : MonoBehaviour
         playerInput.actions["PreviousSkin"].performed += ctx => CyclePreviousSkin();
         playerInput.actions["JoinGame"].performed += ctx => AddAI();
         playerInput.actions["Remove"].performed += ctx => RemoveSelection();
+        playerInput.actions["Start"].performed += ctx => InitiateMatchStart();
         Slot1.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked += Submit;
         Slot2.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked += Submit;
         Slot3.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked += Submit;
@@ -62,6 +64,7 @@ public class PlayerConfigurationController : MonoBehaviour
         playerInput.actions["PreviousSkin"].performed -= ctx => CyclePreviousSkin();
         playerInput.actions["JoinGame"].performed -= ctx => AddAI();
         playerInput.actions["Remove"].performed -= ctx => RemoveSelection();
+        playerInput.actions["Start"].performed -= ctx => InitiateMatchStart();
         Slot1.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked -= Submit;
         Slot2.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked -= Submit;
         Slot3.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked -= Submit;
@@ -82,6 +85,12 @@ public class PlayerConfigurationController : MonoBehaviour
         inputModule.actionsAsset = playerInput.actions;
         GetButtonAvailibility();
         SetInitialSlot();
+    }
+
+    public void InitiateMatchStart()
+    {
+        Debug.Log($"P{playerId} has pressed the 'start' button");
+        onInitiateMatchStart?.Invoke();
     }
 
     public void GetButtonAvailibility()
@@ -161,9 +170,12 @@ public class PlayerConfigurationController : MonoBehaviour
             currentSkin = 0;
             onAddAi?.Invoke(playerId, currentSlot, currentSkin, selectedSlot);
         }
-
     }
-
+    /*public void ResetAIOption()
+    {
+        canSelectAI = false;
+    }
+*/
     public void RemoveSelection()
     {
         onRemoveSelection?.Invoke(playerId,currentSlot,currentSkin);

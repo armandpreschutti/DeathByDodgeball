@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class StaminaUIObserver : MonoBehaviour
 {
 
-    [SerializeField] PlayerManager _playerManager;
+    [SerializeField] PlayerManager_Depricated _playerManager;
     [SerializeField] int _subjectId;
     [SerializeField] Slider _staminaSlider;
 

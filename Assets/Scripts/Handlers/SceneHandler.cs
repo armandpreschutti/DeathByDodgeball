@@ -15,6 +15,11 @@ public class SceneHandler : MonoBehaviour
         SceneManager.LoadScene("PlayerSelection");
     }
 
+    public void LoadGameInstance()
+    {
+        SceneManager.LoadScene("GameInstance");
+    }
+
     public void ExitGame()
     {
         Application.Quit();

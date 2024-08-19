@@ -5,7 +5,7 @@ using System;
 
 public class HealthHandler : MonoBehaviour
 {
-    [SerializeField] PlayerManager _playerManager;
+    [SerializeField] PlayerManager_Depricated _playerManager;
 
     [Header("Health")]
     [SerializeField] int _remainingLives;
@@ -42,7 +42,7 @@ public class HealthHandler : MonoBehaviour
     {
         if(_playerManager != null)
         {
-            _playerManager = GetComponent<PlayerManager>();
+            _playerManager = GetComponent<PlayerManager_Depricated>();
         }
        
     }

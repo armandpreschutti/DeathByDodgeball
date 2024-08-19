@@ -12,7 +12,7 @@ public class PlayerCostumizationSO : ScriptableObject
     public List<Sprite> team1Sprites;
     public List<Sprite> team2Sprites;
 
-    public void GetRandomSkin(PlayerManager playerManager)
+    public void GetRandomSkin(PlayerManager_Depricated playerManager)
     {
         int randomIndex = Random.Range(0, team1Skins.Count);
         playerManager.SkinId = randomIndex;
@@ -32,7 +32,7 @@ public class PlayerCostumizationSO : ScriptableObject
             return;
         }
     }
-    public void TogglePlayerSkin(PlayerManager playerManager)
+    public void TogglePlayerSkin(PlayerManager_Depricated playerManager)
     {
         if (playerManager.TeamId == 1)
         {
@@ -67,7 +67,7 @@ public class PlayerCostumizationSO : ScriptableObject
             return;
         }
     }
-    public void ToggleTeamSkin(PlayerManager playerManager)
+    public void ToggleTeamSkin(PlayerManager_Depricated playerManager)
     {
         if (playerManager.TeamId == 1)
         {

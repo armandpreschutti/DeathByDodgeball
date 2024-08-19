@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 
 public class PlayerSelectionManager : MonoBehaviour
@@ -12,10 +13,20 @@ public class PlayerSelectionManager : MonoBehaviour
     public static Action<int, int, int> onSetMatchSlot;
     public static Action<int, int, int> onRemoveMatchSlot;
     public static Action<int, bool> onResetPlayer;
+    public static Action onMatchReady;
+    public static Action onMatchInitiated;
+    public static Action onMatchAbort;
+    public static Action onMatchStart;
     public bool isMatchReady;
+    public bool isMatchStarting;
+    public PlayableDirector playableDirector;
+    public GameObject matchStartPrompt;
+    public GameObject matchInitiatedPrompt;
+
     private void Awake()
     {
         playerConfigurations = new PlayerConfigurationSO[4];
+        playableDirector= GetComponent<PlayableDirector>();
     }
 
     private void OnEnable()
@@ -23,7 +34,8 @@ public class PlayerSelectionManager : MonoBehaviour
         PlayerConfigurationController.onSubmit += AddPlayerToMatchConfiguration;
         PlayerConfigurationController.onSubmitAi += AddPlayerToMatchConfiguration;
         PlayerConfigurationController.onRemoveSelection += RemovePlayerFromMatchConfiguration;
-        
+        PlayerConfigurationController.onInitiateMatchStart += InitiateMatch;
+        PlayerConfigurationController.onRemoveSelection += AbortMatch;
     }
 
     private void OnDisable()
@@ -31,6 +43,8 @@ public class PlayerSelectionManager : MonoBehaviour
         PlayerConfigurationController.onSubmit -= AddPlayerToMatchConfiguration;
         PlayerConfigurationController.onSubmitAi -= AddPlayerToMatchConfiguration;
         PlayerConfigurationController.onRemoveSelection -= RemovePlayerFromMatchConfiguration;
+        PlayerConfigurationController.onInitiateMatchStart -= InitiateMatch;
+        PlayerConfigurationController.onRemoveSelection -= AbortMatch;
     }
 
     public void AddPlayerToMatchConfiguration(int playerId, int slotId, int skinId)
@@ -56,7 +70,7 @@ public class PlayerSelectionManager : MonoBehaviour
     }
     public void RemovePlayerFromMatchConfiguration(int playerId, int slotId, int skinId)
     {
-        if (playerConfigurations[slotId -1] != null && (playerConfigurations[slotId -1].playerId == playerId || playerConfigurations[slotId-1].playerId == 0))
+        if (playerConfigurations[slotId -1] != null && (playerConfigurations[slotId -1].playerId == playerId || playerConfigurations[slotId-1].playerId == 0) && !isMatchStarting)
         {
             if (playerConfigurations[slotId - 1] != null && (playerConfigurations[slotId - 1].playerId == playerId || playerConfigurations[slotId - 1].playerId == 0))
             {
@@ -93,12 +107,54 @@ public class PlayerSelectionManager : MonoBehaviour
         }
         if(readyBluePlayers >= 1 && readyRedPlayers >= 1)
         {
+            matchStartPrompt.SetActive(true);
             isMatchReady = true;
+            onMatchReady?.Invoke();
+
         }
         else
         {
+            matchStartPrompt.SetActive(false);
             isMatchReady = false;
+
         }
     }
-    
+
+
+    public void InitiateMatch()
+    {
+        if (isMatchReady)
+        {
+            isMatchStarting = true;
+            matchStartPrompt.SetActive(false);
+            matchInitiatedPrompt.SetActive(true);
+            playableDirector.Play();
+            onMatchInitiated?.Invoke();
+        }
+        else
+        {
+            Debug.LogError("Not enough players on both teams");
+            matchStartPrompt.SetActive(false);
+        }
+    }
+
+    public void AbortMatch(int playerId, int currentSlot, int currentSkin)
+    {
+        if(isMatchStarting) 
+        {
+            isMatchStarting = false;
+            matchStartPrompt.SetActive(true);
+            matchInitiatedPrompt.SetActive(false);
+            playableDirector.initialTime = 0.0f;
+            playableDirector.Stop();
+            onMatchAbort?.Invoke();
+        }
+
+    }
+
+    public void StartMatch()
+    {
+        //onMatchStart?.Invoke();
+
+    }
 }

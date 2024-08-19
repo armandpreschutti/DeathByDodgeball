@@ -6,7 +6,7 @@ public class StartPointHandler : MonoBehaviour
 {
     public int teamId;
     public int spawnId;
-    public PlayerManager _playerManager;
+    public PlayerManager_Depricated _playerManager;
 
     private void OnEnable()
     {
@@ -22,7 +22,7 @@ public class StartPointHandler : MonoBehaviour
     }
     public void RespawnPlayerPosition(GameObject gameObject)
     {
-        if(gameObject.GetComponent<PlayerManager>() == _playerManager)
+        if(gameObject.GetComponent<PlayerManager_Depricated>() == _playerManager)
         {
             _playerManager.transform.position = this.transform.position;
         }
@@ -34,16 +34,16 @@ public class StartPointHandler : MonoBehaviour
     }
     public void SetPlayerStartPoint()
     {
-        if(GameManager.GetInstance() != null)
+        if(GameManager_Depricated.GetInstance() != null)
         {
             if (teamId == 1)
             {
                 if (spawnId == 1)
                 {
-                    if (GameManager.GetInstance().GetComponent<LocalMatchManager>().team1[0] != null)
+                    if (GameManager_Depricated.GetInstance().GetComponent<LocalMatchManager>().team1[0] != null)
                     {
-                        GameManager.GetInstance().GetComponent<LocalMatchManager>().team1[0].transform.position = transform.position;
-                        _playerManager = GameManager.GetInstance().GetComponent<LocalMatchManager>().team1[0].GetComponent<PlayerManager>();
+                        GameManager_Depricated.GetInstance().GetComponent<LocalMatchManager>().team1[0].transform.position = transform.position;
+                        _playerManager = GameManager_Depricated.GetInstance().GetComponent<LocalMatchManager>().team1[0].GetComponent<PlayerManager_Depricated>();
                         SetPlayerDirection();
                     }
                     else
@@ -52,12 +52,12 @@ public class StartPointHandler : MonoBehaviour
                     }
 
                 }
-                else if (spawnId == 2 && GameManager.GetInstance().GetComponent<   LocalMatchManager>().team1.Count == 2)
+                else if (spawnId == 2 && GameManager_Depricated.GetInstance().GetComponent<   LocalMatchManager>().team1.Count == 2)
                 {
-                    if (GameManager.GetInstance().GetComponent<LocalMatchManager>().team1[1] != null)
+                    if (GameManager_Depricated.GetInstance().GetComponent<LocalMatchManager>().team1[1] != null)
                     {
-                        GameManager.GetInstance().GetComponent<LocalMatchManager>().team1[1].transform.position = transform.position;
-                        _playerManager = GameManager.GetInstance().GetComponent<LocalMatchManager>().team1[1].GetComponent<PlayerManager>();
+                        GameManager_Depricated.GetInstance().GetComponent<LocalMatchManager>().team1[1].transform.position = transform.position;
+                        _playerManager = GameManager_Depricated.GetInstance().GetComponent<LocalMatchManager>().team1[1].GetComponent<PlayerManager_Depricated>();
                         SetPlayerDirection();
                     }
                     else
@@ -75,10 +75,10 @@ public class StartPointHandler : MonoBehaviour
             {
                 if (spawnId == 1)
                 {
-                    if (GameManager.GetInstance().GetComponent<LocalMatchManager>().team2[0] != null)
+                    if (GameManager_Depricated.GetInstance().GetComponent<LocalMatchManager>().team2[0] != null)
                     {
-                        GameManager.GetInstance().GetComponent<LocalMatchManager>().team2[0].transform.position = transform.position;
-                        _playerManager = GameManager.GetInstance().GetComponent<LocalMatchManager>().team2[0].GetComponent<PlayerManager>();
+                        GameManager_Depricated.GetInstance().GetComponent<LocalMatchManager>().team2[0].transform.position = transform.position;
+                        _playerManager = GameManager_Depricated.GetInstance().GetComponent<LocalMatchManager>().team2[0].GetComponent<PlayerManager_Depricated>();
                         SetPlayerDirection();
                     }
                     else
@@ -86,12 +86,12 @@ public class StartPointHandler : MonoBehaviour
                         Debug.LogWarning("Player T2P1 not found");
                     }
                 }
-                else if (spawnId == 2 && GameManager.GetInstance().GetComponent<   LocalMatchManager>().team2.Count == 2)
+                else if (spawnId == 2 && GameManager_Depricated.GetInstance().GetComponent<   LocalMatchManager>().team2.Count == 2)
                 {
-                    if (GameManager.GetInstance().GetComponent<LocalMatchManager>().team2[1] != null)
+                    if (GameManager_Depricated.GetInstance().GetComponent<LocalMatchManager>().team2[1] != null)
                     {
-                        GameManager.GetInstance().PreMatchManager._team2[1].transform.position = transform.position;
-                        _playerManager = GameManager.GetInstance().GetComponent<LocalMatchManager>().team2[1].GetComponent<PlayerManager>();
+                        GameManager_Depricated.GetInstance().PreMatchManager._team2[1].transform.position = transform.position;
+                        _playerManager = GameManager_Depricated.GetInstance().GetComponent<LocalMatchManager>().team2[1].GetComponent<PlayerManager_Depricated>();
                         SetPlayerDirection();
                     }
                     else

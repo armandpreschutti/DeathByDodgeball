@@ -15,6 +15,8 @@ public class PlayerSelectionPanelObserver : MonoBehaviour
     public Image panel;
     public Image previewImage;
     public Image buttonImage;
+    public Sprite bSymbol;
+    public Sprite xSymbol;
     public TextMeshProUGUI promptText;
     public TextMeshProUGUI playerTagText;
     public Sprite selectedSprite;
@@ -32,6 +34,7 @@ public class PlayerSelectionPanelObserver : MonoBehaviour
         PlayerSelectionPanelBroadcaster.onDeselected += EnableAvailibility;
         PlayerSelectionManager.onSetMatchSlot += PreviewMatchConfigurationSlot;
         PlayerSelectionManager.onRemoveMatchSlot += RemoveMatchConfigurationSlot;
+        PlayerSelectionManager.onMatchInitiated += FinalizeSlot;
     }
     private void OnDisable()
     {
@@ -40,6 +43,7 @@ public class PlayerSelectionPanelObserver : MonoBehaviour
         PlayerSelectionPanelBroadcaster.onDeselected -= EnableAvailibility;
         PlayerSelectionManager.onSetMatchSlot -= PreviewMatchConfigurationSlot;
         PlayerSelectionManager.onRemoveMatchSlot -= RemoveMatchConfigurationSlot;
+        PlayerSelectionManager.onMatchInitiated -= FinalizeSlot;
     }
 
     public void EnableAvailibility(int id)
@@ -66,15 +70,19 @@ public class PlayerSelectionPanelObserver : MonoBehaviour
         {
             previewImage.sprite = previewSkins.skins[skinId];
             panel.sprite = selectedSprite;
-            buttonImage.enabled = false;
-            promptText.text = "Ready!";
-            if(playerId != 0)
+            buttonImage.sprite = bSymbol;
+            if (playerId != 0)
             {
                 playerTagText.text = $"P{playerId}";
+                promptText.text = "Move";
+/*                buttonImage.enabled = false;*/
             }
             else
             {
                 playerTagText.text = $"CPU";
+                promptText.text = "Remove";
+
+/*                buttonImage.enabled = true;*/
             }
 
             isFilled = true;
@@ -83,6 +91,7 @@ public class PlayerSelectionPanelObserver : MonoBehaviour
         {
             if (!isFilled)
             {
+                buttonImage.sprite = xSymbol;
                 promptText.text = "Add AI";
             }
 
@@ -109,8 +118,16 @@ public class PlayerSelectionPanelObserver : MonoBehaviour
         }
         if (!isFilled)
         {
+            buttonImage.sprite = xSymbol;
             promptText.text = "Add AI";
         }
+    }
 
+    public void FinalizeSlot()
+    {
+/*        if(isFilled)
+        {
+            promptText.text = "Ready!";
+        }*/
     }
 }

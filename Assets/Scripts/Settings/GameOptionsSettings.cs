@@ -29,7 +29,7 @@ public class GameOptionsSettings : MonoBehaviour
         Debug.Log("Music Toggled");
         musicActivated = !musicActivated;
         ToggleText(musicActivated, _musicText);
-        GameManager.GetInstance().ToggleMusic(musicActivated);
+        GameManager_Depricated.GetInstance().ToggleMusic(musicActivated);
     }
 
     public void SFXButton()
@@ -41,7 +41,7 @@ public class GameOptionsSettings : MonoBehaviour
 
     public void ReturnToMenuButton()
     {
-        GameManager.GetInstance().SwitchScene("MainMenu");
+        GameManager_Depricated.GetInstance().SwitchScene("MainMenu");
     }
 
   /*  IEnumerator ButtonFlash(Button button)

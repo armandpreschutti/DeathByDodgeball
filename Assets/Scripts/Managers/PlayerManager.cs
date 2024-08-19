@@ -1,9 +1,8 @@
-using JetBrains.Annotations;
 using System;
-using TMPro;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -15,135 +14,24 @@ public class PlayerManager : MonoBehaviour
 
     [Header("Components")]
     [SerializeField] PlayerInput _playerInput;
-    [SerializeField] PlayerStateMachine _playerStateMachine;
-    [SerializeField] HealthHandler _healthHandler;
-    [SerializeField] AudioSource _playerAudio;
     public Animator anim;
-    public GameObject readyPrompt;
-    public GameObject exitPrompt;
 
-    public PlayerStateMachine PlayerStateMachine { get { return _playerStateMachine; } }
-    public HealthHandler HealthHandler { get { return _healthHandler; } }  
-    public AudioSource PlayerAudio { get { return _playerAudio; } }
 
-    public int PlayerId { get { return _playerId;} set { _playerId = value; } }
-    public int TeamId { get { return _teamId; } set { _teamId = value; } }
-    public int SkinId { get { return _skinId; } set { _skinId = value; } }
-    public bool IsInvicible { get { return _isInvicible; } set {  _isInvicible = value; } }
-    public Color TeamColor { get { return _teamColor; } set { _teamColor = value; } }
-
-    public static event Action<PlayerManager> OnPlayerDeath;
-    public static event Action OnPlayerPause;
-    public InputAction _pauseAction;
-    
-    private void OnEnable()
-    {
-        LocalMatchManager.onActivatePlayers += ActivatePlayer;
-        LocalMatchManager.onDeactivatePlayers+= DeactivatePlayer;
-        LocalMatchManager.onResetPlayers += ResetPlayer;
-        _pauseAction.performed += PauseGame;
-    }
-    private void OnDisable()
-    {
-        LocalMatchManager.onActivatePlayers -= ActivatePlayer;
-        LocalMatchManager.onDeactivatePlayers -= DeactivatePlayer;
-        LocalMatchManager.onResetPlayers -= ResetPlayer;
-        _pauseAction.performed -= PauseGame;
-    }
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
         SetPlayerComponents();
     }
 
-    public void ActivatePlayer()
-    {
-        GetComponent<SpriteRenderer>().enabled = true;
-        TogglePlayerInvicibility(false);
-        _playerStateMachine.IsMobile = true;
-        GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-    }
-
-    public void DeactivatePlayer()
-    {
-        TogglePlayerInvicibility(true);
-        _playerStateMachine.IsMobile = false;
-        _playerStateMachine.DestroyBall();
-        GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-    }
-
     public void ResetPlayer()
     {
         _playerInput.SwitchCurrentActionMap("Player");
-        _healthHandler.ResetLives();
-        _playerStateMachine.IsDead = false;
-        _playerStateMachine.DestroyBall();
     }
-  
-    public void TogglePlayerInvicibility(bool value)
-    {
-        if (_playerStateMachine != null)
-        {
-            _playerStateMachine.IsInvicible = value;
-        }
-        if (_healthHandler != null)
-        {
-            _healthHandler.IsInvicible = value;
-        }
 
-    }
+    
     public void SetPlayerComponents()
     {
         _playerInput = GetComponent<PlayerInput>();
-        _playerStateMachine = GetComponent<PlayerStateMachine>();
-        _healthHandler = GetComponent<HealthHandler>();
-        _playerAudio = GetComponent<AudioSource>();
-        _pauseAction = _playerInput.actions["Pause"];
         anim = GetComponent<Animator>();
-    }
-
-    public void ConfigurePlayerInstance(int playerId)
-    {
-        _playerId= playerId;
-        switch (_playerId)
-        {
-            case 1:
-                _teamId = 1;
-                break;
-            case 2:
-                _teamId = 2;
-                break;
-            case 3:
-                _teamId = 1;
-                break;
-            case 4:
-                _teamId = 2;
-                break;
-            default:
-                _teamId = 1;
-                break;
-        }
-    }
-
-    public void Die()
-    {
-        OnPlayerDeath?.Invoke(this);
-    }
-    public void HidePlayer(bool value)
-    {
-        GetComponent<SpriteRenderer>().enabled = !value;
-        if(value)
-        {
-            DeactivatePlayer();
-        }
-        else
-        {
-            ActivatePlayer();
-        }
-    }
-    public void PauseGame(InputAction.CallbackContext context)
-    {
-        Debug.Log("Pause logged in PlayerManager");
-        OnPlayerPause?.Invoke();
     }
 }

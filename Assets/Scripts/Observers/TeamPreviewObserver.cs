@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class TeamPreviewObserver : MonoBehaviour
 {
-    [SerializeField] PlayerConfigurationHandler _playerConfigurationHandler;
+    [SerializeField] PlayerConfigurationHandler_Depricated _playerConfigurationHandler;
     
     private void OnEnable()
     {
-        PlayerConfigurationHandler.onPlayerReady += PreviewPlayer;
+        PlayerConfigurationHandler_Depricated.onPlayerReady += PreviewPlayer;
     }
     private void OnDisable()
     {
-        PlayerConfigurationHandler.onPlayerReady -= PreviewPlayer;
+        PlayerConfigurationHandler_Depricated.onPlayerReady -= PreviewPlayer;
     }
 
-    public void PreviewPlayer(PlayerConfigurationHandler playerConfig, bool ready)
+    public void PreviewPlayer(PlayerConfigurationHandler_Depricated playerConfig, bool ready)
     {
 
         

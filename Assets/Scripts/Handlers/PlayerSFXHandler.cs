@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerSFXHandler : MonoBehaviour
 {
-    [SerializeField] PlayerManager _playerManager;
+    [SerializeField] PlayerManager_Depricated _playerManager;
     [SerializeField] AudioClip _currentSFX;
     [SerializeField] AudioClip _hurtSFX;
     [SerializeField] AudioClip _throwSFX;
@@ -74,7 +74,7 @@ public class PlayerSFXHandler : MonoBehaviour
     {
         if(_playerManager!= null)
         {
-            _playerManager = GetComponent<PlayerManager>();
+            _playerManager = GetComponent<PlayerManager_Depricated>();
         }
         else
         {

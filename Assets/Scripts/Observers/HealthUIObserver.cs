@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class HealthUIObserver : MonoBehaviour
 {
-    [SerializeField] PlayerManager _playerManager;
+    [SerializeField] PlayerManager_Depricated _playerManager;
     [SerializeField] int _subjectId;
     [SerializeField] Image _heart1;
     [SerializeField] Image _heart2;
@@ -26,7 +26,7 @@ public class HealthUIObserver : MonoBehaviour
         {
             _playerManager.GetComponent<PlayerStateMachine>().OnRespawn += UpdateLivesUI;
         }
-        PlayerManager.OnPlayerDeath += CheckPlayerDeath;
+        PlayerManager_Depricated.OnPlayerDeath += CheckPlayerDeath;
         LocalMatchManager.onResetPlayers += ResetUIelements;
     }
 
@@ -36,7 +36,7 @@ public class HealthUIObserver : MonoBehaviour
         {
             _playerManager.GetComponent<PlayerStateMachine>().OnRespawn -= UpdateLivesUI;
         }
-        PlayerManager.OnPlayerDeath -= CheckPlayerDeath;
+        PlayerManager_Depricated.OnPlayerDeath -= CheckPlayerDeath;
         LocalMatchManager.onResetPlayers -= ResetUIelements;
     }
 
@@ -58,7 +58,7 @@ public class HealthUIObserver : MonoBehaviour
         }
     }
 
-    public void CheckPlayerDeath(PlayerManager playerManager)
+    public void CheckPlayerDeath(PlayerManager_Depricated playerManager)
     { 
         if(playerManager == _playerManager)
         {
@@ -73,15 +73,15 @@ public class HealthUIObserver : MonoBehaviour
     {
         if (GameObject.Find($"Player{_subjectId}") != null)
         {
-            _playerManager = GameObject.Find($"Player{_subjectId}").GetComponent<PlayerManager>();
+            _playerManager = GameObject.Find($"Player{_subjectId}").GetComponent<PlayerManager_Depricated>();
             _playerIcon.sprite =  _playerManager.GetComponent<SpriteRenderer>().sprite;
             if(_playerManager.TeamId == 1)
             {
-                _backGround.color = GameManager.GetInstance().team1Color;
+                _backGround.color = GameManager_Depricated.GetInstance().team1Color;
             }
             else if( _playerManager.TeamId == 2)
             {
-                _backGround.color = GameManager.GetInstance().team2Color;
+                _backGround.color = GameManager_Depricated.GetInstance().team2Color;
             }
             else
             {

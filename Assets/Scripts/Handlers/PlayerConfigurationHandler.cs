@@ -5,12 +5,12 @@ using UnityEngine.InputSystem.UI;
 using TMPro;
 using UnityEngine.UI;
 
-public class PlayerConfigurationHandler : MonoBehaviour
+public class PlayerConfigurationHandler_Depricated : MonoBehaviour
 {
     [Header("General")]
     [SerializeField] int _playerId;
     [SerializeField] bool _playerReady = false;
-    [SerializeField] PlayerManager _playerManager;
+    [SerializeField] PlayerManager_Depricated _playerManager;
     [SerializeField] PlayerCostumizationSO _playerCostumizationSO;
     [SerializeField] Image _previewImage;
 
@@ -28,24 +28,24 @@ public class PlayerConfigurationHandler : MonoBehaviour
     [SerializeField] InputAction _switchSkinAction;
 
     public bool PlayerReady { get { return _playerReady; } }
-    public PlayerManager PlayerManager { get { return _playerManager; } }
+    public PlayerManager_Depricated PlayerManager { get { return _playerManager; } }
 
-    public static event Action<PlayerConfigurationHandler, bool> onPlayerReady;
-    public static event Action<PlayerConfigurationHandler> onPlayerToggleTeam;
-    public static event Action<PlayerConfigurationHandler> onPlayerJoinedSession;
+    public static event Action<PlayerConfigurationHandler_Depricated, bool> onPlayerReady;
+    public static event Action<PlayerConfigurationHandler_Depricated> onPlayerToggleTeam;
+    public static event Action<PlayerConfigurationHandler_Depricated> onPlayerJoinedSession;
     public static event Action onPlayerExit;
 
 
     private void OnEnable()
     {
-        GameManager.onPlayerFound += InitializePlayerConfiguration;
+       // GameManager.onPlayerFound += InitializePlayerConfiguration;
         PlayerReadyObserver.onPrimePlayer += PrimePlayerForMatch;
         PlayerExitObserver.onPlayerExit += PromptPlayerExit; 
     }
 
     private void OnDisable()
     {
-        GameManager.onPlayerFound -= InitializePlayerConfiguration;
+       // GameManager.onPlayerFound -= InitializePlayerConfiguration;
         PlayerReadyObserver.onPrimePlayer -= PrimePlayerForMatch;
         PlayerExitObserver.onPlayerExit -= PromptPlayerExit;
         _switchTeamAction.performed -= TogglePlayerTeam;
@@ -61,7 +61,7 @@ public class PlayerConfigurationHandler : MonoBehaviour
             Vector3 randomVector = new Vector3(UnityEngine.Random.Range(-6f, 6f), UnityEngine.Random.Range(-2f, 2f), 0f);
             playerInput.transform.position = randomVector;
             playerInput.name = $"Player{_playerId}";
-            _playerManager = playerInput.GetComponent<PlayerManager>();
+            _playerManager = playerInput.GetComponent<PlayerManager_Depricated>();
             _playerManager.ConfigurePlayerInstance(_playerId);
             UpdateUIText(_playerTeamPrompt, _playerManager.TeamId.ToString());
             _playerCostumizationSO.GetRandomSkin(_playerManager);
@@ -115,7 +115,7 @@ public class PlayerConfigurationHandler : MonoBehaviour
         prompt.text = message ;
     }
 
-    public void PrimePlayerForMatch(PlayerManager playerManager, bool value)
+    public void PrimePlayerForMatch(PlayerManager_Depricated playerManager, bool value)
     {
         if(playerManager == _playerManager)
         {
@@ -150,7 +150,7 @@ public class PlayerConfigurationHandler : MonoBehaviour
             _switchTeamAction.performed += TogglePlayerTeam;
         }
     }
-    public void PromptPlayerExit(PlayerManager playerManager, bool value)
+    public void PromptPlayerExit(PlayerManager_Depricated playerManager, bool value)
     {
         if (value)
         {

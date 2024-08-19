@@ -13,34 +13,34 @@ public class PreMatchManager : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerConfigurationHandler.onPlayerJoinedSession += AddPlayerToMatch;
-        PlayerConfigurationHandler.onPlayerReady += AddToReadyPlayers;
-        PlayerConfigurationHandler.onPlayerReady += SetPlayerTeam;
-        PlayerConfigurationHandler.onPlayerReady += CheckStartGame;
-        PlayerConfigurationHandler.onPlayerExit += ExitMatchConfiguration;
+        PlayerConfigurationHandler_Depricated.onPlayerJoinedSession += AddPlayerToMatch;
+        PlayerConfigurationHandler_Depricated.onPlayerReady += AddToReadyPlayers;
+        PlayerConfigurationHandler_Depricated.onPlayerReady += SetPlayerTeam;
+        PlayerConfigurationHandler_Depricated.onPlayerReady += CheckStartGame;
+        PlayerConfigurationHandler_Depricated.onPlayerExit += ExitMatchConfiguration;
     }
 
     private void OnDisable()
     {
-        PlayerConfigurationHandler.onPlayerJoinedSession -= AddPlayerToMatch;
-        PlayerConfigurationHandler.onPlayerReady -= AddToReadyPlayers;
-        PlayerConfigurationHandler.onPlayerReady -= SetPlayerTeam;
-        PlayerConfigurationHandler.onPlayerReady -= CheckStartGame;
-        PlayerConfigurationHandler.onPlayerExit -= ExitMatchConfiguration;
+        PlayerConfigurationHandler_Depricated.onPlayerJoinedSession -= AddPlayerToMatch;
+        PlayerConfigurationHandler_Depricated.onPlayerReady -= AddToReadyPlayers;
+        PlayerConfigurationHandler_Depricated.onPlayerReady -= SetPlayerTeam;
+        PlayerConfigurationHandler_Depricated.onPlayerReady -= CheckStartGame;
+        PlayerConfigurationHandler_Depricated.onPlayerExit -= ExitMatchConfiguration;
 
     }
     private void Start()
     {
-        GameManager.GetInstance().EnableJoining();
+        GameManager_Depricated.GetInstance().EnableJoining();
     }
 
-    private void AddPlayerToMatch(PlayerConfigurationHandler playerConfig)
+    private void AddPlayerToMatch(PlayerConfigurationHandler_Depricated playerConfig)
     {
         _currentPlayers.Add(playerConfig.PlayerManager.gameObject);
         playerConfig.PlayerManager.TogglePlayerInvicibility(true);
     }
 
-    private void AddToReadyPlayers(PlayerConfigurationHandler playerConfig, bool value)
+    private void AddToReadyPlayers(PlayerConfigurationHandler_Depricated playerConfig, bool value)
     {
         if(value)
         {
@@ -57,7 +57,7 @@ public class PreMatchManager : MonoBehaviour
 
     }
 
-    private void SetPlayerTeam(PlayerConfigurationHandler playerConfig, bool value)
+    private void SetPlayerTeam(PlayerConfigurationHandler_Depricated playerConfig, bool value)
     {
         if (playerConfig.PlayerManager.TeamId == 1 )
         {
@@ -88,7 +88,7 @@ public class PreMatchManager : MonoBehaviour
             return;
         }
     }
-    public void CheckStartGame(PlayerConfigurationHandler playerConfig, bool value)
+    public void CheckStartGame(PlayerConfigurationHandler_Depricated playerConfig, bool value)
     {
         if(_team1.Count != 0 && _team2.Count != 0)
         {
@@ -119,7 +119,7 @@ public class PreMatchManager : MonoBehaviour
                 yield return new WaitForSeconds(1);*/
         yield return new WaitForSeconds(1);
         CreateLocalMatchInstance();
-        GameManager.GetInstance().SwitchScene("Gameplay");
+        GameManager_Depricated.GetInstance().SwitchScene("Gameplay");
     }
     public void CreateLocalMatchInstance()
     {
@@ -133,7 +133,7 @@ public class PreMatchManager : MonoBehaviour
     {
         foreach (GameObject player in _currentPlayers)
         {
-            player.GetComponent<PlayerManager>().DeactivatePlayer();
+            player.GetComponent<PlayerManager_Depricated>().DeactivatePlayer();
         }
         yield return new WaitForSeconds(1.5f);
         foreach (GameObject player in _currentPlayers)
@@ -144,14 +144,14 @@ public class PreMatchManager : MonoBehaviour
         _readyPlayers.Clear();
         _team1.Clear();
         _team2.Clear();
-        GameManager.GetInstance().DisableJoining();
+        GameManager_Depricated.GetInstance().DisableJoining();
         Destroy(this);
     }
 
     public void ExitMatchConfiguration()
     {
         StartCoroutine(ResetConfigurationSettings());
-        GameManager.GetInstance().SwitchScene("MainMenu");
+        GameManager_Depricated.GetInstance().SwitchScene("MainMenu");
 
     }
 

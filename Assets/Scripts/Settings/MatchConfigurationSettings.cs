@@ -20,26 +20,26 @@ public class MatchConfigurationSettings : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManagerUIObserver.onSceneTransitionEnd += GameManager.GetInstance().CreatePreMatchInstance;
+        GameManagerUIObserver.onSceneTransitionEnd += GameManager_Depricated.GetInstance().CreatePreMatchInstance;
     }
 
     private void OnDisable()
     {
-        GameManagerUIObserver.onSceneTransitionEnd -= GameManager.GetInstance().CreatePreMatchInstance;
+        GameManagerUIObserver.onSceneTransitionEnd -= GameManager_Depricated.GetInstance().CreatePreMatchInstance;
 
     }
     private void Start()
     {
-        GameManager.GetInstance().DisableJoining();
+        GameManager_Depricated.GetInstance().DisableJoining();
     }
     public void EnterLocalGameplaySession()
     {
-        GameManager.GetInstance().PreMatchManager.CreateLocalMatchInstance();
-        GameManager.GetInstance().SwitchScene("Gameplay");
+        GameManager_Depricated.GetInstance().PreMatchManager.CreateLocalMatchInstance();
+        GameManager_Depricated.GetInstance().SwitchScene("Gameplay");
     }
     public void ReturnToMainMenu()
     {
         onReturnToMenu?.Invoke();
-        GameManager.GetInstance().SwitchScene("MainMenu");
+        GameManager_Depricated.GetInstance().SwitchScene("MainMenu");
     }
 }

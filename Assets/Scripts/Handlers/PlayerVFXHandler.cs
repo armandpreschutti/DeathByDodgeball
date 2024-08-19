@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerVFXHandler : MonoBehaviour
 {
 
-    [SerializeField] PlayerManager _playerManager;
+    [SerializeField] PlayerManager_Depricated _playerManager;
     [SerializeField] ParticleSystem _dodgeVFX;
     [SerializeField] ParticleSystem _hurtVFX;
 
@@ -13,7 +13,7 @@ public class PlayerVFXHandler : MonoBehaviour
     {
         if (_playerManager != null)
         {
-            _playerManager = GetComponent<PlayerManager>();
+            _playerManager = GetComponent<PlayerManager_Depricated>();
         }
     }
     private void OnDisable()

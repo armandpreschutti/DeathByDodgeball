@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.UI;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 
 public class PlayerSelectionPanelBroadcaster : MonoBehaviour
@@ -20,6 +21,8 @@ public class PlayerSelectionPanelBroadcaster : MonoBehaviour
     public MultiplayerEventSystem eventSystem;
     public PlayerConfigurationController playerConfigurationController;
     public bool isFilled;
+    public bool isLockedIn;
+
 
     private void Awake()
     {
@@ -37,6 +40,8 @@ public class PlayerSelectionPanelBroadcaster : MonoBehaviour
         PlayerConfigurationController.onSubmitAi += SetAIPanelSelection;
         PlayerSelectionManager.onSetMatchSlot += SetPanelSelection;
         PlayerSelectionManager.onRemoveMatchSlot += ResetPanelSelection;
+        PlayerSelectionManager.onMatchInitiated += LockSelection;
+        PlayerSelectionManager.onMatchAbort += UnlockSelection;
     }
 
     private void OnDisable()
@@ -49,6 +54,9 @@ public class PlayerSelectionPanelBroadcaster : MonoBehaviour
         PlayerConfigurationController.onSubmitAi -= SetAIPanelSelection;
         PlayerSelectionManager.onSetMatchSlot -= SetPanelSelection;
         PlayerSelectionManager.onRemoveMatchSlot -= ResetPanelSelection;
+        PlayerSelectionManager.onMatchInitiated -= LockSelection;
+        PlayerSelectionManager.onMatchAbort -= UnlockSelection;
+
     }
 
     public void SelectSlot()
@@ -60,6 +68,7 @@ public class PlayerSelectionPanelBroadcaster : MonoBehaviour
     public void DeselectSlot()
     {
         onDeselected?.Invoke(slotId);
+        playerConfigurationController.canSelectAI = false;
         panel.SetActive(false);
     }
 
@@ -94,7 +103,7 @@ public class PlayerSelectionPanelBroadcaster : MonoBehaviour
     {
         if(currentSlot == slotId && pId ==  playerId)
         {
-            if (!playerConfigurationController.isPlayerSelected && !isFilled)
+            if (!playerConfigurationController.isPlayerSelected && !isFilled && !isLockedIn)
             {
                 panel.SetActive(true);
             }
@@ -106,7 +115,7 @@ public class PlayerSelectionPanelBroadcaster : MonoBehaviour
     }
     public void SetAIPanelState(int playerId, int currentSlot, int currentSkin, int selectedSlot)
     {
-        if(currentSlot == slotId && selectedSlot != slotId && eventSystem.currentSelectedGameObject == panelButton.gameObject && !isFilled)
+        if(currentSlot == slotId && selectedSlot != slotId && eventSystem.currentSelectedGameObject == panelButton.gameObject && !isFilled && !isLockedIn)
         {
             panel.SetActive(true);
         }
@@ -115,7 +124,7 @@ public class PlayerSelectionPanelBroadcaster : MonoBehaviour
     public void SetAIPanelSelection(int pId, int currentSlot, int currentSkin)
     {
        
-        if(currentSlot == slotId && !isFilled)
+        if(currentSlot == slotId && !isFilled && !isLockedIn)
         {
             panel.SetActive(false);
             DisableButton(slotId);
@@ -124,7 +133,7 @@ public class PlayerSelectionPanelBroadcaster : MonoBehaviour
     public void SetPanelSelection(int pId, int currentSlot, int currentSkin)
     {
 
-        if (currentSlot == slotId)
+        if (currentSlot == slotId && !isLockedIn)
         {
             panel.SetActive(false);
             DisableButton(slotId);
@@ -148,7 +157,16 @@ public class PlayerSelectionPanelBroadcaster : MonoBehaviour
                 panel.SetActive(true);
             }
 
-        }
-        
+        }        
+    }
+
+    public void LockSelection()
+    {
+        isLockedIn = true;
+    }
+
+    public void UnlockSelection()
+    {
+        isLockedIn = false;
     }
 }

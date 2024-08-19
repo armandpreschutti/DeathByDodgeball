@@ -25,7 +25,7 @@ public class TitleMenuSettings : MonoBehaviour
     public void SwitchToMainMenu()
     {
         _startButton.color = _flashColor;
-        GameManager.GetInstance().SwitchScene("MainMenu");
+        GameManager_Depricated.GetInstance().SwitchScene("MainMenu");
     }
    /* public void DisableStartButton()
     {

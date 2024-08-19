@@ -27,7 +27,7 @@ public class LocalMatchManager : MonoBehaviour
         SceneManager.sceneLoaded += InitializeScene;
         GameManagerUIObserver.onSceneTransitionEnd += InitializeMatch;
         GameManagerUIObserver.onMatchCountdownEnd += BeginMatch;
-        PlayerManager.OnPlayerDeath += ElminiatePlayer;
+        PlayerManager_Depricated.OnPlayerDeath += ElminiatePlayer;
     }
 
     private void OnDisable()
@@ -35,7 +35,7 @@ public class LocalMatchManager : MonoBehaviour
         SceneManager.sceneLoaded -= InitializeScene;
         GameManagerUIObserver.onSceneTransitionEnd -= InitializeMatch;
         GameManagerUIObserver.onMatchCountdownEnd -= BeginMatch;
-        PlayerManager.OnPlayerDeath -= ElminiatePlayer;
+        PlayerManager_Depricated.OnPlayerDeath -= ElminiatePlayer;
     }
   
     public void InitializeScene(Scene scene, LoadSceneMode mode)
@@ -86,7 +86,7 @@ public class LocalMatchManager : MonoBehaviour
         onActivatePlayers?.Invoke();
     }
 
-    public void ElminiatePlayer(PlayerManager playerManager)
+    public void ElminiatePlayer(PlayerManager_Depricated playerManager)
     {
         Debug.Log($"{playerManager.name} is recognized as dead");
         if(playerManager.TeamId == 1)
@@ -131,7 +131,7 @@ public class LocalMatchManager : MonoBehaviour
     public IEnumerator ContinueToPostGame()
     {
         yield return new WaitForSeconds(2f);
-        GameManager.GetInstance().SwitchScene("PostGameplay");
+        GameManager_Depricated.GetInstance().SwitchScene("PostGameplay");
     }
 
 }

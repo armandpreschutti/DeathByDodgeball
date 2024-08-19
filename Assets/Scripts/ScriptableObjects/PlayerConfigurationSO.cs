@@ -9,9 +9,10 @@ public class PlayerConfigurationSO : ScriptableObject
     public int teamId;
     public int skinID;
 
+   
+
     public void SetTeam(int slot)
     {
-        Debug.Log("SO Function was called correctly");
         if (slot == 1 || slot == 2)
         {
             teamId = 1;
@@ -21,4 +22,5 @@ public class PlayerConfigurationSO : ScriptableObject
             teamId = 2;
         }
     }
+
 }

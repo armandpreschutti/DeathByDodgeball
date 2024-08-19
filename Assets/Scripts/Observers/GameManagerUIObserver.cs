@@ -15,31 +15,31 @@ public class GameManagerUIObserver : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.onStartSceneTransition+= StartSceneTransition;
-        GameManager.onEndSceneTransition += EndSceneTransition;
+        GameManager_Depricated.onStartSceneTransition+= StartSceneTransition;
+        GameManager_Depricated.onEndSceneTransition += EndSceneTransition;
         LocalMatchManager.onMatchCountdown += StartMatchCountdown;
         LocalMatchManager.onMatchOver += PlayStartMatchSFX;
     }
     private void OnDisable()
     {
-        GameManager.onStartSceneTransition-= StartSceneTransition;
-        GameManager.onEndSceneTransition -= EndSceneTransition;
+        GameManager_Depricated.onStartSceneTransition-= StartSceneTransition;
+        GameManager_Depricated.onEndSceneTransition -= EndSceneTransition;
         LocalMatchManager.onMatchCountdown -= StartMatchCountdown;
         LocalMatchManager.onMatchOver -= PlayStartMatchSFX;
     }
 
     public void StartSceneTransition()
     {
-        GameManager.GetInstance().Anim.Play("Start");
+        GameManager_Depricated.GetInstance().Anim.Play("Start");
     }
     public void EndSceneTransition()
     {
-        GameManager.GetInstance().Anim.Play("End");
+        GameManager_Depricated.GetInstance().Anim.Play("End");
     }
 
     public void StartMatchCountdown()
     {
-        GameManager.GetInstance().Anim.Play("MatchCountdown");
+        GameManager_Depricated.GetInstance().Anim.Play("MatchCountdown");
     }
 
     public void BroadcastMatchCountdownEnd()
@@ -59,17 +59,17 @@ public class GameManagerUIObserver : MonoBehaviour
 
     public void PlayGetReadySFX()
     {
-        GameManager.GetInstance().GameManagerAudio.clip = _getReadySFX;
-        GameManager.GetInstance().GameManagerAudio.Play();
+        GameManager_Depricated.GetInstance().GameManagerAudio.clip = _getReadySFX;
+        GameManager_Depricated.GetInstance().GameManagerAudio.Play();
     }
     public void PlayCountSFX()
     {
-        GameManager.GetInstance().GameManagerAudio.clip = _countSFX;
-        GameManager.GetInstance().GameManagerAudio.Play();
+        GameManager_Depricated.GetInstance().GameManagerAudio.clip = _countSFX;
+        GameManager_Depricated.GetInstance().GameManagerAudio.Play();
     }
     public void PlayStartMatchSFX()
     {
-        GameManager.GetInstance().GameManagerAudio.clip = _startMatchSFX;
-        GameManager.GetInstance().GameManagerAudio.Play();
+        GameManager_Depricated.GetInstance().GameManagerAudio.clip = _startMatchSFX;
+        GameManager_Depricated.GetInstance().GameManagerAudio.Play();
     }
 }

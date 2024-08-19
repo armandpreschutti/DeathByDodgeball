@@ -15,39 +15,39 @@ public class GameOverSettings : MonoBehaviour
     public void Start()
     {
         _eventSystem.firstSelectedGameObject = _replayButton.gameObject;
-        foreach (GameObject player in GameManager.GetInstance().GetComponent<LocalMatchManager>().currentPlayers)
+        foreach (GameObject player in GameManager_Depricated.GetInstance().GetComponent<LocalMatchManager>().currentPlayers)
         {
-            player.GetComponent<PlayerManager>().HidePlayer(true);
+            player.GetComponent<PlayerManager_Depricated>().HidePlayer(true);
         }
         DisplayWinnerText();
     }
 
     public void ReturnToMenu()
     {
-        GameManager.GetInstance().SwitchScene("MainMenu");
-        foreach(GameObject player in GameManager.GetInstance().GetComponent<LocalMatchManager>().currentPlayers)
+        GameManager_Depricated.GetInstance().SwitchScene("MainMenu");
+        foreach(GameObject player in GameManager_Depricated.GetInstance().GetComponent<LocalMatchManager>().currentPlayers)
         {
             Destroy(player.gameObject);
         }
-        Destroy(GameManager.GetInstance().GetComponent<LocalMatchManager>());
-        Destroy(GameManager.GetInstance().GetComponent<PreMatchManager>());
+        Destroy(GameManager_Depricated.GetInstance().GetComponent<LocalMatchManager>());
+        Destroy(GameManager_Depricated.GetInstance().GetComponent<PreMatchManager>());
     }
 
     public void ReplayGame()
     {
-        GameManager.GetInstance().SwitchScene("Gameplay");
+        GameManager_Depricated.GetInstance().SwitchScene("Gameplay");
     }
     public void DisplayWinnerText()
     {
        /* winPrompt.text = $"Team {GameManager.GetInstance().GetComponent<LocalMatchManager>().winningTeam} wins!";*/
-        if(GameManager.GetInstance().GetComponent<LocalMatchManager>().winningTeam == 1)
+        if(GameManager_Depricated.GetInstance().GetComponent<LocalMatchManager>().winningTeam == 1)
         {
             winPrompt.text = "Blue Team Wins!";
             winPrompt.color = Color.blue;
             blueSprites.SetActive(true);
 
         }
-        else if (GameManager.GetInstance().GetComponent<LocalMatchManager>().winningTeam == 2)
+        else if (GameManager_Depricated.GetInstance().GetComponent<LocalMatchManager>().winningTeam == 2)
         {
             winPrompt.text = "Red Team Wins!";
             winPrompt.color = Color.red;
