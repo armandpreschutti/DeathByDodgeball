@@ -19,7 +19,7 @@ public class PlayerEquippedState : PlayerBaseState
     public override void UpdateState()
     {
         CheckSwitchState();
-       
+        Ctx.CurrentSuperState = "Equipped State";
     }
 
     public override void FixedUpdateState()

@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerUnequippedState : PlayerBaseState
+public class PlayerActiveState : PlayerBaseState
 {
 
-    public PlayerUnequippedState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory) : base(currentContext, playerStateFactory)
+    public PlayerActiveState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory) : base(currentContext, playerStateFactory)
     {
         IsRootState= true;
         InitializeSubState();
@@ -20,6 +20,7 @@ public class PlayerUnequippedState : PlayerBaseState
     public override void UpdateState()
     {
         CheckSwitchState();
+        Ctx.CurrentSuperState = "Active State";
     }
 
     public override void FixedUpdateState()
@@ -35,10 +36,7 @@ public class PlayerUnequippedState : PlayerBaseState
 
     public override void CheckSwitchState() 
     {
-        if(Ctx.IsEquipped)
-        {
-            SwitchState(Factory.Equipped());
-        }
+
     }
 
     public override void InitializeSubState()

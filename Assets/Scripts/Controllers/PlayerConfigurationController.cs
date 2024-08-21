@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerConfigurationController : MonoBehaviour
 {
@@ -31,6 +32,7 @@ public class PlayerConfigurationController : MonoBehaviour
     public static Action<int, int, int, int> onAddAi;
     public static Action<int, int, int> onSubmitAi;
     public static Action onInitiateMatchStart;
+    public static Action onDestroyAllPlayers;
     public bool canSelectAI;
 
     //public static Action onNewPlayer;
@@ -42,6 +44,7 @@ public class PlayerConfigurationController : MonoBehaviour
 
     private void OnEnable()
     {
+        SceneManager.sceneUnloaded += DisableConfigurationController;
         PlayerSelectionManager.onResetPlayer += ResetPlayer;
         PlayerSelectionPanelBroadcaster.onSelected += SetCurrentSelection;
         playerInput.actions["NextSkin"].performed += ctx => CycleNextSkin();
@@ -49,15 +52,11 @@ public class PlayerConfigurationController : MonoBehaviour
         playerInput.actions["JoinGame"].performed += ctx => AddAI();
         playerInput.actions["Remove"].performed += ctx => RemoveSelection();
         playerInput.actions["Start"].performed += ctx => InitiateMatchStart();
-        Slot1.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked += Submit;
-        Slot2.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked += Submit;
-        Slot3.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked += Submit;
-        Slot4.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked += Submit;
-
-        
     }
+
     private void OnDisable()
     {
+        SceneManager.sceneUnloaded -= DisableConfigurationController;
         PlayerSelectionManager.onResetPlayer -= ResetPlayer;
         PlayerSelectionPanelBroadcaster.onSelected -= SetCurrentSelection;
         playerInput.actions["NextSkin"].performed -= ctx => CycleNextSkin();
@@ -65,17 +64,26 @@ public class PlayerConfigurationController : MonoBehaviour
         playerInput.actions["JoinGame"].performed -= ctx => AddAI();
         playerInput.actions["Remove"].performed -= ctx => RemoveSelection();
         playerInput.actions["Start"].performed -= ctx => InitiateMatchStart();
-        Slot1.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked -= Submit;
-        Slot2.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked -= Submit;
-        Slot3.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked -= Submit;
-        Slot4.GetComponent<PlayerSelectionPanelBroadcaster>().onButtonClicked -= Submit;
+    }
 
+    public void DisableConfigurationController(Scene scene)
+    {
+        if(scene.name == "PlayerSelection")
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    public void DestroyAllPlayers()
+    {
+        onDestroyAllPlayers?.Invoke();
     }
 
     public void SetInitialPlayerValues()
     {
+        transform.parent.name = $"Player{playerId}";
         playerSelectionManager = FindObjectOfType<PlayerSelectionManager>();
-        playerInput = GetComponent<PlayerInput>();
+        playerInput = GetComponentInParent<PlayerInput>();
         playerId = playerInput.playerIndex + 1 ;
         Slot1.name = $"P{playerId}Button1";
         Slot2.name = $"P{playerId}Button2";
@@ -85,6 +93,7 @@ public class PlayerConfigurationController : MonoBehaviour
         inputModule.actionsAsset = playerInput.actions;
         GetButtonAvailibility();
         SetInitialSlot();
+        transform.parent.name = $"Player{playerId}";
     }
 
     public void InitiateMatchStart()

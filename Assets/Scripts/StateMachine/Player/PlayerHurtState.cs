@@ -15,8 +15,7 @@ public class PlayerHurtState : PlayerBaseState
     public override void EnterState() 
     {
         Ctx.OnHurt?.Invoke();
-        Ctx.Rb.velocity = Vector2.zero;
-        Ctx.StartCoroutine(Hurt());
+       // Ctx.StartCoroutine(Hurt());
         Ctx.Anim.SetBool("Hit", true);
         Ctx.Anim.Play("Hit");
     }
@@ -24,6 +23,7 @@ public class PlayerHurtState : PlayerBaseState
     public override void UpdateState()
     {
         CheckSwitchState();
+        Ctx.CurrentSubState = "Hurt State";
     }
 
     public override void FixedUpdateState()
@@ -35,15 +35,10 @@ public class PlayerHurtState : PlayerBaseState
     public override void ExitState() 
     {
         Ctx.Anim.SetBool("Hit", false);
-        Ctx.Rb.velocity = Vector2.zero;
     }
 
     public override void CheckSwitchState() 
     {
-      /*  if(!Ctx.IsHurt)
-        {
-            SwitchState(Factory.Idle());
-        }*/
         if (Ctx.IsDead)
         {
             SwitchState(Factory.Death());
@@ -55,9 +50,4 @@ public class PlayerHurtState : PlayerBaseState
 
     }
 
-    IEnumerator Hurt()
-    {
-        yield return new WaitForSeconds(Ctx.HurtDuration);
-        Ctx.IsHurt = false;
-    }
 }

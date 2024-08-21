@@ -8,19 +8,24 @@ public class PlayerConfigurationSO : ScriptableObject
     public int playerId;
     public int teamId;
     public int skinID;
-
+    public int slotId;
    
 
-    public void SetTeam(int slot)
+    public void SetTeam()
     {
-        if (slot == 1 || slot == 2)
+        if (slotId == 1 || slotId == 2)
         {
             teamId = 1;
         }
-        else if(slot == 3 || slot == 4)
+        else if(slotId == 3 || slotId == 4)
         {
             teamId = 2;
         }
+    }
+
+    public void ResetTeam()
+    {
+        teamId = 0;
     }
 
 }

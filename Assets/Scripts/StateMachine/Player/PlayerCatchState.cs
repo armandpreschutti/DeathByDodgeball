@@ -13,13 +13,15 @@ public class PlayerCatchState : PlayerBaseState
     public override void EnterState()
     {
         Ctx.IsCatchPressed = false;
-        Ctx.StartCoroutine(Catch());
+        Ctx.IsCatching = true;
+        Ctx.Anim.SetBool("IsCatching", true);
+        Ctx.OnCatch?.Invoke();
     }
 
     public override void UpdateState()
     {
         CheckSwitchState();
-        Ctx.Rb.velocity = new Vector2(Ctx.MoveDirection.x * 0f, Ctx.MoveDirection.y * 0f);
+        Ctx.CurrentSubState = "Catch State";
     }
 
     public override void FixedUpdateState()
@@ -29,8 +31,8 @@ public class PlayerCatchState : PlayerBaseState
 
     public override void ExitState()
     {
-        Ctx.IsCatching = false;
         Ctx.Anim.SetBool("IsCatching", false);
+        Ctx.IsCatching = false;
     }
 
     public override void CheckSwitchState()
@@ -43,21 +45,14 @@ public class PlayerCatchState : PlayerBaseState
         {
             SwitchState(Factory.Idle());
         }
+        else if(Ctx.IsDead)
+        {
+            SwitchState(Factory.Death());
+        }
     }
 
     public override void InitializeSubState()
     {
 
     }
-
-    public IEnumerator Catch()
-    {
-        Ctx.IsCatching = true;
-        Ctx.Anim.SetBool("IsCatching", true);
-        Ctx.OnCatch?.Invoke();
-        yield return new WaitForSeconds(Ctx.CatchDuration);
-        Ctx.Anim.SetBool("IsCatching", false);
-        Ctx.IsCatching = false;
-    }
-
 }

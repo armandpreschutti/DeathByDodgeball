@@ -7,11 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-/*    [SerializeField] PlayerInputManager _playerInputManager;
-    [SerializeField] PreMatchManager _preMatchManager;
-    public PlayerInputManager PlayerInputManager { get { return _playerInputManager; } }*/
-
     public static GameManager gameInstance;
+    public GameObject[] currentPlayers;
 
     public static GameManager GetInstance()
     {
@@ -24,28 +21,45 @@ public class GameManager : MonoBehaviour
         {
             gameInstance = this;
             DontDestroyOnLoad(gameObject);
-            SetGameComponents();
         }
         else
         {
             Destroy(gameObject);
         }
     }
-    public void Start()
-    {
 
+    private void OnEnable()
+    {
+        PlayerConfigurationController.onDestroyAllPlayers += ClearPlayersFromGame;
+        PlayerManager.onJoin += AddPlayerToGame;
+    }
+    private void OnDisable()
+    {
+        PlayerConfigurationController.onDestroyAllPlayers -= ClearPlayersFromGame;
+        PlayerManager.onJoin -= AddPlayerToGame;
     }
 
-    public void Update()
+    public void AddPlayerToGame(int playerId, GameObject playerObject)
     {
-      
+        // Find the first available (null) index in the currentPlayers array
+        for (int i = 0; i < currentPlayers.Length; i++)
+        {
+            if (currentPlayers[i] == null)
+            {
+                currentPlayers[i] = playerObject;
 
+                return; // Exit the function once the player is added
+            }
+        }
     }
-    public void SetGameComponents()
+
+    public void ClearPlayersFromGame()
     {
-        //_playerInputManager = GetComponent<PlayerInputManager>();
+        for (int i = 0; i < currentPlayers.Length; i++)
+        {
+            Destroy(currentPlayers[i]);
+            currentPlayers[i] = null;
+        }
     }
 
-  
- 
 }

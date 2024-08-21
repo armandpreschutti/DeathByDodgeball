@@ -720,6 +720,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: -4605070213423293015}
+        m_TargetAssemblyTypeName: PlayerConfigurationController, Assembly-CSharp
+        m_MethodName: DestroyAllPlayers
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 6398396082594318120}
         m_TargetAssemblyTypeName: SceneHandler, Assembly-CSharp
         m_MethodName: LoadMainMenu
@@ -3022,7 +3034,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7068681732559896287}
-  - component: {fileID: -4863972910169740804}
   - component: {fileID: -4605070213423293015}
   m_Layer: 0
   m_Name: PlayerConfigurationController
@@ -3047,36 +3058,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-4863972910169740804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5977462096592424909}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 232aaa4fc64a85841bc4f54ba855ef60, type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 6617592264917743548}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 1
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: UI
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!114 &-4605070213423293015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3089,7 +3070,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be9dbe9253ab9364db1c3bce6b6be6ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInput: {fileID: -4863972910169740804}
+  playerInput: {fileID: 0}
   playerSelectionManager: {fileID: 0}
   playerId: 0
   eventSystem: {fileID: 8569190321618534355}

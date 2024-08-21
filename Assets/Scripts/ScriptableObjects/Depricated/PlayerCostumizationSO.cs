@@ -7,7 +7,7 @@ using UnityEngine.UI;
 [CreateAssetMenu (menuName = "DBDB/Player Costumization")]
 public class PlayerCostumizationSO : ScriptableObject
 {
-    public List<AnimatorOverrideController> team1Skins;
+/*    public List<AnimatorOverrideController> team1Skins;
     public List<AnimatorOverrideController> team2Skins;
     public List<Sprite> team1Sprites;
     public List<Sprite> team2Sprites;
@@ -84,5 +84,5 @@ public class PlayerCostumizationSO : ScriptableObject
             Debug.Log("Something went wrong trying to increase skin index");
             return;
         }
-    }
+    }*/
 }

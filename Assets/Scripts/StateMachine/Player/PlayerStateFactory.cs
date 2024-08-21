@@ -30,13 +30,18 @@ public class PlayerStateFactory
     {
         return new PlayerIdleState(_context, this);
     }
+
+    public PlayerBaseState Move()
+    {
+        return new PlayerMoveState(_context, this);
+    }
     public PlayerBaseState Hurt()
     {
         return new PlayerHurtState(_context, this);
     }
     public PlayerBaseState Unequipped()     
     {
-        return new PlayerUnequippedState(_context, this);
+        return new PlayerActiveState(_context, this);
     }
 
     public PlayerBaseState Death()

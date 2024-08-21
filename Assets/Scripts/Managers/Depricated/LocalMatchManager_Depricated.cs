@@ -24,18 +24,18 @@ public class LocalMatchManager : MonoBehaviour
     
     private void OnEnable()
     {
-        SceneManager.sceneLoaded += InitializeScene;
+       /* SceneManager.sceneLoaded += InitializeScene;
         GameManagerUIObserver.onSceneTransitionEnd += InitializeMatch;
         GameManagerUIObserver.onMatchCountdownEnd += BeginMatch;
-        PlayerManager_Depricated.OnPlayerDeath += ElminiatePlayer;
+        PlayerManager_Depricated.OnPlayerDeath += ElminiatePlayer;*/
     }
 
     private void OnDisable()
-    {
+    {/*
         SceneManager.sceneLoaded -= InitializeScene;
         GameManagerUIObserver.onSceneTransitionEnd -= InitializeMatch;
         GameManagerUIObserver.onMatchCountdownEnd -= BeginMatch;
-        PlayerManager_Depricated.OnPlayerDeath -= ElminiatePlayer;
+        PlayerManager_Depricated.OnPlayerDeath -= ElminiatePlayer;*/
     }
   
     public void InitializeScene(Scene scene, LoadSceneMode mode)

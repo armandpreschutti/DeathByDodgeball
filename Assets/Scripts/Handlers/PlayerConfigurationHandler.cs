@@ -64,7 +64,7 @@ public class PlayerConfigurationHandler_Depricated : MonoBehaviour
             _playerManager = playerInput.GetComponent<PlayerManager_Depricated>();
             _playerManager.ConfigurePlayerInstance(_playerId);
             UpdateUIText(_playerTeamPrompt, _playerManager.TeamId.ToString());
-            _playerCostumizationSO.GetRandomSkin(_playerManager);
+           // _playerCostumizationSO.GetRandomSkin(_playerManager);
             _previewImage.sprite = _playerManager.GetComponent<SpriteRenderer>().sprite;
             _configurationCover.SetActive(false);
             InitializePlayerConfigurationControl(playerInput);
@@ -87,7 +87,7 @@ public class PlayerConfigurationHandler_Depricated : MonoBehaviour
                 _playerManager.TeamId = 1;
                 break;
         }
-        _playerCostumizationSO.ToggleTeamSkin(_playerManager);
+     //   _playerCostumizationSO.ToggleTeamSkin(_playerManager);
         _previewImage.sprite = _playerManager.GetComponent<SpriteRenderer>().sprite;
         onPlayerToggleTeam?.Invoke(this);
         UpdateUIText(_playerTeamPrompt, _playerManager.TeamId.ToString());
@@ -95,7 +95,7 @@ public class PlayerConfigurationHandler_Depricated : MonoBehaviour
 
     public void TogglePlayerSkin(InputAction.CallbackContext context)
     {
-        _playerCostumizationSO.TogglePlayerSkin(_playerManager);
+      //  _playerCostumizationSO.TogglePlayerSkin(_playerManager);
         _previewImage.sprite = _playerManager.GetComponent<SpriteRenderer>().sprite;
     }
 

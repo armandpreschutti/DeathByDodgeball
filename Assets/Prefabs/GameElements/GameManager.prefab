@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5298344005680597871}
   - component: {fileID: 8808849185306992032}
   m_Layer: 0
-  m_Name: GameManager(Depricated)
+  m_Name: GameManager
   m_TagString: GameElement
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,5 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6854c4743bf5e1429b2df659d6ca1ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerInputManager: {fileID: 0}
-  _preMatchManager: {fileID: 0}
+  currentPlayers:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

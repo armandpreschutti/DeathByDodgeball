@@ -32,8 +32,8 @@ public class PlayerManager_Depricated : MonoBehaviour
     public bool IsInvicible { get { return _isInvicible; } set {  _isInvicible = value; } }
     public Color TeamColor { get { return _teamColor; } set { _teamColor = value; } }
 
-    public static event Action<PlayerManager_Depricated> OnPlayerDeath;
-    public static event Action OnPlayerPause;
+/*    public static event Action<PlayerManager_Depricated> OnPlayerDeath;
+    public static event Action OnPlayerPause;*/
     public InputAction _pauseAction;
     
     private void OnEnable()
@@ -57,54 +57,54 @@ public class PlayerManager_Depricated : MonoBehaviour
     }
 
     public void ActivatePlayer()
-    {
+    {/*
         GetComponent<SpriteRenderer>().enabled = true;
         TogglePlayerInvicibility(false);
         _playerStateMachine.IsMobile = true;
-        GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        GetComponent<Rigidbody2D>().velocity = Vector3.zero;*/
     }
 
     public void DeactivatePlayer()
     {
-        TogglePlayerInvicibility(true);
+/*        TogglePlayerInvicibility(true);
         _playerStateMachine.IsMobile = false;
         _playerStateMachine.DestroyBall();
-        GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        GetComponent<Rigidbody2D>().velocity = Vector3.zero;*/
     }
 
     public void ResetPlayer()
     {
-        _playerInput.SwitchCurrentActionMap("Player");
+/*        _playerInput.SwitchCurrentActionMap("Player");
         _healthHandler.ResetLives();
         _playerStateMachine.IsDead = false;
-        _playerStateMachine.DestroyBall();
+        _playerStateMachine.DestroyBall();*/
     }
   
     public void TogglePlayerInvicibility(bool value)
     {
-        if (_playerStateMachine != null)
+      /*  if (_playerStateMachine != null)
         {
-            _playerStateMachine.IsInvicible = value;
+            //_playerStateMachine.IsInvicible = value;
         }
         if (_healthHandler != null)
         {
             _healthHandler.IsInvicible = value;
-        }
+        }*/
 
     }
     public void SetPlayerComponents()
     {
-        _playerInput = GetComponent<PlayerInput>();
+       /* _playerInput = GetComponent<PlayerInput>();
         _playerStateMachine = GetComponent<PlayerStateMachine>();
         _healthHandler = GetComponent<HealthHandler>();
         _playerAudio = GetComponent<AudioSource>();
         _pauseAction = _playerInput.actions["Pause"];
-        anim = GetComponent<Animator>();
+        anim = GetComponent<Animator>();*/
     }
 
     public void ConfigurePlayerInstance(int playerId)
     {
-        _playerId= playerId;
+       /* _playerId= playerId;
         switch (_playerId)
         {
             case 1:
@@ -122,16 +122,16 @@ public class PlayerManager_Depricated : MonoBehaviour
             default:
                 _teamId = 1;
                 break;
-        }
+        }*/
     }
 
     public void Die()
     {
-        OnPlayerDeath?.Invoke(this);
+      // OnPlayerDeath?.Invoke(this);
     }
     public void HidePlayer(bool value)
     {
-        GetComponent<SpriteRenderer>().enabled = !value;
+      /*  GetComponent<SpriteRenderer>().enabled = !value;
         if(value)
         {
             DeactivatePlayer();
@@ -139,11 +139,11 @@ public class PlayerManager_Depricated : MonoBehaviour
         else
         {
             ActivatePlayer();
-        }
+        }*/
     }
     public void PauseGame(InputAction.CallbackContext context)
     {
-        Debug.Log("Pause logged in PlayerManager");
-        OnPlayerPause?.Invoke();
+/*        Debug.Log("Pause logged in PlayerManager");
+        OnPlayerPause?.Invoke();*/
     }
 }

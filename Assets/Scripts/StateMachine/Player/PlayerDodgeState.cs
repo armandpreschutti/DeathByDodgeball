@@ -14,12 +14,17 @@ public class PlayerDodgeState : PlayerBaseState
     public override void EnterState()
     {
         Ctx.IsDodgePressed = false;
-        Ctx.StartCoroutine(Dodge());
+
+        Ctx.IsDodging = true;
+        Ctx.Anim.SetBool("IsDodging", true);
     }
 
     public override void UpdateState()
     {
         CheckSwitchState();
+        Ctx.CurrentSubState = "Dodge State";
+
+        Ctx.transform.Translate(Ctx.MoveDirection * Ctx.DodgeSpeed * Time.deltaTime);
     }
 
     public override void FixedUpdateState()
@@ -30,19 +35,22 @@ public class PlayerDodgeState : PlayerBaseState
 
     public override void ExitState() 
     {
-
+        Ctx.IsDodging = false;
+        Ctx.Anim.SetBool("IsDodging", false);
     }
 
     public override void CheckSwitchState() 
     {
         if(Ctx.IsDodging == false)
         {
-            SwitchState(Factory.Idle());
-        }
-        if (Ctx.IsHurt)
-        {
-            Ctx.IsDodging = false;
-            SwitchState(Factory.Hurt());
+            if(Ctx.MoveInput != Vector2.zero)
+            {
+                SwitchState(Factory.Move());
+            }
+            else
+            {
+                SwitchState(Factory.Idle());
+            }
         }
     }
 
@@ -51,32 +59,4 @@ public class PlayerDodgeState : PlayerBaseState
 
     }
 
-    IEnumerator Dodge()
-    {
-        Ctx.IsDodging = true;
-        Ctx.Anim.SetBool("IsDodging", true);
-
-        if (!Ctx.IsInvicible)
-        {
-            Ctx.CurrentStamina -= 20;
-        }
-
-        Ctx.OnDodge?.Invoke();
-        Vector2 direction = Ctx.MoveDirection.normalized * Ctx.DodgeSpeed;
-        float startTime = Time.time;
-
-        while (Time.time < startTime + Ctx.DodgeDuration)
-        {
-            if (Ctx.IsHurt)
-            {
-                break;
-            }
-
-            Ctx.Rb.velocity = direction;
-            yield return null;
-        }
-
-        Ctx.Anim.SetBool("IsDodging", false);
-        Ctx.IsDodging = false;
-    }
 }

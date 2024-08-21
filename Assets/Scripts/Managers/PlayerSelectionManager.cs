@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class PlayerSelectionManager : MonoBehaviour
 {
     public PlayerConfigurationSO[] playerConfigurations;
+    public PlayerInputManager playerInputManager;
     public static Action<int, int, int> onSetMatchSlot;
     public static Action<int, int, int> onRemoveMatchSlot;
     public static Action<int, bool> onResetPlayer;
@@ -27,6 +28,7 @@ public class PlayerSelectionManager : MonoBehaviour
     {
         playerConfigurations = new PlayerConfigurationSO[4];
         playableDirector= GetComponent<PlayableDirector>();
+        playerInputManager = GetComponent<PlayerInputManager>();
     }
 
     private void OnEnable()
@@ -55,6 +57,7 @@ public class PlayerSelectionManager : MonoBehaviour
         // Assign values to the new object (replace with actual properties)
         newPlayerConfig.playerId = playerId;
         newPlayerConfig.skinID = skinId;
+        newPlayerConfig.slotId = slotId;
 
         // Ensure the array has enough space
         if (playerConfigurations.Length <= slotId)
@@ -94,7 +97,7 @@ public class PlayerSelectionManager : MonoBehaviour
 
             if (playerConfigurations[i]!= null)
             {
-                playerConfigurations[i].SetTeam(i + 1);
+                playerConfigurations[i].SetTeam();
                 if (playerConfigurations[i].teamId == 1)
                 {
                     readyBluePlayers++;
@@ -154,7 +157,7 @@ public class PlayerSelectionManager : MonoBehaviour
 
     public void StartMatch()
     {
-        //onMatchStart?.Invoke();
+       
 
     }
 }

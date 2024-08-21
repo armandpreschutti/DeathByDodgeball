@@ -12,24 +12,30 @@ public class PlayerThrowState : PlayerBaseState
     {
         Ctx.Anim.SetBool("IsThrowing", true);
         Ctx.IsThrowing = true;
-        Ctx.StartCoroutine(Throw());
+        Ctx.OnThrow?.Invoke();
+        Ctx.UnequipBall(Ctx.EquippedBall);
     }
 
     public override void UpdateState()
     {
         CheckSwitchState();
+        Ctx.CurrentSubState = "Throw State";
+
         SetPlayerDirection();
     }
 
     public override void FixedUpdateState()
     {
-/*        Ctx.Rb.velocity = new Vector2(Ctx.AimDirection.x * Ctx.CurrentThrowPower /7f, 0f);*/
-        Ctx.Rb.velocity = new Vector2(Ctx.MoveDirection.x * 5, Ctx.MoveDirection.y * 5);
+
     }
 
     public override void ExitState()
     {
-       
+        Ctx.Anim.SetBool("IsThrowing", false);
+        Ctx.IsThrowing = false;
+        Ctx.HoldPosition = null;
+        Ctx.CurrentThrowPower = Ctx.MinThrowPower;
+
     }
 
     public override void CheckSwitchState()
@@ -38,10 +44,6 @@ public class PlayerThrowState : PlayerBaseState
         {
             SwitchState(Factory.Idle());
         }
-        if(Ctx.IsHurt) 
-        {
-            SwitchState(Factory.Hurt());
-        }
     }
 
     public override void InitializeSubState()
@@ -49,37 +51,6 @@ public class PlayerThrowState : PlayerBaseState
 
     }
 
-    public IEnumerator Throw()
-    {
-   /*     float startTime = Time.time;
-
-        while (Time.time < startTime + .25f)
-        {
-            if (Ctx.IsHurt)
-            {
-                Ctx.IsThrowing = false;
-                break;
-            }
-
-            yield return null;
-        }*/
-        
-
-        if (!Ctx.IsInvicible)
-        {
-            Ctx.CurrentStamina -= Ctx.CurrentThrowPower;
-        }
-        Ctx.OnThrow?.Invoke();
-        Ctx.EquippedBall.GetComponent<BallStateMachine>().EnterActiveState(Ctx.CurrentThrowPower);
-        Ctx.EquippedBall.GetComponent<BallStateMachine>().Rb.AddForce(Ctx.AimDirection * Ctx.CurrentThrowPower, ForceMode2D.Impulse);
-        Ctx.UnequipBall(Ctx.EquippedBall);
-        yield return new WaitForSeconds(Ctx.ThrowDuration);
-        Ctx.HoldPosition = null;
-        Ctx.CurrentThrowPower = Ctx.MinThrowPower;
-        Ctx.Anim.SetBool("IsThrowing", false);
-        Ctx.IsThrowing = false;
-
-    }
     public void SetPlayerDirection()
     {
         bool flipped = Ctx.AimDirection.x < 0;

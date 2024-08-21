@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 2263679329731230058}
   - component: {fileID: 4652121607540620213}
   - component: {fileID: 4417571979888718514}
-  - component: {fileID: -8647111331786247953}
+  - component: {fileID: -1374249663423183657}
   m_Layer: 6
-  m_Name: Ball
+  m_Name: Ball_Depricated
   m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -151,7 +151,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.35
---- !u!114 &-8647111331786247953
+--- !u!114 &-1374249663423183657
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -160,9 +160,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1461552479495024368}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1c6ff0834723444da53c1d2c1a2052d, type: 3}
+  m_Script: {fileID: 11500000, guid: d1da6971a5ef76545ac6992fd74fcd9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _col: {fileID: 0}
+  _rb: {fileID: 0}
+  _spriteRenderer: {fileID: 0}
+  _normalBallVFX: {fileID: 8415722646236332487}
+  _superBallVFX: {fileID: 2671472614532509387}
+  _ballExplosionVFX: {fileID: 3986500930379919405, guid: 9aa9159bc6bb91743b42ffd9fdc8ce36, type: 3}
+  _explosionImpact: {fileID: 5452249288527948992, guid: 742706624b00861478d06c9b9059fcfe, type: 3}
+  _ballSprite: {fileID: 21300000, guid: d303eee9b114007488fdd22799d094a6, type: 3}
+  _bombSprite: {fileID: 21300000, guid: d8c2dc95ba6a65b48b7805002724a353, type: 3}
+  _parent: {fileID: 0}
+  _ballDamage: 0
+  _knockBackPower: 10
 --- !u!1 &3091680637538156359
 GameObject:
   m_ObjectHideFlags: 0

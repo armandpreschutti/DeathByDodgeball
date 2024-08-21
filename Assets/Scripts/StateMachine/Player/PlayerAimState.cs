@@ -14,57 +14,48 @@ public class PlayerAimState : PlayerBaseState
 
     public override void EnterState()
     { 
-        Ctx.PlayerThrowBar.gameObject.SetActive(true);
         Ctx.CurrentThrowPower = Ctx.MinThrowPower;
         Ctx.IsAiming= true;
         Ctx.Anim.SetBool("IsAiming", true);
-        Ctx.AimingObject.SetActive(true);
     }
 
     public override void UpdateState()
     {
         CheckSwitchState();
+        Ctx.CurrentSubState = "Aim State";
+
         SetAimDirection();
         SetThrowPower();
+        Ctx.transform.Translate(Ctx.MoveDirection * (Ctx.CurrentThrowPower >= Ctx.MaxThrowPower ? Ctx.AimSpeed : Ctx.MoveSpeed) * Time.deltaTime);
     }
 
     public override void FixedUpdateState()
     {
-        if (Ctx.CurrentThrowPower >= Ctx.MaxThrowPower)
-        {
-            Ctx.Rb.velocity = new Vector2(Ctx.MoveDirection.x * Ctx.AimSpeed, Ctx.MoveDirection.y * Ctx.AimSpeed);
-        }
-        else
-        {
-            Ctx.Rb.velocity = new Vector2(Ctx.MoveDirection.x * Ctx.IdleSpeed, Ctx.MoveDirection.y * Ctx.IdleSpeed);
-        }
+      
     }
 
     public override void ExitState() 
     {
         Ctx.HoldPosition = null;
-        Ctx.PlayerThrowBar.fillRect.GetComponent<Image>().color = Color.white;
-        Ctx.PlayerThrowBar.gameObject.SetActive(false);
         Ctx.IsAiming = false;
         Ctx.Anim.SetBool("IsAiming", false);
-        Ctx.AimingObject.SetActive(false);
 
     }
 
     public override void CheckSwitchState()
     {
-        if (!Ctx.IsAimPressed)
+        if (!Ctx.IsThrowPressed)
         {
             SwitchState(Factory.Throw());
         }
-        else if(Ctx.IsHurt)
+        else if (Ctx.IsDead)
         {
-            Ctx.IsAimPressed = false;
-            SwitchState(Factory.Hurt());
+            Ctx.IsThrowPressed = false;
+            SwitchState(Factory.Death());
         }
         else if(Ctx.IsDodgePressed) 
         {
-            Ctx.IsAimPressed = false;
+            Ctx.IsThrowPressed = false;
             SwitchState(Factory.Dodge());
         }
     }
@@ -81,34 +72,15 @@ public class PlayerAimState : PlayerBaseState
         bool flipped;
         if (Ctx.AimInput.magnitude > .75f)
         {
-            Debug.Log("manual aiming");
-            if (Ctx.AimInput.x < 0)
-            {
-                flipped = true;
-            }
-            else
-            {
-                flipped = false;
-            }
+            flipped = Ctx.AimInput.x < 0 ? true : false;
         }
         else
         {
-            Debug.Log("Auto aiming");
-            if (Ctx.transform.position.x > 0f)
-            {
-                flipped = true;
-            }
-            else
-            {
-                flipped = false;
-            }
+            flipped = Ctx.transform.position.x > 0f ? true : false;
         }
         Ctx.GetComponent<SpriteRenderer>().flipX = flipped;
         Ctx.HoldPosition = flipped ? Ctx.HoldRightPosition : Ctx.HoldLeftPosition;
-        Ctx.EquippedBall.GetComponent<SpriteRenderer>().flipX = flipped;
         Ctx.AimDirection = new Vector3(flipped ? -1 : 1, 0, 0);
-        Ctx.AimingObject.transform.localPosition = Ctx.AimDirection + new Vector3(flipped ? - 10f : 10f, .25f, 0);
-        Ctx.PlayerThrowBar.transform.localPosition = new Vector3(flipped ? 400 : -400, 0, 0);
 
         if (Ctx.IsEquipped)
         {
@@ -118,29 +90,11 @@ public class PlayerAimState : PlayerBaseState
     }
     public void SetThrowPower()
     {
-        if (!Ctx.IsThrowing)
+        if (Ctx.CurrentThrowPower >= Ctx.MaxThrowPower)
         {
-
-            if (Ctx.CurrentThrowPower >= Ctx.MaxThrowPower)
-            {
-                Ctx.CurrentThrowPower = Ctx.SuperThrowPower;
-                Ctx.PlayerThrowBar.fillRect.GetComponent<Image>().color = Color.red;
-                Ctx.EquippedBall.GetComponent<BallStateMachine>().SetSprite(Ctx.CurrentThrowPower);
-            }
-
-            if (Ctx.CurrentThrowPower >= Ctx.CurrentStamina)
-            {
-                Ctx.CurrentStamina = 0;
-            }
-
-            Ctx.CurrentThrowPower += Ctx.ThrowPowerIncreaseRate * Time.deltaTime;
-            Ctx.PlayerThrowBar.value = Ctx.CurrentThrowPower;
-
+            Ctx.CurrentThrowPower = Ctx.SuperThrowPower;
         }
-        else
-        {
-            return;
-        }
+        Ctx.CurrentThrowPower += Ctx.ThrowPowerIncreaseRate * Time.deltaTime;
     }
     
 }

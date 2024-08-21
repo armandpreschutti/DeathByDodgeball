@@ -53,14 +53,14 @@ public class GameManager_Depricated : MonoBehaviour
 
     private void OnEnable()
     {
-        SceneManager.sceneLoaded += InitializeScene;
-        PlayerManager_Depricated.OnPlayerPause += PauseGame;
+/*        SceneManager.sceneLoaded += InitializeScene;
+        //PlayerManager_Depricated.OnPlayerPause += PauseGame;*/
     }
 
     private void OnDisable()
     {
-        SceneManager.sceneLoaded -= InitializeScene;
-        PlayerManager_Depricated.OnPlayerPause += PauseGame;
+/*        SceneManager.sceneLoaded -= InitializeScene;
+        PlayerManager_Depricated.OnPlayerPause += PauseGame;*/
     }
 
     public void Start()

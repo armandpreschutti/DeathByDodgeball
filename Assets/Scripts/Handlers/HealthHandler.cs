@@ -84,7 +84,7 @@ public class HealthHandler : MonoBehaviour
     {
         yield return new WaitForSeconds(_respawnDelay);
         _playerManager.PlayerStateMachine.IsDead = false;
-        _playerManager.PlayerStateMachine.CurrentStamina = _playerManager.PlayerStateMachine.MaxStamina;
+       // _playerManager.PlayerStateMachine.CurrentStamina = _playerManager.PlayerStateMachine.MaxStamina;
         _onRespawn.Invoke(this.gameObject);
         StartCoroutine(StartRespawnInvincibility());
     }

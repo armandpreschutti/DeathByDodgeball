@@ -46,7 +46,7 @@ public class BallActiveState : BallBaseState
                     bool hitDirection = _ctx.transform.position.x > 0;
                     collider.transform.GetComponent<PlayerManager_Depricated>().PlayerStateMachine.IsHurt = true;
                     collider.transform.GetComponent<PlayerManager_Depricated>().HealthHandler.KillPlayer(_ctx.BallDamage);
-                    collider.GetComponent<PlayerManager_Depricated>().PlayerStateMachine.Rb.AddForce(new Vector3(hitDirection ? 1 : -1, 0, 0) * (_ctx.BallDamage * _ctx.KnockBackPower), ForceMode2D.Force);
+                   // collider.GetComponent<PlayerManager_Depricated>().PlayerStateMachine.Rb.AddForce(new Vector3(hitDirection ? 1 : -1, 0, 0) * (_ctx.BallDamage * _ctx.KnockBackPower), ForceMode2D.Force);
                     if (_ctx.BallDamage >= 35f)
                     {
                         _ctx.InstantiateBallExplosion();

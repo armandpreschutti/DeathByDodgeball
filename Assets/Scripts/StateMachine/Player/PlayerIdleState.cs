@@ -18,19 +18,12 @@ public class PlayerIdleState : PlayerBaseState
     public override void UpdateState()
     {
         CheckSwitchState();
-
-        if (Ctx.MoveDirection.magnitude > .65 && !Ctx.IsThrowing)
-        {
-            bool flipped = Ctx.MoveDirection.x < 0f;
-
-            Ctx.GetComponent<SpriteRenderer>().flipX = flipped;
-        }
-        
+        Ctx.CurrentSubState = "Idle State";
     }
 
     public override void FixedUpdateState()
     { 
-        Ctx.Rb.velocity = new Vector2(Ctx.MoveDirection.x * Ctx.IdleSpeed, Ctx.MoveDirection.y * Ctx.IdleSpeed);
+
     }
 
     public override void ExitState()
@@ -40,11 +33,15 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void CheckSwitchState() 
     {
-        if (Ctx.IsDodgePressed)
+        if(Ctx.MoveInput != Vector2.zero)
+        {
+            SwitchState(Factory.Move());
+        }
+        else if (Ctx.IsDodgePressed)
         {
             SwitchState(Factory.Dodge());
         }
-        else if (Ctx.IsAimPressed)
+        else if (Ctx.IsThrowPressed)
         {
             SwitchState(Factory.Aim());
         }
@@ -52,13 +49,9 @@ public class PlayerIdleState : PlayerBaseState
         {
             SwitchState(Factory.Catch());
         }
-        else if (Ctx.IsHurt)
+        else if (Ctx.IsDead)
         {
             SwitchState(Factory.Hurt());
-        }
-        else
-        {
-            return;
         }
     }
 

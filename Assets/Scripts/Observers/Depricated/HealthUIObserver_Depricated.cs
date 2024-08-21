@@ -22,22 +22,22 @@ public class HealthUIObserver : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_playerManager != null)
+     /*//**   if (_playerManager != null)
         {
             _playerManager.GetComponent<PlayerStateMachine>().OnRespawn += UpdateLivesUI;
-        }
+        }*//*
         PlayerManager_Depricated.OnPlayerDeath += CheckPlayerDeath;
-        LocalMatchManager.onResetPlayers += ResetUIelements;
+        LocalMatchManager.onResetPlayers += ResetUIelements;*/
     }
 
     private void OnDisable()
     {
-        if(_playerManager != null)
+       /* if(_playerManager != null)
         {
             _playerManager.GetComponent<PlayerStateMachine>().OnRespawn -= UpdateLivesUI;
-        }
+        }*//*
         PlayerManager_Depricated.OnPlayerDeath -= CheckPlayerDeath;
-        LocalMatchManager.onResetPlayers -= ResetUIelements;
+        LocalMatchManager.onResetPlayers -= ResetUIelements;*/
     }
 
     public void UpdateLivesUI()

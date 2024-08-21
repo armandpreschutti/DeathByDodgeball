@@ -22,6 +22,7 @@ public class PlayerDeathState: PlayerBaseState
     public override void UpdateState()
     {
         CheckSwitchState();
+        Ctx.CurrentSuperState = "Death State";
     }
 
     public override void FixedUpdateState()
@@ -51,6 +52,6 @@ public class PlayerDeathState: PlayerBaseState
     public IEnumerator StopVelocityCoroutine()
     {
         yield return new WaitForSeconds(.5f);
-        Ctx.Rb.velocity = Vector2.zero;
+       // Ctx.Rb.velocity = Vector2.zero;
     }
 }
