@@ -24,13 +24,15 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] Transform _holdPosition;
     [SerializeField] Transform _holdRightPosition;
     [SerializeField] Transform _holdLeftPosition;
+    [SerializeField] bool _canRespawn;
+    [SerializeField] float _respawnDelay;
 
     [Header("Melee")]
     [SerializeField] Vector3 _aimDirection;
     [SerializeField] float _minThrowPower = 4f;
     [SerializeField] float _maxThrowPower = 20f;
     [SerializeField] float _superThrowPower = 35;
-    [SerializeField] float _currentThrowPower= 4f;
+    [SerializeField] float _currentThrowPower = 4f;
     [SerializeField] float _throwPowerIncreaseRate = 7.5f;
 
     [Header("Locomotion")]
@@ -51,6 +53,7 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] bool _isThrowing;
     [SerializeField] bool _isCatching;
     [SerializeField] bool _isExhausted;
+
 
     [Header("Input Booleans")]
     [SerializeField] Vector2 _moveInput;
@@ -89,6 +92,8 @@ public class PlayerStateMachine : MonoBehaviour
     public Transform HoldPosition { get { return _holdPosition; } set { _holdPosition = value; } }
     public Transform HoldRightPosition { get { return _holdRightPosition; } set { _holdRightPosition = value; } }
     public Transform HoldLeftPosition { get { return _holdLeftPosition; } set { _holdLeftPosition = value; } }
+    public bool CanRespawn { get { return _canRespawn; } set { _canRespawn = value; } }
+    public float RespawnDelay { get { return _respawnDelay; } set { _respawnDelay = value; } }
 
     public Vector3 AimDirection { get { return _aimDirection; } set { _aimDirection = value; } }
     public float MinThrowPower { get { return _minThrowPower; } set { _minThrowPower = value; } }
@@ -124,14 +129,6 @@ public class PlayerStateMachine : MonoBehaviour
         _currentState = _states.Unequipped();
         _currentState.EnterState();
     }
-    private void OnEnable()
-    {
-        MatchInstanceManager.onStartMatch += ActivateStateMachine;
-    }
-    private void OnDisable()
-    {
-        MatchInstanceManager.onStartMatch -= ActivateStateMachine;
-    }
     void Start()
     {
         SetPlayerInitialVariables();
@@ -158,11 +155,10 @@ public class PlayerStateMachine : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _anim = GetComponent<Animator>();
     }
-    public void ActivateStateMachine()
+   /* public void ActivateStateMachine()
     {
-        Debug.Log("StartMatch function called");
-        this.enabled = true;
-    }
+        enabled = true;
+    }*/
     public void EquipBall(GameObject ball)
     {
         if(_equippedBall == null)

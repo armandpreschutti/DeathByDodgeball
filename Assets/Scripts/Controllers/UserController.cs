@@ -44,7 +44,7 @@ public class UserController : MonoBehaviour
         if(playerStateMachine != null && isActivated)
         {
             //Debug.Log("Move called on controller");
-            if (!playerStateMachine.IsDodging)
+            if (!playerStateMachine.IsDodging && !playerStateMachine.IsDead)
             {
                 playerStateMachine.MoveInput = value;
             }
@@ -55,8 +55,11 @@ public class UserController : MonoBehaviour
     {
         if(playerStateMachine != null && isActivated)
         {
-            //Debug.Log("Aim called on controller");
-            playerStateMachine.AimInput = value;
+            if (!playerStateMachine.IsDead)
+            {
+                //Debug.Log("Aim called on controller");
+                playerStateMachine.AimInput = value;
+            }
         }        
     }
 
@@ -65,7 +68,7 @@ public class UserController : MonoBehaviour
         if (playerStateMachine != null && isActivated)
         {
             //Debug.Log("Dodge called on controller");
-            if (playerStateMachine.MoveInput != Vector2.zero && !playerStateMachine.IsDodging && !playerStateMachine.IsCatching && !playerStateMachine.IsHurt && !playerStateMachine.IsThrowing && !playerStateMachine.IsAiming)
+            if (playerStateMachine.MoveInput != Vector2.zero && !playerStateMachine.IsDodging && !playerStateMachine.IsCatching && !playerStateMachine.IsDead && !playerStateMachine.IsThrowing && !playerStateMachine.IsAiming)
             {
                 playerStateMachine.IsDodgePressed = value;
             }
@@ -77,7 +80,7 @@ public class UserController : MonoBehaviour
         if (playerStateMachine != null && isActivated)
         {
             //Debug.Log("Catch called on controller");
-            if (!playerStateMachine.IsCatching && !playerStateMachine.IsHurt && !playerStateMachine.IsThrowing)
+            if (!playerStateMachine.IsCatching && !playerStateMachine.IsHurt && !playerStateMachine.IsThrowing && !playerStateMachine.IsDead)
             {
                 playerStateMachine.IsCatchPressed = value;
             }

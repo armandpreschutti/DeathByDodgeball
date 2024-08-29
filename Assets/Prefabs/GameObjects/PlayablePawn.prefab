@@ -53,7 +53,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotId: 3
-  playerId: 0
+  skinId: 0
+  playerId: 2
+  teamId: 2
+  playerStateMachine: {fileID: 0}
 --- !u!114 &868135169106175682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,6 +77,8 @@ MonoBehaviour:
   _holdPosition: {fileID: 0}
   _holdRightPosition: {fileID: 2241914423583041677}
   _holdLeftPosition: {fileID: 2620207465713008395}
+  _canRespawn: 1
+  _respawnDelay: 3
   _aimDirection: {x: 0, y: 0, z: 0}
   _minThrowPower: 4
   _maxThrowPower: 25

@@ -13,10 +13,12 @@ public class PlayerDeathState: PlayerBaseState
     public override void EnterState()
     { 
         Ctx.DestroyBall();
-        Ctx.StartCoroutine(StopVelocityCoroutine());
         Ctx.Anim.SetBool("Die", true);
         Ctx.OnDeath?.Invoke();
-        //Ctx.Rb.velocity = Vector2.zero;
+        if(Ctx.CanRespawn)
+        {
+            Ctx.StartCoroutine(RespawnAfterDelay());
+        }
     }
 
     public override void UpdateState()
@@ -49,9 +51,10 @@ public class PlayerDeathState: PlayerBaseState
     {
 
     }
-    public IEnumerator StopVelocityCoroutine()
+
+    public IEnumerator RespawnAfterDelay()
     {
-        yield return new WaitForSeconds(.5f);
-       // Ctx.Rb.velocity = Vector2.zero;
+        yield return new WaitForSeconds(Ctx.RespawnDelay);
+        Ctx.IsDead = false;
     }
 }

@@ -51,7 +51,7 @@ public class PlayerIdleState : PlayerBaseState
         }
         else if (Ctx.IsDead)
         {
-            SwitchState(Factory.Hurt());
+            SwitchState(Factory.Death());
         }
     }
 

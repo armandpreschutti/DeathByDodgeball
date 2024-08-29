@@ -45,10 +45,10 @@ public class PlayerCatchState : PlayerBaseState
         {
             SwitchState(Factory.Idle());
         }
-        else if(Ctx.IsDead)
+/*        else if(Ctx.IsDead)
         {
             SwitchState(Factory.Death());
-        }
+        }*/
     }
 
     public override void InitializeSubState()

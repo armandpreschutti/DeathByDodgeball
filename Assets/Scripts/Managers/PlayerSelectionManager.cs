@@ -145,7 +145,6 @@ public class PlayerSelectionManager : MonoBehaviour
     {
         if (isMatchReady)
         {
-            Debug.Log("Match is starting ...");
             isMatchStarting = true;
             matchStartPrompt.SetActive(false);
             matchInitiatedPrompt.SetActive(true);
@@ -158,7 +157,6 @@ public class PlayerSelectionManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Not enough players on both teams");
             matchStartPrompt.SetActive(false);
         }
     }

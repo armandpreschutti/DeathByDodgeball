@@ -36,14 +36,17 @@ public class MatchInstanceManager : MonoBehaviour
         {
             PlayerSelectionManager playerSelectionManager;
             playerSelectionManager = GameObject.Find("PlayerSelectionManager").GetComponent<PlayerSelectionManager>();
-            for(int i = 0; i < playerSelectionManager.playerConfigurations.Length; i++)
+            if(playerSelectionManager != null)
             {
-                if (playerSelectionManager.playerConfigurations[i]!= null)
+                for (int i = 0; i < playerSelectionManager.playerConfigurations.Length; i++)
                 {
-                    CreatePlayerInstance(playerSelectionManager.playerConfigurations[i]);
+                    if (playerSelectionManager.playerConfigurations[i] != null)
+                    {
+                        CreatePlayerInstance(playerSelectionManager.playerConfigurations[i]);
+                    }
                 }
+                Destroy(playerSelectionManager.gameObject);
             }
-            Destroy(playerSelectionManager.gameObject);
             onInitializeMatchInstance?.Invoke();
         }
     }
