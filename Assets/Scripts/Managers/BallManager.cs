@@ -7,6 +7,7 @@ public class BallManager : MonoBehaviour
     public bool hasOwner;
     public PlayerStateMachine owner;
     public bool owningTeam;
+    public bool isEquipped;
 
     [Header("Components")]
     public Collider2D _col;
@@ -29,9 +30,20 @@ public class BallManager : MonoBehaviour
         if(collision.GetComponent<PlayerStateMachine>() != null)
         {
             PlayerStateMachine stateMachine = collision.GetComponent<PlayerStateMachine>();
-            if (!stateMachine.IsEquipped)
+            if (!hasOwner)
             {
-                EquiptBall(stateMachine);
+                if (!stateMachine.IsEquipped)
+                {
+                    EquiptBall(stateMachine);
+                }
+            }
+            else
+            {
+                if(stateMachine != owner )
+                {
+                    stateMachine.IsDead = true;
+                    Destroy(gameObject);
+                }
             }
         }
     }
@@ -46,11 +58,12 @@ public class BallManager : MonoBehaviour
         hasOwner = true;
         owner = stateMachine;
         stateMachine.EquipBall(gameObject);
+        isEquipped = true;
     }
 
     public void ActivateBall()
     {
-        owner.UnequipBall(gameObject);
+        
     }
 
     public void SetTrajecctory()

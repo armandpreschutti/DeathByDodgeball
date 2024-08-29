@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,36 +10,41 @@ public class PlayerManager : MonoBehaviour
 {
     [Header("Stats")]
     public int _playerId;
-    public int _teamId;
     public int _skinId;
-    [SerializeField] Color _teamColor;
+    public int _slotId;
+    public int _teamId;
 
     [Header("Components")]
-    [SerializeField] PlayerInput _playerInput;
-    public GameObject playerInstance;
+    public PlayerInput playerInput;
+    public UserController userController;
+
     public static Action<int, GameObject> onJoin;
+
+    private void OnEnable()
+    {
+
+    }
+    private void OnDisable()
+    {
+
+    }
 
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
-        SetPlayerComponents();
+        BroadcastJoin();
+        SetComponents();
     }
-
-    public void ResetPlayer()
-    {
-        _playerInput.SwitchCurrentActionMap("Player");
-    }
-
     
-    public void SetPlayerComponents()
+    public void BroadcastJoin()
     {
-        if(GetComponentInChildren<PlayerConfigurationController>() != null)
-        {
-            PlayerConfigurationController controller = GetComponentInChildren<PlayerConfigurationController>();
-            _playerId = controller.playerId;
-        }
-
-        _playerInput = GetComponent<PlayerInput>();
         onJoin?.Invoke(_playerId, gameObject);
     }
+
+    public void SetComponents()
+    {
+        playerInput= GetComponent<PlayerInput>();
+        userController= GetComponent<UserController>();
+    }
+
 }

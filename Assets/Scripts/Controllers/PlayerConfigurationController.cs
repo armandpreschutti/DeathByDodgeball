@@ -28,8 +28,8 @@ public class PlayerConfigurationController : MonoBehaviour
     public Action onCycleNextSkin;
     public Action onCyclePreviousSkin;
     public static Action<int, int, int> onRemoveSelection;
-    public static Action<int, int, int> onSubmit;
     public static Action<int, int, int, int> onAddAi;
+    public static Action<int, int, int> onSubmit;
     public static Action<int, int, int> onSubmitAi;
     public static Action onInitiateMatchStart;
     public static Action onDestroyAllPlayers;
@@ -98,7 +98,7 @@ public class PlayerConfigurationController : MonoBehaviour
 
     public void InitiateMatchStart()
     {
-        Debug.Log($"P{playerId} has pressed the 'start' button");
+       // Debug.Log($"P{playerId} has pressed the 'start' button");
         onInitiateMatchStart?.Invoke();
     }
 

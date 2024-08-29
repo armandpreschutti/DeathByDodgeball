@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4747675520440633601}
-  - component: {fileID: 2388188179525136518}
+  - component: {fileID: 7008240433279482959}
   - component: {fileID: 868135169106175682}
   - component: {fileID: 1719316581579537401}
   - component: {fileID: 7754080829793167634}
@@ -40,7 +40,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2388188179525136518
+--- !u!114 &7008240433279482959
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49,12 +49,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2230309673918977745}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df1a4cdab324ef04399e1cd88b2dfe52, type: 3}
+  m_Script: {fileID: 11500000, guid: ad43722eaace87f4d8f771153eef5c2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInput: {fileID: 0}
-  playerManager: {fileID: 0}
-  playerStateMachine: {fileID: 0}
+  slotId: 3
+  playerId: 0
 --- !u!114 &868135169106175682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,36 +67,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _col: {fileID: 0}
-  _rb: {fileID: 0}
   _spriteRenderer: {fileID: 0}
   _anim: {fileID: 0}
   _playerInput: {fileID: 0}
   _equippedBall: {fileID: 0}
-  _aimingObject: {fileID: 0}
   _holdPosition: {fileID: 0}
   _holdRightPosition: {fileID: 2241914423583041677}
   _holdLeftPosition: {fileID: 2620207465713008395}
-  _playerThrowBar: {fileID: 0}
-  _playerStaminaBar: {fileID: 0}
   _aimDirection: {x: 0, y: 0, z: 0}
-  _throwDuration: 0.3
   _minThrowPower: 4
   _maxThrowPower: 25
   _superThrowPower: 35
   _currentThrowPower: 0
   _throwPowerIncreaseRate: 10
-  _catchDuration: 0.65
-  _hurtDuration: 0.4
   _moveDirection: {x: 0, y: 0}
   _currentSpeed: 0
   _moveSpeed: 3
   _aimSpeed: 1.5
   _dodgeSpeed: 10
-  _dodgeDuration: 0.2
   CurrentSuperState: 
   CurrentSubState: 
-  _isMobile: 1
-  _isInvicible: 1
   _isDead: 0
   _isDodging: 0
   _isEquipped: 0
@@ -106,57 +95,11 @@ MonoBehaviour:
   _isThrowing: 0
   _isCatching: 0
   _isExhausted: 0
-  _moveAction:
-    m_Name: Move
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: bb76658e-ae72-4c54-bac3-83d9719a22d9
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  _throwAction:
-    m_Name: Throw
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 40f71935-1901-48b1-99e5-f347fc505a66
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  _catchAction:
-    m_Name: Catch
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: b789c2dc-0c30-4a1a-9015-0ae0fb36114c
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  _dodgeAction:
-    m_Name: Dodge
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: adfcd7b5-3886-44ef-8f5f-41e63f6a51f6
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  _aimAction:
-    m_Name: Aim
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: bfd4e68d-9d11-4895-8e7b-df28ed78bcc9
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  _isThrowPressed: 0
   _moveInput: {x: 0, y: 0}
   _aimInput: {x: 0, y: 0}
+  _isThrowPressed: 0
   _isCatchPressed: 0
   _isDodgePressed: 0
-  _isReadyPressed: 0
 --- !u!212 &1719316581579537401
 SpriteRenderer:
   m_ObjectHideFlags: 0

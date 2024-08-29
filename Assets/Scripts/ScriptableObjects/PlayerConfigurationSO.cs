@@ -9,6 +9,7 @@ public class PlayerConfigurationSO : ScriptableObject
     public int teamId;
     public int skinID;
     public int slotId;
+    public string playerName;
    
 
     public void SetTeam()

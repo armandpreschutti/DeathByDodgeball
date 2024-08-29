@@ -13,7 +13,8 @@ public class PlayerThrowState : PlayerBaseState
         Ctx.Anim.SetBool("IsThrowing", true);
         Ctx.IsThrowing = true;
         Ctx.OnThrow?.Invoke();
-        Ctx.UnequipBall(Ctx.EquippedBall);
+       
+
     }
 
     public override void UpdateState()
@@ -31,6 +32,8 @@ public class PlayerThrowState : PlayerBaseState
 
     public override void ExitState()
     {
+        Ctx.EquippedBall.GetComponent<Rigidbody2D>().AddForce(Ctx.AimDirection * Ctx.CurrentThrowPower, ForceMode2D.Impulse);
+        Ctx.UnequipBall(Ctx.EquippedBall);
         Ctx.Anim.SetBool("IsThrowing", false);
         Ctx.IsThrowing = false;
         Ctx.HoldPosition = null;

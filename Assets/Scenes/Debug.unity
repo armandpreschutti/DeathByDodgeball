@@ -194,17 +194,31 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7379132588588892142, guid: d5ddbdf0b2958b943bf1632550ef0fe7, type: 3}
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 170602548978469672, guid: d5ddbdf0b2958b943bf1632550ef0fe7, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1921758389}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d5ddbdf0b2958b943bf1632550ef0fe7, type: 3}
---- !u!4 &36762564 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 170602548978469672, guid: d5ddbdf0b2958b943bf1632550ef0fe7, type: 3}
+--- !u!114 &36762564 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5960546502413962516, guid: d5ddbdf0b2958b943bf1632550ef0fe7, type: 3}
   m_PrefabInstance: {fileID: 36762563}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cca6039d41ecec4abcccaeaccadd4d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &36762565 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -5604491223695184902, guid: d5ddbdf0b2958b943bf1632550ef0fe7, type: 3}
+  m_PrefabInstance: {fileID: 36762563}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &48334339
 GameObject:
   m_ObjectHideFlags: 0
@@ -2119,15 +2133,27 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 36762564}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2230309673918977745, guid: 4ccb50fb9b1d0204f8ea1f0ba147a53b, type: 3}
       propertyPath: m_Name
       value: PlayablePawn
       objectReference: {fileID: 0}
+    - target: {fileID: 2388188179525136518, guid: 4ccb50fb9b1d0204f8ea1f0ba147a53b, type: 3}
+      propertyPath: playerInput
+      value: 
+      objectReference: {fileID: 36762565}
+    - target: {fileID: 2388188179525136518, guid: 4ccb50fb9b1d0204f8ea1f0ba147a53b, type: 3}
+      propertyPath: playerManager
+      value: 
+      objectReference: {fileID: 36762564}
+    - target: {fileID: 2388188179525136518, guid: 4ccb50fb9b1d0204f8ea1f0ba147a53b, type: 3}
+      propertyPath: playerStateMachine
+      value: 
+      objectReference: {fileID: 1921758389}
     - target: {fileID: 4747675520440633601, guid: 4ccb50fb9b1d0204f8ea1f0ba147a53b, type: 3}
       propertyPath: m_RootOrder
-      value: -1
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4747675520440633601, guid: 4ccb50fb9b1d0204f8ea1f0ba147a53b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2174,11 +2200,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ccb50fb9b1d0204f8ea1f0ba147a53b, type: 3}
---- !u!4 &1921758389 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4747675520440633601, guid: 4ccb50fb9b1d0204f8ea1f0ba147a53b, type: 3}
+--- !u!114 &1921758389 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 868135169106175682, guid: 4ccb50fb9b1d0204f8ea1f0ba147a53b, type: 3}
   m_PrefabInstance: {fileID: 1921758388}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9535a73d32a29ff4aa4323630d4ff6df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2041383129
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2593,36 +2625,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _col: {fileID: 0}
-  _rb: {fileID: 0}
   _spriteRenderer: {fileID: 0}
   _anim: {fileID: 0}
   _playerInput: {fileID: 0}
   _equippedBall: {fileID: 0}
-  _aimingObject: {fileID: 0}
   _holdPosition: {fileID: 0}
   _holdRightPosition: {fileID: 3025148685724038232}
   _holdLeftPosition: {fileID: 1349748617338528734}
-  _playerThrowBar: {fileID: 0}
-  _playerStaminaBar: {fileID: 0}
   _aimDirection: {x: 0, y: 0, z: 0}
-  _throwDuration: 0.3
   _minThrowPower: 4
   _maxThrowPower: 25
   _superThrowPower: 35
   _currentThrowPower: 0
   _throwPowerIncreaseRate: 10
-  _catchDuration: 0.65
-  _hurtDuration: 0.4
   _moveDirection: {x: 0, y: 0}
   _currentSpeed: 0
   _moveSpeed: 3
   _aimSpeed: 1.5
   _dodgeSpeed: 10
-  _dodgeDuration: 0.2
   CurrentSuperState: 
   CurrentSubState: 
-  _isMobile: 1
-  _isInvicible: 1
   _isDead: 0
   _isDodging: 0
   _isEquipped: 0
@@ -2631,57 +2653,11 @@ MonoBehaviour:
   _isThrowing: 0
   _isCatching: 0
   _isExhausted: 0
-  _moveAction:
-    m_Name: Move
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: bb76658e-ae72-4c54-bac3-83d9719a22d9
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  _throwAction:
-    m_Name: Throw
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 40f71935-1901-48b1-99e5-f347fc505a66
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  _catchAction:
-    m_Name: Catch
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: b789c2dc-0c30-4a1a-9015-0ae0fb36114c
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  _dodgeAction:
-    m_Name: Dodge
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: adfcd7b5-3886-44ef-8f5f-41e63f6a51f6
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  _aimAction:
-    m_Name: Aim
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: bfd4e68d-9d11-4895-8e7b-df28ed78bcc9
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  _isThrowPressed: 0
   _moveInput: {x: 0, y: 0}
   _aimInput: {x: 0, y: 0}
+  _isThrowPressed: 0
   _isCatchPressed: 0
   _isDodgePressed: 0
-  _isReadyPressed: 0
 --- !u!82 &6568664546942373472
 AudioSource:
   m_ObjectHideFlags: 0

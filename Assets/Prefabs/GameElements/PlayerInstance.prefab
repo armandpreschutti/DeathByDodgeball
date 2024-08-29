@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 170602548978469672}
   - component: {fileID: -5604491223695184902}
   - component: {fileID: 5960546502413962516}
+  - component: {fileID: -1561138645488108633}
   m_Layer: 0
   m_Name: PlayerInstance
   m_TagString: Untagged
@@ -77,12 +78,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerId: 0
-  _teamId: 0
   _skinId: 0
-  _isInvicible: 0
-  _teamColor: {r: 0, g: 0, b: 0, a: 0}
-  _playerInput: {fileID: 0}
-  anim: {fileID: 0}
+  _slotId: 0
+  playerInput: {fileID: 0}
+  userController: {fileID: 0}
+--- !u!114 &-1561138645488108633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5200011997215567144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df1a4cdab324ef04399e1cd88b2dfe52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerId: 0
+  playerManager: {fileID: 0}
+  playerStateMachine: {fileID: 0}
 --- !u!1001 &3788591499665059875
 PrefabInstance:
   m_ObjectHideFlags: 0

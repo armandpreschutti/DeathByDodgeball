@@ -17,7 +17,7 @@ public class SceneHandler : MonoBehaviour
 
     public void LoadGameInstance()
     {
-        SceneManager.LoadScene("GameInstance");
+        SceneManager.LoadScene("MatchInstance");
     }
 
     public void ExitGame()

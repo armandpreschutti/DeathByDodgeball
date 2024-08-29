@@ -124,6 +124,14 @@ public class PlayerStateMachine : MonoBehaviour
         _currentState = _states.Unequipped();
         _currentState.EnterState();
     }
+    private void OnEnable()
+    {
+        MatchInstanceManager.onStartMatch += ActivateStateMachine;
+    }
+    private void OnDisable()
+    {
+        MatchInstanceManager.onStartMatch -= ActivateStateMachine;
+    }
     void Start()
     {
         SetPlayerInitialVariables();
@@ -150,7 +158,11 @@ public class PlayerStateMachine : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _anim = GetComponent<Animator>();
     }
-
+    public void ActivateStateMachine()
+    {
+        Debug.Log("StartMatch function called");
+        this.enabled = true;
+    }
     public void EquipBall(GameObject ball)
     {
         if(_equippedBall == null)

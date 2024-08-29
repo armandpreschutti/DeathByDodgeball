@@ -1,15 +1,13 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.UI;
 using UnityEngine.Playables;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerSelectionManager : MonoBehaviour
 {
     public PlayerConfigurationSO[] playerConfigurations;
+
     public PlayerInputManager playerInputManager;
     public static Action<int, int, int> onSetMatchSlot;
     public static Action<int, int, int> onRemoveMatchSlot;
@@ -27,8 +25,9 @@ public class PlayerSelectionManager : MonoBehaviour
     private void Awake()
     {
         playerConfigurations = new PlayerConfigurationSO[4];
-        playableDirector= GetComponent<PlayableDirector>();
+        playableDirector = GetComponent<PlayableDirector>();
         playerInputManager = GetComponent<PlayerInputManager>();
+        DontDestroyOnLoad(this.gameObject);
     }
 
     private void OnEnable()
@@ -38,6 +37,7 @@ public class PlayerSelectionManager : MonoBehaviour
         PlayerConfigurationController.onRemoveSelection += RemovePlayerFromMatchConfiguration;
         PlayerConfigurationController.onInitiateMatchStart += InitiateMatch;
         PlayerConfigurationController.onRemoveSelection += AbortMatch;
+        SceneManager.sceneLoaded += DestroySelectionManager;
     }
 
     private void OnDisable()
@@ -47,6 +47,15 @@ public class PlayerSelectionManager : MonoBehaviour
         PlayerConfigurationController.onRemoveSelection -= RemovePlayerFromMatchConfiguration;
         PlayerConfigurationController.onInitiateMatchStart -= InitiateMatch;
         PlayerConfigurationController.onRemoveSelection -= AbortMatch;
+        SceneManager.sceneLoaded -= DestroySelectionManager;
+    }
+
+    public void DestroySelectionManager(Scene scene, LoadSceneMode mode)
+    {
+        if(scene.name == "MainMenu")
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     public void AddPlayerToMatchConfiguration(int playerId, int slotId, int skinId)
@@ -58,11 +67,19 @@ public class PlayerSelectionManager : MonoBehaviour
         newPlayerConfig.playerId = playerId;
         newPlayerConfig.skinID = skinId;
         newPlayerConfig.slotId = slotId;
+        newPlayerConfig.playerName = $"Player{playerId}";
+        if(playerId != 0)
+        {
+            PlayerManager playerManager = GameObject.Find($"Player{playerId}").GetComponent<PlayerManager>();
+            playerManager._playerId = playerId;
+            playerManager._skinId = skinId;
+            playerManager._slotId = slotId; 
+        }
 
         // Ensure the array has enough space
         if (playerConfigurations.Length <= slotId)
         {
-            Array.Resize(ref playerConfigurations, slotId );
+            Array.Resize(ref playerConfigurations, slotId);
         }
 
         // Assign the new object to the specified slot
@@ -73,7 +90,7 @@ public class PlayerSelectionManager : MonoBehaviour
     }
     public void RemovePlayerFromMatchConfiguration(int playerId, int slotId, int skinId)
     {
-        if (playerConfigurations[slotId -1] != null && (playerConfigurations[slotId -1].playerId == playerId || playerConfigurations[slotId-1].playerId == 0) && !isMatchStarting)
+        if (playerConfigurations[slotId - 1] != null && (playerConfigurations[slotId - 1].playerId == playerId || playerConfigurations[slotId - 1].playerId == 0) && !isMatchStarting)
         {
             if (playerConfigurations[slotId - 1] != null && (playerConfigurations[slotId - 1].playerId == playerId || playerConfigurations[slotId - 1].playerId == 0))
             {
@@ -91,11 +108,11 @@ public class PlayerSelectionManager : MonoBehaviour
     public void CheckMatchReadyState()
     {
         int readyBluePlayers = 0;
-        int readyRedPlayers= 0;
+        int readyRedPlayers = 0;
         for (int i = 0; i < playerConfigurations.Length; i++)
         {
 
-            if (playerConfigurations[i]!= null)
+            if (playerConfigurations[i] != null)
             {
                 playerConfigurations[i].SetTeam();
                 if (playerConfigurations[i].teamId == 1)
@@ -108,7 +125,7 @@ public class PlayerSelectionManager : MonoBehaviour
                 }
             }
         }
-        if(readyBluePlayers >= 1 && readyRedPlayers >= 1)
+        if (readyBluePlayers >= 1 && readyRedPlayers >= 1)
         {
             matchStartPrompt.SetActive(true);
             isMatchReady = true;
@@ -128,11 +145,16 @@ public class PlayerSelectionManager : MonoBehaviour
     {
         if (isMatchReady)
         {
+            Debug.Log("Match is starting ...");
             isMatchStarting = true;
             matchStartPrompt.SetActive(false);
             matchInitiatedPrompt.SetActive(true);
             playableDirector.Play();
             onMatchInitiated?.Invoke();
+        }
+        else if (isMatchStarting)
+        {
+            return;
         }
         else
         {
@@ -143,7 +165,7 @@ public class PlayerSelectionManager : MonoBehaviour
 
     public void AbortMatch(int playerId, int currentSlot, int currentSkin)
     {
-        if(isMatchStarting) 
+        if (isMatchStarting)
         {
             isMatchStarting = false;
             matchStartPrompt.SetActive(true);
@@ -157,7 +179,6 @@ public class PlayerSelectionManager : MonoBehaviour
 
     public void StartMatch()
     {
-       
 
     }
 }
