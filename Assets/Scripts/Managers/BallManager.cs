@@ -6,8 +6,10 @@ public class BallManager : MonoBehaviour
 {
     public bool hasOwner;
     public PlayerStateMachine owner;
-    public bool owningTeam;
+    public int owningTeam;
     public bool isEquipped;
+    public bool isBallActive;
+    
 
     [Header("Components")]
     public Collider2D _col;
@@ -40,7 +42,7 @@ public class BallManager : MonoBehaviour
             }
             else
             {
-                if(stateMachine != owner )
+                if(stateMachine != owner && isBallActive && stateMachine.GetComponent<PawnManager>().teamId != owningTeam)
                 {
                     if(stateMachine.IsCatching)
                     {
@@ -68,11 +70,13 @@ public class BallManager : MonoBehaviour
         owner = stateMachine;
         stateMachine.EquipBall(gameObject);
         isEquipped = true;
+        owningTeam = stateMachine.GetComponent<PawnManager>().teamId;
+        isBallActive = false;
     }
 
-    public void ActivateBall()
+    public void SetBallActiveState(bool value)
     {
-        
+        isBallActive = value;
     }
 
     public void SetTrajectory()

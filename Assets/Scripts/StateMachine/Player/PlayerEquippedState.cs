@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static PlayerManager_Depricated;
 
 public class PlayerEquippedState : PlayerBaseState
 {

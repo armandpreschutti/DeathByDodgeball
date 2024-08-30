@@ -22,6 +22,8 @@ public class PlayerCatchState : PlayerBaseState
     {
         CheckSwitchState();
         Ctx.CurrentSubState = "Catch State";
+
+        Ctx.SetPlayerOrientation();
     }
 
     public override void FixedUpdateState()
@@ -45,10 +47,6 @@ public class PlayerCatchState : PlayerBaseState
         {
             SwitchState(Factory.Idle());
         }
-/*        else if(Ctx.IsDead)
-        {
-            SwitchState(Factory.Death());
-        }*/
     }
 
     public override void InitializeSubState()

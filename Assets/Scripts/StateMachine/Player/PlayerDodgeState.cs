@@ -23,7 +23,6 @@ public class PlayerDodgeState : PlayerBaseState
     {
         CheckSwitchState();
         Ctx.CurrentSubState = "Dodge State";
-
         Ctx.transform.Translate(Ctx.MoveDirection * Ctx.DodgeSpeed * Time.deltaTime);
     }
 

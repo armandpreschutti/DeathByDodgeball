@@ -20,17 +20,7 @@ public class PlayerMoveState : PlayerBaseState
         Ctx.CurrentSubState = "Move State";
 
         Ctx.transform.Translate(Ctx.MoveDirection * Ctx.MoveSpeed * Time.deltaTime);
-        if (Ctx.MoveDirection.magnitude > .65 && !Ctx.IsThrowing)
-        {
-            bool flipped = Ctx.MoveDirection.x < 0f;
-
-            Ctx.GetComponent<SpriteRenderer>().flipX = flipped;
-        }
-        if (Ctx.IsEquipped)
-        {
-            Ctx.ChangeBallPosition(Ctx.EquippedBall);
-        }
-
+        Ctx.SetPlayerOrientation();
     }
 
     public override void FixedUpdateState()

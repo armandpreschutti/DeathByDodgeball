@@ -27,6 +27,7 @@ public class PlayerAimState : PlayerBaseState
         SetAimDirection();
         SetThrowPower();
         Ctx.transform.Translate(Ctx.MoveDirection * (Ctx.CurrentThrowPower >= Ctx.MaxThrowPower ? Ctx.AimSpeed : Ctx.MoveSpeed) * Time.deltaTime);
+        Ctx.SetPlayerOrientation();
     }
 
     public override void FixedUpdateState()
@@ -69,7 +70,7 @@ public class PlayerAimState : PlayerBaseState
 
     public void SetAimDirection()
     {
-/*        bool flipped;
+        bool flipped;
         if (Ctx.AimInput.magnitude > .75f)
         {
             flipped = Ctx.AimInput.x < 0 ? true : false;
@@ -80,7 +81,7 @@ public class PlayerAimState : PlayerBaseState
         }
         Ctx.GetComponent<SpriteRenderer>().flipX = flipped;
         Ctx.HoldPosition = flipped ? Ctx.HoldRightPosition : Ctx.HoldLeftPosition;
-        Ctx.AimDirection = new Vector3(flipped ? -1 : 1, 0, 0);*/
+        Ctx.AimDirection = new Vector3(flipped ? -1 : 1, 0, 0);
 
     }
     public void SetThrowPower()
