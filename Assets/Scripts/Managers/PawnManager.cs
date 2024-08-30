@@ -10,6 +10,7 @@ public class PawnManager : MonoBehaviour
     public int skinId;
     public int playerId;
     public int teamId;
+    public string playerName;
     public PlayerStateMachine playerStateMachine;
 
     public static Action<int, GameObject> onPlayerLoaded;
@@ -17,7 +18,8 @@ public class PawnManager : MonoBehaviour
 
     private void Awake()
     {
-        playerStateMachine = GetComponent<PlayerStateMachine>();    
+        playerStateMachine = GetComponent<PlayerStateMachine>();
+        playerName = playerId != 0 ? $"P{playerId}" : "CPU";
     }
 
     private void Start()

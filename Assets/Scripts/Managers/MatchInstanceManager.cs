@@ -32,21 +32,24 @@ public class MatchInstanceManager : MonoBehaviour
 
     public void ConfigureMatchInstance(Scene scene, LoadSceneMode mode)
     {
-        if(scene.name == "MatchInstance" && GameObject.Find("PlayerSelectionManager").GetComponent<PlayerSelectionManager>() != null)
+        if(scene.name == "MatchInstance" )
         {
-            PlayerSelectionManager playerSelectionManager;
-            playerSelectionManager = GameObject.Find("PlayerSelectionManager").GetComponent<PlayerSelectionManager>();
-            if(playerSelectionManager != null)
+            if(FindObjectOfType<PlayerSelectionManager>() != null)
             {
-                for (int i = 0; i < playerSelectionManager.playerConfigurations.Length; i++)
+                PlayerSelectionManager playerSelectionManager;
+                playerSelectionManager = GameObject.Find("PlayerSelectionManager").GetComponent<PlayerSelectionManager>();
+                if (playerSelectionManager != null)
                 {
-                    if (playerSelectionManager.playerConfigurations[i] != null)
+                    for (int i = 0; i < playerSelectionManager.playerConfigurations.Length; i++)
                     {
-                        CreatePlayerInstance(playerSelectionManager.playerConfigurations[i]);
+                        if (playerSelectionManager.playerConfigurations[i] != null)
+                        {
+                            CreatePlayerInstance(playerSelectionManager.playerConfigurations[i]);
+                        }
                     }
+                    Destroy(playerSelectionManager.gameObject);
                 }
-                Destroy(playerSelectionManager.gameObject);
-            }
+            }            
             onInitializeMatchInstance?.Invoke();
         }
     }
@@ -60,6 +63,7 @@ public class MatchInstanceManager : MonoBehaviour
         pawnManager.skinId = so.skinID;
         pawnManager.playerId = so.playerId;
         pawnManager.teamId = so.teamId;
+       // pawnManager.playerName = so.playerName;
         Instantiate(pawn, transform.position, Quaternion.identity);
     }
 

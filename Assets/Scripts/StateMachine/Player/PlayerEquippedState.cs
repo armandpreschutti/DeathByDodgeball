@@ -13,42 +13,42 @@ public class PlayerEquippedState : PlayerBaseState
 
     public override void EnterState()
     {
-        Ctx.IsEquipped= true;
+       // Ctx.IsEquipped= true;
     }
 
     public override void UpdateState()
     {
-        CheckSwitchState();
-        Ctx.CurrentSuperState = "Equipped State";
+       /* CheckSwitchState();
+        Ctx.CurrentSuperState = "Equipped State";*/
     }
 
     public override void FixedUpdateState()
     {
-        if (!Ctx.IsAiming &&  !Ctx.IsThrowing && Ctx.MoveDirection.magnitude > .65f)
+        /*if (!Ctx.IsAiming &&  !Ctx.IsThrowing && Ctx.MoveDirection.magnitude > .65f)
         {
-            bool flipped = Ctx.MoveDirection.x < 0f;
-            Ctx.HoldPosition = flipped ? Ctx.HoldRightPosition : Ctx.HoldLeftPosition;
+            //bool flipped = Ctx.MoveDirection.x < 0f;
+            //Ctx.HoldPosition = flipped ? Ctx.HoldRightPosition : Ctx.HoldLeftPosition;
             Ctx.ChangeBallPosition(Ctx.EquippedBall);
-        }       
+        }       */
     }
 
 
     public override void ExitState()
     {
-        Ctx.IsEquipped = false;
-        Ctx.HoldPosition = null;
+       /* Ctx.IsEquipped = false;
+        Ctx.HoldPosition = null;*/
     }
 
     public override void CheckSwitchState() 
     {
-        if (!Ctx.IsEquipped)
+       /* if (!Ctx.IsEquipped)
         {
             SwitchState(Factory.Unequipped());
-        }
+        }*/
     }
 
     public override void InitializeSubState()
     {
-        SetSubState(Factory.Idle());
+       // SetSubState(Factory.Idle());
     }    
 }

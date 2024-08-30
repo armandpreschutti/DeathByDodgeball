@@ -23,6 +23,7 @@ public class BallManager : MonoBehaviour
     public Transform _parent;
     public float _ballDamage;
     public float _knockBackPower;
+    public Vector2 Trajectory;
 
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -41,8 +42,16 @@ public class BallManager : MonoBehaviour
             {
                 if(stateMachine != owner )
                 {
-                    stateMachine.IsDead = true;
-                    Destroy(gameObject);
+                    if(stateMachine.IsCatching)
+                    {
+                        EquiptBall(stateMachine);
+                    }
+                    else
+                    {
+                        stateMachine.IsDead = true;
+                        Destroy(gameObject);
+                    }
+
                 }
             }
         }
@@ -50,7 +59,7 @@ public class BallManager : MonoBehaviour
 
     private void Update()
     {
-        SetTrajecctory();
+        SetTrajectory();
     }
 
     public void EquiptBall(PlayerStateMachine stateMachine)
@@ -66,8 +75,8 @@ public class BallManager : MonoBehaviour
         
     }
 
-    public void SetTrajecctory()
+    public void SetTrajectory()
     {
-
+        transform.Translate(Trajectory);
     }
 }

@@ -36,7 +36,7 @@ public class PlayerAimState : PlayerBaseState
 
     public override void ExitState() 
     {
-        Ctx.HoldPosition = null;
+        //Ctx.HoldPosition = null;
         Ctx.IsAiming = false;
         Ctx.Anim.SetBool("IsAiming", false);
 
@@ -69,7 +69,7 @@ public class PlayerAimState : PlayerBaseState
 
     public void SetAimDirection()
     {
-        bool flipped;
+/*        bool flipped;
         if (Ctx.AimInput.magnitude > .75f)
         {
             flipped = Ctx.AimInput.x < 0 ? true : false;
@@ -80,13 +80,8 @@ public class PlayerAimState : PlayerBaseState
         }
         Ctx.GetComponent<SpriteRenderer>().flipX = flipped;
         Ctx.HoldPosition = flipped ? Ctx.HoldRightPosition : Ctx.HoldLeftPosition;
-        Ctx.AimDirection = new Vector3(flipped ? -1 : 1, 0, 0);
+        Ctx.AimDirection = new Vector3(flipped ? -1 : 1, 0, 0);*/
 
-        if (Ctx.IsEquipped)
-        {
-            Ctx.ChangeBallPosition(Ctx.EquippedBall);
-        }
-       
     }
     public void SetThrowPower()
     {

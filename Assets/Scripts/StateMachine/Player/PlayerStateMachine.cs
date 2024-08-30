@@ -24,6 +24,7 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] Transform _holdPosition;
     [SerializeField] Transform _holdRightPosition;
     [SerializeField] Transform _holdLeftPosition;
+    [SerializeField] bool _isFacingRight;
     [SerializeField] bool _canRespawn;
     [SerializeField] float _respawnDelay;
 
@@ -92,6 +93,7 @@ public class PlayerStateMachine : MonoBehaviour
     public Transform HoldPosition { get { return _holdPosition; } set { _holdPosition = value; } }
     public Transform HoldRightPosition { get { return _holdRightPosition; } set { _holdRightPosition = value; } }
     public Transform HoldLeftPosition { get { return _holdLeftPosition; } set { _holdLeftPosition = value; } }
+    
     public bool CanRespawn { get { return _canRespawn; } set { _canRespawn = value; } }
     public float RespawnDelay { get { return _respawnDelay; } set { _respawnDelay = value; } }
 
@@ -141,6 +143,10 @@ public class PlayerStateMachine : MonoBehaviour
         _anim.SetFloat("MoveX", _moveDirection.x);
         _anim.SetFloat("MoveY", _moveDirection.y);
         _currentState.UpdateStates();
+        if(_isEquipped)
+        {
+            ChangeBallPosition(_equippedBall);
+        }
     }
 
     private void FixedUpdate()
@@ -155,16 +161,14 @@ public class PlayerStateMachine : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _anim = GetComponent<Animator>();
     }
-   /* public void ActivateStateMachine()
-    {
-        enabled = true;
-    }*/
+
     public void EquipBall(GameObject ball)
     {
         if(_equippedBall == null)
         {
             ball.transform.parent = transform;
             ball.transform.position = _holdRightPosition.position;
+            ball.GetComponent<BallManager>().Trajectory = Vector2.zero;
             _equippedBall = ball;
             _onEquip?.Invoke();
             _isEquipped = true;

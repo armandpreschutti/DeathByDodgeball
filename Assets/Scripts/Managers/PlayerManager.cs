@@ -12,7 +12,6 @@ public class PlayerManager : MonoBehaviour
     public int _playerId;
     public int _skinId;
     public int _slotId;
-    public int _teamId;
 
     [Header("Components")]
     public PlayerInput playerInput;

@@ -32,11 +32,12 @@ public class PlayerThrowState : PlayerBaseState
 
     public override void ExitState()
     {
-        Ctx.EquippedBall.GetComponent<Rigidbody2D>().AddForce(Ctx.AimDirection * Ctx.CurrentThrowPower, ForceMode2D.Impulse);
+        //Ctx.EquippedBall.GetComponent<Rigidbody2D>().AddForce(Ctx.AimDirection * Ctx.CurrentThrowPower, ForceMode2D.Impulse);
+        Ctx.EquippedBall.GetComponent<BallManager>().Trajectory = Ctx.AimDirection * Ctx.CurrentThrowPower * Time.deltaTime;
         Ctx.UnequipBall(Ctx.EquippedBall);
         Ctx.Anim.SetBool("IsThrowing", false);
         Ctx.IsThrowing = false;
-        Ctx.HoldPosition = null;
+       //Ctx.HoldPosition = null;
         Ctx.CurrentThrowPower = Ctx.MinThrowPower;
 
     }
