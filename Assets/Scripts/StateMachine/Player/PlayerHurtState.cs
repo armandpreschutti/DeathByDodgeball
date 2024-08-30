@@ -16,8 +16,8 @@ public class PlayerHurtState : PlayerBaseState
     {
         Ctx.OnHurt?.Invoke();
        // Ctx.StartCoroutine(Hurt());
-        Ctx.Anim.SetBool("Hit", true);
-        Ctx.Anim.Play("Hit");
+        Ctx.BaseAnim.SetBool("Hit", true);
+        Ctx.BaseAnim.Play("Hit");
     }
 
     public override void UpdateState()
@@ -34,7 +34,7 @@ public class PlayerHurtState : PlayerBaseState
 
     public override void ExitState() 
     {
-        Ctx.Anim.SetBool("Hit", false);
+        Ctx.BaseAnim.SetBool("Hit", false);
     }
 
     public override void CheckSwitchState() 

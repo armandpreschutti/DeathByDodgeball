@@ -10,7 +10,8 @@ public class PlayerThrowState : PlayerBaseState
     }
     public override void EnterState()
     {
-        Ctx.Anim.SetBool("IsThrowing", true);
+        Ctx.BaseAnim.SetBool("IsThrowing", true);
+        Ctx.SkinAnim.SetBool("IsThrowing", true);
         Ctx.IsThrowing = true;
         Ctx.OnThrow?.Invoke();
        
@@ -32,7 +33,8 @@ public class PlayerThrowState : PlayerBaseState
     {
         //Ctx.EquippedBall.GetComponent<Rigidbody2D>().AddForce(Ctx.AimDirection * Ctx.CurrentThrowPower, ForceMode2D.Impulse
         Ctx.ThrowBall();
-        Ctx.Anim.SetBool("IsThrowing", false);
+        Ctx.BaseAnim.SetBool("IsThrowing", false);
+        Ctx.SkinAnim.SetBool("IsThrowing", false);
         Ctx.IsThrowing = false;
        //Ctx.HoldPosition = null;
         Ctx.CurrentThrowPower = Ctx.MinThrowPower;

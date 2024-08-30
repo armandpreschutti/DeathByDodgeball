@@ -16,7 +16,8 @@ public class PlayerStateMachine : MonoBehaviour
     [Header("Components")]
     [SerializeField] Collider2D _col;
     [SerializeField] SpriteRenderer _spriteRenderer;
-    [SerializeField] Animator _anim;
+    [SerializeField] Animator _baseAnim;
+    [SerializeField] Animator _skinAnim;
 
     [Header("General")]
     [SerializeField] GameObject _equippedBall = null;
@@ -85,7 +86,8 @@ public class PlayerStateMachine : MonoBehaviour
 
     public Collider2D Col { get { return _col;} set { _col = value; } }
     public SpriteRenderer SpriteRenderer { get { return _spriteRenderer;} set { _spriteRenderer = value; } }
-    public Animator Anim { get { return _anim;} set { _anim = value; } }
+    public Animator BaseAnim { get { return _baseAnim;} set { _baseAnim = value; } }
+    public Animator SkinAnim { get { return _skinAnim; } set { _skinAnim = value; } }
 
     public GameObject EquippedBall { get {return _equippedBall;} set { _equippedBall = value; } }
     public Transform HoldPosition { get { return _holdPosition; } set { _holdPosition = value; } }
@@ -123,12 +125,11 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void Awake()
     {
-        SetPlayerComponents();
-
         _states = new PlayerStateFactory(this);
         _currentState = _states.Unequipped();
         _currentState.EnterState();
     }
+
     void Start()
     {
         SetPlayerInitialVariables();
@@ -138,8 +139,10 @@ public class PlayerStateMachine : MonoBehaviour
     void Update()
     {
         _moveDirection = _moveInput;
-        _anim.SetFloat("MoveX", _moveDirection.x);
-        _anim.SetFloat("MoveY", _moveDirection.y);
+        _baseAnim.SetFloat("MoveX", _moveDirection.x);
+        _baseAnim.SetFloat("MoveY", _moveDirection.y);
+        _skinAnim.SetFloat("MoveX", _moveDirection.x);
+        _skinAnim.SetFloat("MoveY", _moveDirection.y);
         _currentState.UpdateStates();
         SetBallEquippedPosition(_equippedBall);
     }
@@ -147,13 +150,6 @@ public class PlayerStateMachine : MonoBehaviour
     private void FixedUpdate()
     {
         _currentState.FixedUpdateStates();
-    }
-
-    public void SetPlayerComponents()
-    {
-        _col = GetComponent<Collider2D>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        _anim = GetComponent<Animator>();
     }
 
     public void EquipBall(GameObject ball)
@@ -207,20 +203,20 @@ public class PlayerStateMachine : MonoBehaviour
             if (_isAiming || _isThrowing || _isCatching)
             {
                 _isFacingRight = transform.position.x > 0 ? true : false;
-                GetComponent<SpriteRenderer>().flipX = _isFacingRight;
+                _spriteRenderer.flipX = _isFacingRight;
                 _holdPosition = _isFacingRight ? _holdRightPosition : _holdLeftPosition;
             }
             else
             {
                 _isFacingRight = _moveInput.x > 0 ? true : false;
-                GetComponent<SpriteRenderer>().flipX = !_isFacingRight;
+                _spriteRenderer.flipX = !_isFacingRight;
                 _holdPosition = _isFacingRight ? _holdLeftPosition : _holdRightPosition;
             }
         }
         else
         {
             _isFacingRight = transform.position.x > 0 ? true : false;
-            GetComponent<SpriteRenderer>().flipX = _isFacingRight;
+            _spriteRenderer.flipX = _isFacingRight;
             _holdPosition = _isFacingRight ? _holdRightPosition : _holdLeftPosition;
         }
     }
@@ -264,10 +260,5 @@ public class PlayerStateMachine : MonoBehaviour
     public void Animation_ThrowEnd()
     {
         _isThrowing = false;
-    }
-
-    public void CreateAnimationEvents()
-    {
-
     }
 }

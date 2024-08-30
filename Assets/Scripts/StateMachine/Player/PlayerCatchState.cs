@@ -14,7 +14,8 @@ public class PlayerCatchState : PlayerBaseState
     {
         Ctx.IsCatchPressed = false;
         Ctx.IsCatching = true;
-        Ctx.Anim.SetBool("IsCatching", true);
+        Ctx.BaseAnim.SetBool("IsCatching", true);
+        Ctx.SkinAnim.SetBool("IsCatching", true);
         Ctx.OnCatch?.Invoke();
     }
 
@@ -33,7 +34,8 @@ public class PlayerCatchState : PlayerBaseState
 
     public override void ExitState()
     {
-        Ctx.Anim.SetBool("IsCatching", false);
+        Ctx.BaseAnim.SetBool("IsCatching", false);
+        Ctx.SkinAnim.SetBool("IsCatching", false);
         Ctx.IsCatching = false;
     }
 

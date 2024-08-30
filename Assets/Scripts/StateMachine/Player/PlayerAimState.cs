@@ -16,7 +16,8 @@ public class PlayerAimState : PlayerBaseState
     { 
         Ctx.CurrentThrowPower = Ctx.MinThrowPower;
         Ctx.IsAiming= true;
-        Ctx.Anim.SetBool("IsAiming", true);
+        Ctx.BaseAnim.SetBool("IsAiming", true);
+        Ctx.SkinAnim.SetBool("IsAiming", true);
     }
 
     public override void UpdateState()
@@ -37,9 +38,9 @@ public class PlayerAimState : PlayerBaseState
 
     public override void ExitState() 
     {
-        //Ctx.HoldPosition = null;
         Ctx.IsAiming = false;
-        Ctx.Anim.SetBool("IsAiming", false);
+        Ctx.BaseAnim.SetBool("IsAiming", false);
+        Ctx.SkinAnim.SetBool("IsAiming", false);
 
     }
 

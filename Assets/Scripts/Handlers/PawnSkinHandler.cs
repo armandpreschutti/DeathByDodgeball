@@ -9,7 +9,7 @@ public class PawnSkinHandler : MonoBehaviour
 
     private void Awake()
     {
-        pawnManager = GetComponent<PawnManager>();
+        pawnManager = GetComponentInParent<PawnManager>();
     }
 
     private void Start()

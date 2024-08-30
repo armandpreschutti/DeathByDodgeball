@@ -13,7 +13,8 @@ public class PlayerDeathState: PlayerBaseState
     public override void EnterState()
     { 
         Ctx.DestroyBall();
-        Ctx.Anim.SetBool("Die", true);
+        Ctx.BaseAnim.SetBool("Die", true);
+        Ctx.SkinAnim.SetBool("Die", true);
         Ctx.OnDeath?.Invoke();
         if(Ctx.CanRespawn)
         {
@@ -35,7 +36,8 @@ public class PlayerDeathState: PlayerBaseState
 
     public override void ExitState() 
     {
-        Ctx.Anim.SetBool("Die", false);
+        Ctx.BaseAnim.SetBool("Die", false);
+        Ctx.SkinAnim.SetBool("Die", false);
         Ctx.OnRespawn?.Invoke();
     }
 
