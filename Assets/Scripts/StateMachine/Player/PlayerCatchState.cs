@@ -16,7 +16,7 @@ public class PlayerCatchState : PlayerBaseState
         Ctx.IsCatching = true;
         Ctx.BaseAnim.SetBool("IsCatching", true);
         Ctx.SkinAnim.SetBool("IsCatching", true);
-        Ctx.OnCatch?.Invoke();
+        Ctx.OnCatch?.Invoke(true);
     }
 
     public override void UpdateState()
@@ -37,6 +37,7 @@ public class PlayerCatchState : PlayerBaseState
         Ctx.BaseAnim.SetBool("IsCatching", false);
         Ctx.SkinAnim.SetBool("IsCatching", false);
         Ctx.IsCatching = false;
+        Ctx.OnCatch?.Invoke(false);
     }
 
     public override void CheckSwitchState()

@@ -21,6 +21,7 @@ public class UserController : MonoBehaviour
         MatchInstanceManager.onInitializeMatchInstance += SetStateMachine;
         MatchInstanceManager.onEnablePawnControl += EnableControl;
         MatchInstanceManager.onDisablePawnControl += DisableControl;
+        
         SubscribeToActions();
     }
 

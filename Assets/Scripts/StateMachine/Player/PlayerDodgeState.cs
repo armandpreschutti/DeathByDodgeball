@@ -18,6 +18,7 @@ public class PlayerDodgeState : PlayerBaseState
         Ctx.IsDodging = true;
         Ctx.BaseAnim.SetBool("IsDodging", true);
         Ctx.SkinAnim.SetBool("IsDodging", true);
+        Ctx.OnDodge?.Invoke(true);
     }
 
     public override void UpdateState()
@@ -38,6 +39,7 @@ public class PlayerDodgeState : PlayerBaseState
         Ctx.IsDodging = false;
         Ctx.BaseAnim.SetBool("IsDodging", false);
         Ctx.SkinAnim.SetBool("IsDodging", false);
+        Ctx.OnDodge?.Invoke(false);
     }
 
     public override void CheckSwitchState() 

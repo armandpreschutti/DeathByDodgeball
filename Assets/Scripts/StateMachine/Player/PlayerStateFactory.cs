@@ -5,7 +5,12 @@ public class PlayerStateFactory
     public PlayerStateFactory(PlayerStateMachine currentContext)
     {
         _context = currentContext;  
-    } 
+    }
+
+    public PlayerBaseState Active()
+    {
+        return new PlayerActiveState(_context, this);
+    }
     public PlayerBaseState Aim()
     {
         return new PlayerAimState(_context, this);
@@ -22,28 +27,14 @@ public class PlayerStateFactory
     {
         return new PlayerDodgeState(_context, this);
     }
-    public PlayerBaseState Equipped()
-    {
-        return new PlayerEquippedState(_context, this);
-    }
     public PlayerBaseState Idle()
     {
         return new PlayerIdleState(_context, this);
     }
-
     public PlayerBaseState Move()
     {
         return new PlayerMoveState(_context, this);
     }
-    public PlayerBaseState Hurt()
-    {
-        return new PlayerHurtState(_context, this);
-    }
-    public PlayerBaseState Unequipped()     
-    {
-        return new PlayerActiveState(_context, this);
-    }
-
     public PlayerBaseState Death()
     {
         return new PlayerDeathState(_context, this);

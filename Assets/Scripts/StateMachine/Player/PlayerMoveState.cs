@@ -11,7 +11,7 @@ public class PlayerMoveState : PlayerBaseState
 
     public override void EnterState()
     {
-
+        Ctx.OnMove?.Invoke(true);
     }
 
     public override void UpdateState()
@@ -30,7 +30,7 @@ public class PlayerMoveState : PlayerBaseState
 
     public override void ExitState()
     {
-
+        Ctx.OnMove?.Invoke(false);
     }
 
     public override void CheckSwitchState()

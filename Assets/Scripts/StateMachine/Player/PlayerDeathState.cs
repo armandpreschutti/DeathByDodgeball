@@ -15,7 +15,7 @@ public class PlayerDeathState: PlayerBaseState
         Ctx.DestroyBall();
         Ctx.BaseAnim.SetBool("Die", true);
         Ctx.SkinAnim.SetBool("Die", true);
-        Ctx.OnDeath?.Invoke();
+        Ctx.OnDeath?.Invoke(true);
         if(Ctx.CanRespawn)
         {
             Ctx.StartCoroutine(RespawnAfterDelay());
@@ -38,6 +38,7 @@ public class PlayerDeathState: PlayerBaseState
     {
         Ctx.BaseAnim.SetBool("Die", false);
         Ctx.SkinAnim.SetBool("Die", false);
+        Ctx.OnDeath?.Invoke(false);
         Ctx.OnRespawn?.Invoke();
     }
 
@@ -45,7 +46,7 @@ public class PlayerDeathState: PlayerBaseState
     {
         if (!Ctx.IsDead)
         {
-            SwitchState(Factory.Unequipped());
+            SwitchState(Factory.Active());
         }
     }
 

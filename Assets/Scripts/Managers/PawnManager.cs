@@ -11,7 +11,7 @@ public class PawnManager : MonoBehaviour
     public int playerId;
     public int teamId;
     public string playerName;
-    public bool isEiminated;
+    public bool isEliminated;
     public PlayerStateMachine playerStateMachine;
 
     public static Action<int, GameObject> onPlayerLoaded;

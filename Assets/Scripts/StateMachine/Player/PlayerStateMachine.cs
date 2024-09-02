@@ -16,6 +16,7 @@ public class PlayerStateMachine : MonoBehaviour
     [Header("Components")]
     [SerializeField] Collider2D _col;
     [SerializeField] SpriteRenderer _spriteRenderer;
+    [SerializeField] Rigidbody2D _rb;
     [SerializeField] Animator _baseAnim;
     [SerializeField] Animator _skinAnim;
 
@@ -27,6 +28,7 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] bool _isFacingRight;
     [SerializeField] bool _canRespawn;
     [SerializeField] float _respawnDelay;
+    
 
     [Header("Melee")]
     [SerializeField] Vector3 _aimDirection;
@@ -63,24 +65,14 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] bool _isCatchPressed;
     [SerializeField] bool _isDodgePressed;
 
-    [SerializeField] event Action _onDeath;
-    [SerializeField] event Action _onDodge;
-    [SerializeField] event Action _onEquip;
-    [SerializeField] event Action _onHurt;
-    [SerializeField] event Action _onAim;
-    [SerializeField] event Action _onThrow;
-    [SerializeField] event Action _onCatch;
-    [SerializeField] event Action _onRespawn;
-    
-
-    public Action OnDeath { get { return _onDeath; } set { _onDeath = value; } }
-    public Action OnDodge { get { return _onDodge; } set { _onDodge = value; } }
-    public Action OnEquip { get { return _onEquip; } set { _onEquip = value; } }
-    public Action OnHurt { get { return _onHurt; } set { _onHurt = value; } }
-    public Action OnAim { get { return _onAim; } set { _onAim = value; } }
-    public Action OnThrow { get { return _onThrow; } set { _onThrow = value; } }
-    public Action OnCatch { get { return _onCatch; } set { _onCatch = value; } }
-    public Action OnRespawn { get { return _onRespawn; } set { _onRespawn = value; } }
+    public Action<bool> OnDeath;
+    public Action<bool> OnMove;
+    public Action<bool> OnDodge;
+    public Action<bool> OnHurt;
+    public Action<bool> OnAim;
+    public Action<bool> OnThrow;
+    public Action<bool> OnCatch;
+    public Action OnRespawn;
 
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
 
@@ -88,6 +80,7 @@ public class PlayerStateMachine : MonoBehaviour
     public SpriteRenderer SpriteRenderer { get { return _spriteRenderer;} set { _spriteRenderer = value; } }
     public Animator BaseAnim { get { return _baseAnim;} set { _baseAnim = value; } }
     public Animator SkinAnim { get { return _skinAnim; } set { _skinAnim = value; } }
+    public Rigidbody2D Rb { get { return _rb; } set { _rb = value; } }  
 
     public GameObject EquippedBall { get {return _equippedBall;} set { _equippedBall = value; } }
     public Transform HoldPosition { get { return _holdPosition; } set { _holdPosition = value; } }
@@ -126,7 +119,7 @@ public class PlayerStateMachine : MonoBehaviour
     private void Awake()
     {
         _states = new PlayerStateFactory(this);
-        _currentState = _states.Unequipped();
+        _currentState = _states.Active();
         _currentState.EnterState();
     }
 
@@ -160,7 +153,6 @@ public class PlayerStateMachine : MonoBehaviour
             ball.transform.position = _holdRightPosition.position;
             ball.GetComponent<BallManager>().Trajectory = Vector2.zero;
             _equippedBall = ball;
-            _onEquip?.Invoke();
             _isEquipped = true;
         }
         else
@@ -224,6 +216,7 @@ public class PlayerStateMachine : MonoBehaviour
     public void ThrowBall()
     {
         _equippedBall.GetComponent<BallManager>().SetBallActiveState(true);
+        //Ctx.EquippedBall.GetComponent<Rigidbody2D>().AddForce(Ctx.AimDirection * Ctx.CurrentThrowPower, ForceMode2D.Impulse
         _equippedBall.GetComponent<BallManager>().Trajectory = _aimDirection * _currentThrowPower * Time.deltaTime;
         UnequipBall(_equippedBall);
     }

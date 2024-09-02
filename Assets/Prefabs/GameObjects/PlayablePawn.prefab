@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 4747675520440633601}
   - component: {fileID: 7008240433279482959}
   - component: {fileID: 868135169106175682}
+  - component: {fileID: 8176879857749893002}
+  - component: {fileID: 9046920166658646720}
   - component: {fileID: 7754080829793167634}
   - component: {fileID: 3223174439667077122}
   - component: {fileID: 2619317501389014449}
@@ -58,6 +60,7 @@ MonoBehaviour:
   playerId: 0
   teamId: 2
   playerName: 
+  isEiminated: 0
   playerStateMachine: {fileID: 0}
 --- !u!114 &868135169106175682
 MonoBehaviour:
@@ -108,6 +111,34 @@ MonoBehaviour:
   _isThrowPressed: 0
   _isCatchPressed: 0
   _isDodgePressed: 0
+--- !u!114 &8176879857749893002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2230309673918977745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 962f6bc7188d0e5409c277b80add5ac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxLives: 3
+  currentLives: 0
+  isEliminated: 0
+  playerStateMachine: {fileID: 0}
+--- !u!114 &9046920166658646720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2230309673918977745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38c89f93630dc564a8941326042222f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!70 &7754080829793167634
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

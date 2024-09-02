@@ -18,6 +18,7 @@ public class PlayerAimState : PlayerBaseState
         Ctx.IsAiming= true;
         Ctx.BaseAnim.SetBool("IsAiming", true);
         Ctx.SkinAnim.SetBool("IsAiming", true);
+        Ctx.OnAim?.Invoke(true);
     }
 
     public override void UpdateState()
@@ -41,7 +42,7 @@ public class PlayerAimState : PlayerBaseState
         Ctx.IsAiming = false;
         Ctx.BaseAnim.SetBool("IsAiming", false);
         Ctx.SkinAnim.SetBool("IsAiming", false);
-
+        Ctx.OnAim?.Invoke(false);
     }
 
     public override void CheckSwitchState()
