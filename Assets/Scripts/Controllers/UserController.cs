@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class UserController : MonoBehaviour
 {
@@ -21,7 +22,6 @@ public class UserController : MonoBehaviour
         MatchInstanceManager.onInitializeMatchInstance += SetStateMachine;
         MatchInstanceManager.onEnablePawnControl += EnableControl;
         MatchInstanceManager.onDisablePawnControl += DisableControl;
-        
         SubscribeToActions();
     }
 
@@ -121,10 +121,12 @@ public class UserController : MonoBehaviour
     public void EnableControl()
     {
         isActivated = true;
+        playerStateMachine.MoveInput = Vector2.zero;
     }
     public void DisableControl()
     {
         isActivated = false;
+        playerStateMachine.MoveInput = Vector2.zero;
     }
 
 

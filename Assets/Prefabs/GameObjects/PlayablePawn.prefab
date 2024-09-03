@@ -56,11 +56,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotId: 3
-  skinId: 2
+  skinId: 6
   playerId: 0
   teamId: 2
   playerName: 
-  isEiminated: 0
+  isEliminated: 0
   playerStateMachine: {fileID: 0}
 --- !u!114 &868135169106175682
 MonoBehaviour:
@@ -76,6 +76,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _col: {fileID: 7754080829793167634}
   _spriteRenderer: {fileID: 1456662035755726007}
+  _rb: {fileID: 0}
   _baseAnim: {fileID: 2619317501389014449}
   _skinAnim: {fileID: 4314044666098972538}
   _equippedBall: {fileID: 0}
@@ -123,10 +124,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 962f6bc7188d0e5409c277b80add5ac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotId: 0
   maxLives: 3
   currentLives: 0
   isEliminated: 0
   playerStateMachine: {fileID: 0}
+  pawnManager: {fileID: 0}
 --- !u!114 &9046920166658646720
 MonoBehaviour:
   m_ObjectHideFlags: 0

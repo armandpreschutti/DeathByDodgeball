@@ -34,7 +34,7 @@ public class PawnHUDObserver : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(DisableUnownded());
+        StartCoroutine(DisableUnowned());
     }
 
     public void SetHealthSystemUI(int slot, string newName, HealthSystem system)
@@ -43,10 +43,11 @@ public class PawnHUDObserver : MonoBehaviour
         {
             pawnName.text = newName;
             hasOwner = true;
+            
         }
     }
 
-    public IEnumerator DisableUnownded()
+    public IEnumerator DisableUnowned()
     {
         yield return new WaitForSeconds(.25f);
         if(!hasOwner)
@@ -59,20 +60,19 @@ public class PawnHUDObserver : MonoBehaviour
     {
         if(slotId == slot)
         {
-              switch(lives)
-        {
-            case 2:
-                heart1.gameObject.SetActive(false);
-                break;
-            case 1:
-                heart2.gameObject.SetActive(false);
-                break;
-            case 0:
-                heart3.gameObject.SetActive(false);
-                break;
+            switch(lives)
+            {
+                case 2:
+                    heart1.gameObject.SetActive(false);
+                    break;
+                case 1:
+                    heart2.gameObject.SetActive(false);
+                    break;
+                case 0:
+                    heart3.gameObject.SetActive(false);
+                    break;
+            }
         }
-        }
-      
     }
 
     public void SetEliminationPrompt(int slot)

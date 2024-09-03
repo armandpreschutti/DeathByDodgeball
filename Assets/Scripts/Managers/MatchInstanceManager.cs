@@ -1,56 +1,77 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
+using UnityEngine.Timeline;
 
 public class MatchInstanceManager : MonoBehaviour
 {
+    public static MatchInstanceManager Instance { get; private set; }
 
-    public static Action onMatchInstanceLoaded;
+    public PlayableDirector playableDirector;
+    public TimelineAsset matchBeginCS;
+    public TimelineAsset matchOverCS;
     public GameObject[] blueTeamConfigurations;
     public GameObject[] redTeamConfigurations;
+    public GameObject[] blueActivePlayers;
+    public GameObject[] redActivePlayers;
     public GameObject playablePawn;
 
     public static Action onInitializeMatchInstance;
     public static Action onStartMatch;
+    public static Action onEndMatch;
     public static Action onDisablePawnControl;
     public static Action onEnablePawnControl;
+
+    public string matchWinner;
+
+    private void Awake()
+    {
+        // Singleton pattern implementation
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        playableDirector = GetComponent<PlayableDirector>();
+    }
 
     private void OnEnable()
     {
         SceneManager.sceneLoaded += ConfigureMatchInstance;
         PawnManager.onPlayerLoaded += AddPlayerToMatch;
+        HealthSystem.onPlayerElimination += CheckMatchStatus;
     }
+
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= ConfigureMatchInstance;
         PawnManager.onPlayerLoaded -= AddPlayerToMatch;
+        HealthSystem.onPlayerElimination -= CheckMatchStatus;
     }
 
     public void ConfigureMatchInstance(Scene scene, LoadSceneMode mode)
     {
-        if(scene.name == "MatchInstance" )
+        if (scene.name == "MatchInstance")
         {
-            if(FindObjectOfType<PlayerSelectionManager>() != null)
+            PlayerSelectionManager playerSelectionManager = FindObjectOfType<PlayerSelectionManager>();
+            if (playerSelectionManager != null)
             {
-                PlayerSelectionManager playerSelectionManager;
-                playerSelectionManager = GameObject.Find("PlayerSelectionManager").GetComponent<PlayerSelectionManager>();
-                if (playerSelectionManager != null)
+                for (int i = 0; i < playerSelectionManager.playerConfigurations.Length; i++)
                 {
-                    for (int i = 0; i < playerSelectionManager.playerConfigurations.Length; i++)
+                    if (playerSelectionManager.playerConfigurations[i] != null)
                     {
-                        if (playerSelectionManager.playerConfigurations[i] != null)
-                        {
-                            CreatePlayerInstance(playerSelectionManager.playerConfigurations[i]);
-                        }
+                        CreatePlayerInstance(playerSelectionManager.playerConfigurations[i]);
                     }
-                    Destroy(playerSelectionManager.gameObject);
                 }
-            }            
+/*                Destroy(playerSelectionManager.gameObject);*/
+            }
+            matchWinner = "Draw";
             onInitializeMatchInstance?.Invoke();
+            PlayCutScene(matchBeginCS);
         }
     }
 
@@ -63,7 +84,6 @@ public class MatchInstanceManager : MonoBehaviour
         pawnManager.skinId = so.skinID;
         pawnManager.playerId = so.playerId;
         pawnManager.teamId = so.teamId;
-       // pawnManager.playerName = so.playerName;
         Instantiate(pawn, transform.position, Quaternion.identity);
     }
 
@@ -73,17 +93,20 @@ public class MatchInstanceManager : MonoBehaviour
         {
             case 1:
                 blueTeamConfigurations[0] = pawn;
+                blueActivePlayers[0] = pawn;
                 break;
             case 2:
                 blueTeamConfigurations[1] = pawn;
+                blueActivePlayers[1] = pawn;
                 break;
             case 3:
                 redTeamConfigurations[0] = pawn;
+                redActivePlayers[0] = pawn;
                 break;
             case 4:
                 redTeamConfigurations[1] = pawn;
+                redActivePlayers[1] = pawn;
                 break;
-
         }
     }
 
@@ -96,8 +119,80 @@ public class MatchInstanceManager : MonoBehaviour
     {
         onEnablePawnControl?.Invoke();
     }
+
     public void DisablePawnControl()
     {
         onDisablePawnControl?.Invoke();
     }
+
+    public void EndMatch()
+    {
+        onEndMatch?.Invoke();
+        SceneManager.LoadScene("PostMatch");
+    }
+
+    public void CheckMatchStatus(int slotId)
+    {
+        switch (slotId)
+        {
+            case 1:
+                blueActivePlayers[0] = null;
+                break;
+            case 2:
+                blueActivePlayers[1] = null;
+                break;
+            case 3:
+                redActivePlayers[0] = null;
+                break;
+            case 4:
+                redActivePlayers[1] = null;
+                break;
+        }
+
+        // Check if the blue team is fully empty
+        bool isBlueTeamEmpty = true;
+        for (int i = 0; i < blueActivePlayers.Length; i++)
+        {
+            if (blueActivePlayers[i] != null)
+            {
+                isBlueTeamEmpty = false;
+                break;
+            }
+        }
+
+        // Check if the red team is fully empty
+        bool isRedTeamEmpty = true;
+        for (int i = 0; i < redActivePlayers.Length; i++)
+        {
+            if (redActivePlayers[i] != null)
+            {
+                isRedTeamEmpty = false;
+                break;
+            }
+        }
+
+        // Log which team is empty
+        if (isBlueTeamEmpty)
+        {
+            matchWinner = "Red";
+            PlayCutScene(matchOverCS);
+        }
+
+        if (isRedTeamEmpty)
+        {
+            matchWinner = "Blue";
+            PlayCutScene(matchOverCS);
+        }
+
+
+    }
+
+    public void PlayCutScene(PlayableAsset asset)
+    {
+        Debug.LogWarning(playableDirector.name);
+        playableDirector.playableAsset = asset;
+        playableDirector.initialTime = 0.0f;
+        playableDirector.Play();
+    }
+
 }

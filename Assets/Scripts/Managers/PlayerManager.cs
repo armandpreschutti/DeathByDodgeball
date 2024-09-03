@@ -21,11 +21,11 @@ public class PlayerManager : MonoBehaviour
 
     private void OnEnable()
     {
-
+        SceneManager.sceneLoaded += DestroyPlayerInstance;
     }
     private void OnDisable()
     {
-
+        SceneManager.sceneLoaded -= DestroyPlayerInstance;
     }
 
     private void Awake()
@@ -44,6 +44,14 @@ public class PlayerManager : MonoBehaviour
     {
         playerInput= GetComponent<PlayerInput>();
         userController= GetComponent<UserController>();
+    }
+    public void DestroyPlayerInstance(Scene scene, LoadSceneMode mode)
+    {
+        if(scene.name == "MainMenu")
+        {
+            Destroy(gameObject);
+        }
+
     }
 
 }

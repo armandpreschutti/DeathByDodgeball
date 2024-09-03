@@ -48,7 +48,7 @@ public class BallManager : MonoBehaviour
                     {
                         EquiptBall(stateMachine);
                     }
-                    else
+                    else if(!stateMachine.IsDead)
                     {
                         stateMachine.IsDead = true;
                         Destroy(gameObject);
