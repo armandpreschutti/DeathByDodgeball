@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+
+using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
 public class UserController : MonoBehaviour
 {
@@ -11,6 +8,7 @@ public class UserController : MonoBehaviour
     public PlayerManager playerManager;
     public PlayerStateMachine playerStateMachine;
     public bool isActivated;
+    public static Action onPausePressed;
 
     private void Awake()
     { 
@@ -42,19 +40,23 @@ public class UserController : MonoBehaviour
 
     public void SetMoveInput(Vector2 value)
     {
-        if(playerStateMachine != null && isActivated)
+        if(playerStateMachine != null && isActivated && !GameManager.gameInstance.isPaused)
         {
             //Debug.Log("Move called on controller");
             if (!playerStateMachine.IsDodging && !playerStateMachine.IsDead)
             {
                 playerStateMachine.MoveInput = value;
             }
-        }     
+        }
+        else
+        {
+            playerStateMachine.MoveInput = Vector2.zero;
+        }
     }
 
     public void SetAimInput(Vector2 value)
     {
-        if(playerStateMachine != null && isActivated)
+        if(playerStateMachine != null && isActivated && !GameManager.gameInstance.isPaused)
         {
             if (!playerStateMachine.IsDead)
             {
@@ -66,7 +68,7 @@ public class UserController : MonoBehaviour
 
     public void SetDodgeInput(bool value)
     {
-        if (playerStateMachine != null && isActivated)
+        if (playerStateMachine != null && isActivated && !GameManager.gameInstance.isPaused)
         {
             //Debug.Log("Dodge called on controller");
             if (playerStateMachine.MoveInput != Vector2.zero && !playerStateMachine.IsDodging && !playerStateMachine.IsCatching && !playerStateMachine.IsDead && !playerStateMachine.IsThrowing && !playerStateMachine.IsAiming)
@@ -78,7 +80,7 @@ public class UserController : MonoBehaviour
     
     public void SetCatchInput(bool value)
     {
-        if (playerStateMachine != null && isActivated)
+        if (playerStateMachine != null && isActivated && !GameManager.gameInstance.isPaused)
         {
             //Debug.Log("Catch called on controller");
             if (!playerStateMachine.IsCatching && !playerStateMachine.IsHurt && !playerStateMachine.IsThrowing && !playerStateMachine.IsDead)
@@ -90,7 +92,7 @@ public class UserController : MonoBehaviour
 
     public void SetThrowInput(bool value)
     {
-        if (playerStateMachine != null && isActivated)
+        if (playerStateMachine != null && isActivated && !GameManager.gameInstance.isPaused)
         {
             //Debug.Log("Throw called on controller");
             if (!playerStateMachine.IsDodging && !playerStateMachine.IsHurt && !playerStateMachine.IsThrowing && playerStateMachine.IsEquipped)
@@ -98,6 +100,12 @@ public class UserController : MonoBehaviour
                 playerStateMachine.IsThrowPressed = value;
             }
         }
+    }
+
+    public void SetPauseInput(bool value)
+    {
+        onPausePressed?.Invoke();
+        
     }
     public void SubscribeToActions()
     {
@@ -107,7 +115,10 @@ public class UserController : MonoBehaviour
         playerManager.playerInput.actions["Catch"].performed += ctx => SetCatchInput(ctx.ReadValueAsButton());
         playerManager.playerInput.actions["Throw"].performed += ctx => SetThrowInput(ctx.ReadValueAsButton());
         playerManager.playerInput.actions["Throw"].canceled += ctx => SetThrowInput(ctx.ReadValueAsButton());
+        playerManager.playerInput.actions["Pause"].performed += ctx => SetPauseInput(ctx.ReadValueAsButton());
+
     }
+
     public void UnsubscribeFromActions()
     {
         playerManager.playerInput.actions["Move"].performed -= ctx => SetMoveInput(ctx.ReadValue<Vector2>());
@@ -116,6 +127,7 @@ public class UserController : MonoBehaviour
         playerManager.playerInput.actions["Catch"].performed -= ctx => SetCatchInput(ctx.ReadValueAsButton());
         playerManager.playerInput.actions["Throw"].performed -= ctx => SetThrowInput(ctx.ReadValueAsButton());
         playerManager.playerInput.actions["Throw"].canceled -= ctx => SetThrowInput(ctx.ReadValueAsButton());
+        playerManager.playerInput.actions["Pause"].performed -= ctx => SetPauseInput(ctx.ReadValueAsButton());
     }
 
     public void EnableControl()

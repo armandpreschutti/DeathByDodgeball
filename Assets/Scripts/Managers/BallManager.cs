@@ -59,11 +59,6 @@ public class BallManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        SetTrajectory();
-    }
-
     public void EquiptBall(PlayerStateMachine stateMachine)
     {
         hasOwner = true;
@@ -74,13 +69,14 @@ public class BallManager : MonoBehaviour
         isBallActive = false;
     }
 
-    public void SetBallActiveState(bool value)
+   /* public void SetBallActiveState(bool value)
     {
         isBallActive = value;
     }
-
-    public void SetTrajectory()
+*/
+    public void SetTrajectory(bool value, Vector2 direction)
     {
-        transform.Translate(Trajectory);
+        isBallActive = value;
+        GetComponent<Rigidbody2D>().AddForce(direction, ForceMode2D.Impulse);
     }
 }

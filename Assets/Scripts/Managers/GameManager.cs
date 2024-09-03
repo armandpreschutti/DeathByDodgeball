@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager gameInstance;
     public GameObject[] currentPlayers;
+    public bool isPaused;
 
     public static GameManager GetInstance()
     {
@@ -32,11 +33,13 @@ public class GameManager : MonoBehaviour
     {
         PlayerConfigurationController.onDestroyAllPlayers += ClearPlayersFromGame;
         PlayerManager.onJoin += AddPlayerToGame;
+        PauseMenuController.OnGamePaused += PauseGame;
     }
     private void OnDisable()
     {
         PlayerConfigurationController.onDestroyAllPlayers -= ClearPlayersFromGame;
         PlayerManager.onJoin -= AddPlayerToGame;
+        PauseMenuController.OnGamePaused -= PauseGame;
     }
 
     public void AddPlayerToGame(int playerId, GameObject playerObject)
@@ -59,6 +62,17 @@ public class GameManager : MonoBehaviour
         {
             Destroy(currentPlayers[i]);
             currentPlayers[i] = null;
+        }
+    }
+
+    public void PauseGame(bool value)
+    {
+        isPaused = value;
+        Time.timeScale = value ? 0.0f : 1.0f;
+        PlayerStateMachine[] pausedEntities = FindObjectsOfType<PlayerStateMachine>();
+        for (int i = 0; i < pausedEntities.Length; i++)
+        {
+            pausedEntities[i].enabled = !value;
         }
     }
 

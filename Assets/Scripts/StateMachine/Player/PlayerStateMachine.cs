@@ -215,9 +215,10 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void ThrowBall()
     {
-        _equippedBall.GetComponent<BallManager>().SetBallActiveState(true);
-        //Ctx.EquippedBall.GetComponent<Rigidbody2D>().AddForce(Ctx.AimDirection * Ctx.CurrentThrowPower, ForceMode2D.Impulse
-        _equippedBall.GetComponent<BallManager>().Trajectory = _aimDirection * _currentThrowPower * Time.deltaTime;
+        _equippedBall.GetComponent<BallManager>().SetTrajectory(true, _aimDirection * _currentThrowPower);
+      /*  _equippedBall.GetComponent<BallManager>().SetBallActiveState(true);
+        Ctx.EquippedBall.GetComponent<Rigidbody2D>().AddForce(Ctx.AimDirection * Ctx.CurrentThrowPower, ForceMode2D.Impulse
+        _equippedBall.GetComponent<BallManager>().Trajectory = _aimDirection * _currentThrowPower * Time.deltaTime;*/
         UnequipBall(_equippedBall);
     }
 
