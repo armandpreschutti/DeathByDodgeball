@@ -9,8 +9,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager gameInstance;
     public GameObject[] currentPlayers;
+    public PlayerConfigurationSO[] playerConfigurations;
     public bool isPaused;
-
+    public PlayerInputManager playerInputManager;
+    public string winningTeam;
     public static GameManager GetInstance()
     {
         return gameInstance;
@@ -21,6 +23,7 @@ public class GameManager : MonoBehaviour
         if (gameInstance == null)
         {
             gameInstance = this;
+            winningTeam = "Draw";
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -34,12 +37,16 @@ public class GameManager : MonoBehaviour
         PlayerConfigurationController.onDestroyAllPlayers += ClearPlayersFromGame;
         PlayerManager.onJoin += AddPlayerToGame;
         PauseMenuController.OnGamePaused += PauseGame;
+        SceneManager.sceneLoaded += ResetCurrentPlayers;
+        
     }
+
     private void OnDisable()
     {
         PlayerConfigurationController.onDestroyAllPlayers -= ClearPlayersFromGame;
         PlayerManager.onJoin -= AddPlayerToGame;
         PauseMenuController.OnGamePaused -= PauseGame;
+        SceneManager.sceneLoaded -= ResetCurrentPlayers;
     }
 
     public void AddPlayerToGame(int playerId, GameObject playerObject)
@@ -69,6 +76,7 @@ public class GameManager : MonoBehaviour
     {
         isPaused = value;
         Time.timeScale = value ? 0.0f : 1.0f;
+
         PlayerStateMachine[] pausedEntities = FindObjectsOfType<PlayerStateMachine>();
         for (int i = 0; i < pausedEntities.Length; i++)
         {
@@ -76,4 +84,42 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void ResetCurrentPlayers(Scene scene, LoadSceneMode mode)
+    {
+        if(scene.name == "MainMenu")
+        {
+            for(int i = 0; i < currentPlayers.Length; i++)
+            {
+
+                if (currentPlayers[i].gameObject != null)
+                {
+                    Destroy(currentPlayers[i].gameObject);
+                }
+
+
+                currentPlayers[i] = null;
+            }
+            // Loop through each player
+/*            for (int i = 0; i < PlayerInput.all.Count; i++)
+            {
+                // Destroy the player GameObject
+                Destroy(PlayerInput.all[i].gameObject);
+            }*/
+            isPaused = false;
+            Time.timeScale = 1.0f;
+        }
+      /*  if(scene.name == "PlayerSelection")
+        {
+            playerInputManager.EnableJoining();
+        }
+        else
+        {
+            playerInputManager.DisableJoining();
+        }*/
+    }
+
+    public void EnablePlayerJoin()
+    {
+
+    }
 }

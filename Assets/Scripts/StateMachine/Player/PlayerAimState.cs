@@ -28,13 +28,14 @@ public class PlayerAimState : PlayerBaseState
 
         SetAimDirection();
         SetThrowPower();
-        Ctx.transform.Translate(Ctx.MoveDirection * (Ctx.CurrentThrowPower >= Ctx.MaxThrowPower ? Ctx.AimSpeed : Ctx.MoveSpeed) * Time.deltaTime);
+        //Ctx.transform.Translate(Ctx.MoveDirection * (Ctx.CurrentThrowPower >= Ctx.MaxThrowPower ? Ctx.AimSpeed : Ctx.MoveSpeed) * Time.deltaTime);
+
         Ctx.SetPlayerOrientation();
     }
 
     public override void FixedUpdateState()
     {
-      
+        Ctx.Rb.velocity = Ctx.MoveDirection * (Ctx.CurrentThrowPower >= Ctx.MaxThrowPower ? Ctx.AimSpeed : Ctx.MoveSpeed);
     }
 
     public override void ExitState() 

@@ -1,6 +1,7 @@
 
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class UserController : MonoBehaviour
 {
@@ -109,25 +110,59 @@ public class UserController : MonoBehaviour
     }
     public void SubscribeToActions()
     {
-        playerManager.playerInput.actions["Move"].performed += ctx => SetMoveInput(ctx.ReadValue<Vector2>());
-        playerManager.playerInput.actions["Aim"].performed += ctx => SetAimInput(ctx.ReadValue<Vector2>());
-        playerManager.playerInput.actions["Dodge"].performed += ctx => SetDodgeInput(ctx.ReadValueAsButton());
-        playerManager.playerInput.actions["Catch"].performed += ctx => SetCatchInput(ctx.ReadValueAsButton());
-        playerManager.playerInput.actions["Throw"].performed += ctx => SetThrowInput(ctx.ReadValueAsButton());
-        playerManager.playerInput.actions["Throw"].canceled += ctx => SetThrowInput(ctx.ReadValueAsButton());
-        playerManager.playerInput.actions["Pause"].performed += ctx => SetPauseInput(ctx.ReadValueAsButton());
-
+        playerManager.playerInput.actions["Move"].performed += OnMovePerformed;
+        playerManager.playerInput.actions["Aim"].performed += OnAimPerformed;
+        playerManager.playerInput.actions["Dodge"].performed += OnDodgePerformed;
+        playerManager.playerInput.actions["Catch"].performed += OnCatchPerformed;
+        playerManager.playerInput.actions["Throw"].performed += OnThrowPerformed;
+        playerManager.playerInput.actions["Throw"].canceled += OnThrowCanceled;
+        playerManager.playerInput.actions["Pause"].performed += OnPausePerformed;
     }
 
     public void UnsubscribeFromActions()
     {
-        playerManager.playerInput.actions["Move"].performed -= ctx => SetMoveInput(ctx.ReadValue<Vector2>());
-        playerManager.playerInput.actions["Aim"].performed -= ctx => SetAimInput(ctx.ReadValue<Vector2>());
-        playerManager.playerInput.actions["Dodge"].performed -= ctx => SetDodgeInput(ctx.ReadValueAsButton());
-        playerManager.playerInput.actions["Catch"].performed -= ctx => SetCatchInput(ctx.ReadValueAsButton());
-        playerManager.playerInput.actions["Throw"].performed -= ctx => SetThrowInput(ctx.ReadValueAsButton());
-        playerManager.playerInput.actions["Throw"].canceled -= ctx => SetThrowInput(ctx.ReadValueAsButton());
-        playerManager.playerInput.actions["Pause"].performed -= ctx => SetPauseInput(ctx.ReadValueAsButton());
+        playerManager.playerInput.actions["Move"].performed -= OnMovePerformed;
+        playerManager.playerInput.actions["Aim"].performed -= OnAimPerformed;
+        playerManager.playerInput.actions["Dodge"].performed -= OnDodgePerformed;
+        playerManager.playerInput.actions["Catch"].performed -= OnCatchPerformed;
+        playerManager.playerInput.actions["Throw"].performed -= OnThrowPerformed;
+        playerManager.playerInput.actions["Throw"].canceled -= OnThrowCanceled;
+        playerManager.playerInput.actions["Pause"].performed -= OnPausePerformed;
+    }
+
+    private void OnMovePerformed(InputAction.CallbackContext ctx)
+    {
+        SetMoveInput(ctx.ReadValue<Vector2>());
+    }
+
+    private void OnAimPerformed(InputAction.CallbackContext ctx)
+    {
+        SetAimInput(ctx.ReadValue<Vector2>());
+    }
+
+    private void OnDodgePerformed(InputAction.CallbackContext ctx)
+    {
+        SetDodgeInput(ctx.ReadValueAsButton());
+    }
+
+    private void OnCatchPerformed(InputAction.CallbackContext ctx)
+    {
+        SetCatchInput(ctx.ReadValueAsButton());
+    }
+
+    private void OnThrowPerformed(InputAction.CallbackContext ctx)
+    {
+        SetThrowInput(ctx.ReadValueAsButton());
+    }
+
+    private void OnThrowCanceled(InputAction.CallbackContext ctx)
+    {
+        SetThrowInput(ctx.ReadValueAsButton());
+    }
+
+    private void OnPausePerformed(InputAction.CallbackContext ctx)
+    {
+        SetPauseInput(ctx.ReadValueAsButton());
     }
 
     public void EnableControl()

@@ -1,6 +1,4 @@
 using UnityEngine.SceneManagement;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SceneHandler : MonoBehaviour
@@ -13,6 +11,7 @@ public class SceneHandler : MonoBehaviour
     public void LoadPlayerSelection()
     {
         SceneManager.LoadScene("PlayerSelection");
+        
     }
 
     public void LoadGameInstance()
@@ -23,7 +22,5 @@ public class SceneHandler : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
-    }
-
-    
+    }    
 }

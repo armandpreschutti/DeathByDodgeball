@@ -8,7 +8,6 @@ public class PlayerSelectionManager : MonoBehaviour
 {
     public PlayerConfigurationSO[] playerConfigurations;
 
-    public PlayerInputManager playerInputManager;
     public static Action<int, int, int> onSetMatchSlot;
     public static Action<int, int, int> onRemoveMatchSlot;
     public static Action<int, bool> onResetPlayer;
@@ -26,8 +25,6 @@ public class PlayerSelectionManager : MonoBehaviour
     {
         playerConfigurations = new PlayerConfigurationSO[4];
         playableDirector = GetComponent<PlayableDirector>();
-        playerInputManager = GetComponent<PlayerInputManager>();
-        DontDestroyOnLoad(this.gameObject);
     }
 
     private void OnEnable()
@@ -68,6 +65,7 @@ public class PlayerSelectionManager : MonoBehaviour
         newPlayerConfig.skinID = skinId;
         newPlayerConfig.slotId = slotId;
         newPlayerConfig.playerName = $"Player{playerId}";
+
         if(playerId != 0)
         {
             PlayerManager playerManager = GameObject.Find($"Player{playerId}").GetComponent<PlayerManager>();
@@ -148,6 +146,7 @@ public class PlayerSelectionManager : MonoBehaviour
             isMatchStarting = true;
             matchStartPrompt.SetActive(false);
             matchInitiatedPrompt.SetActive(true);
+            playableDirector.initialTime = 0.0f;
             playableDirector.Play();
             onMatchInitiated?.Invoke();
         }
@@ -177,6 +176,12 @@ public class PlayerSelectionManager : MonoBehaviour
 
     public void StartMatch()
     {
-
+        GameManager.gameInstance.playerConfigurations = playerConfigurations;
+        PlayerConfigurationController[] controllers;
+        controllers = FindObjectsOfType<PlayerConfigurationController>();
+        for(int i = 0; i < controllers.Length; i++)
+        {
+            Destroy(controllers[i].gameObject);
+        }
     }
 }

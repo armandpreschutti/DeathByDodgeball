@@ -25,12 +25,13 @@ public class PlayerDodgeState : PlayerBaseState
     {
         CheckSwitchState();
         Ctx.CurrentSubState = "Dodge State";
-        Ctx.transform.Translate(Ctx.MoveDirection * Ctx.DodgeSpeed * Time.deltaTime);
+        // Ctx.transform.Translate(Ctx.MoveDirection * Ctx.DodgeSpeed * Time.deltaTime);
+
     }
 
     public override void FixedUpdateState()
     {
-
+        Ctx.Rb.velocity = Ctx.MoveDirection * Ctx.DodgeSpeed;
     }
 
 

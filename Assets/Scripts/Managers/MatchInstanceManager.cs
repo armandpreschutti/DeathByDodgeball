@@ -34,7 +34,7 @@ public class MatchInstanceManager : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+       // DontDestroyOnLoad(gameObject);
 
         playableDirector = GetComponent<PlayableDirector>();
     }
@@ -55,23 +55,26 @@ public class MatchInstanceManager : MonoBehaviour
 
     public void ConfigureMatchInstance(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "MatchInstance")
+        if (scene.name == "MatchInstance" || scene.name == "Debug")
         {
-            PlayerSelectionManager playerSelectionManager = FindObjectOfType<PlayerSelectionManager>();
-            if (playerSelectionManager != null)
+            if(GameManager.gameInstance.playerConfigurations != null)
             {
-                for (int i = 0; i < playerSelectionManager.playerConfigurations.Length; i++)
+                for (int i = 0; i < GameManager.gameInstance.playerConfigurations.Length; i++)
                 {
-                    if (playerSelectionManager.playerConfigurations[i] != null)
+                    if (GameManager.gameInstance.playerConfigurations[i] != null)
                     {
-                        CreatePlayerInstance(playerSelectionManager.playerConfigurations[i]);
+                        CreatePlayerInstance(GameManager.gameInstance.playerConfigurations[i]);
                     }
                 }
-/*                Destroy(playerSelectionManager.gameObject);*/
             }
+
             matchWinner = "Draw";
             onInitializeMatchInstance?.Invoke();
-            PlayCutScene(matchBeginCS);
+           // PlayCutScene(matchBeginCS);
+        }
+        if(scene.name == "MainMenu")
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -175,12 +178,14 @@ public class MatchInstanceManager : MonoBehaviour
         if (isBlueTeamEmpty)
         {
             matchWinner = "Red";
+            GameManager.gameInstance.winningTeam = "Red";
             PlayCutScene(matchOverCS);
         }
 
         if (isRedTeamEmpty)
         {
             matchWinner = "Blue";
+            GameManager.gameInstance.winningTeam = "Blue";
             PlayCutScene(matchOverCS);
         }
 
@@ -189,7 +194,6 @@ public class MatchInstanceManager : MonoBehaviour
 
     public void PlayCutScene(PlayableAsset asset)
     {
-        Debug.LogWarning(playableDirector.name);
         playableDirector.playableAsset = asset;
         playableDirector.initialTime = 0.0f;
         playableDirector.Play();

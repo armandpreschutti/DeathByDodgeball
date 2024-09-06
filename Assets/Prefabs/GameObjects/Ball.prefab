@@ -163,6 +163,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1c6ff0834723444da53c1d2c1a2052d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasOwner: 0
+  owner: {fileID: 0}
+  owningTeam: 0
+  isEquipped: 0
+  isBallActive: 0
+  isSuperBall: 0
+  _col: {fileID: 0}
+  _rb: {fileID: 0}
+  _spriteRenderer: {fileID: 0}
+  _explosionImpact: {fileID: 0}
+  _ballSprite: {fileID: 0}
+  _bombSprite: {fileID: 0}
+  _normalTrail: {fileID: 8415722646236332487}
+  _superTrail: {fileID: 2671472614532509387}
+  _parent: {fileID: 0}
+  _ballDamage: 0
+  _knockBackPower: 0
+  Trajectory: {x: 0, y: 0}
 --- !u!1 &3091680637538156359
 GameObject:
   m_ObjectHideFlags: 0

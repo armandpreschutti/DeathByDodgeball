@@ -34,8 +34,7 @@ public class PlayerConfigurationController : MonoBehaviour
     public static Action onInitiateMatchStart;
     public static Action onDestroyAllPlayers;
     public bool canSelectAI;
-
-    //public static Action onNewPlayer;
+    public bool isControlEnabled;
 
     private void Awake()
     {
@@ -44,26 +43,49 @@ public class PlayerConfigurationController : MonoBehaviour
 
     private void OnEnable()
     {
-        SceneManager.sceneUnloaded += DisableConfigurationController;
         PlayerSelectionManager.onResetPlayer += ResetPlayer;
         PlayerSelectionPanelBroadcaster.onSelected += SetCurrentSelection;
-        playerInput.actions["NextSkin"].performed += ctx => CycleNextSkin();
-        playerInput.actions["PreviousSkin"].performed += ctx => CyclePreviousSkin();
-        playerInput.actions["JoinGame"].performed += ctx => AddAI();
-        playerInput.actions["Remove"].performed += ctx => RemoveSelection();
-        playerInput.actions["Start"].performed += ctx => InitiateMatchStart();
+        playerInput.actions["NextSkin"].performed += OnNextSkinPerformed;
+        playerInput.actions["PreviousSkin"].performed += OnPreviousSkinPerformed;
+        playerInput.actions["JoinGame"].performed += OnAddAIPerformed;
+        playerInput.actions["Remove"].performed += OnRemoveSelectionPerformed;
+        playerInput.actions["Start"].performed += OnStartPerformed;
     }
 
     private void OnDisable()
     {
-        SceneManager.sceneUnloaded -= DisableConfigurationController;
         PlayerSelectionManager.onResetPlayer -= ResetPlayer;
         PlayerSelectionPanelBroadcaster.onSelected -= SetCurrentSelection;
-        playerInput.actions["NextSkin"].performed -= ctx => CycleNextSkin();
-        playerInput.actions["PreviousSkin"].performed -= ctx => CyclePreviousSkin();
-        playerInput.actions["JoinGame"].performed -= ctx => AddAI();
-        playerInput.actions["Remove"].performed -= ctx => RemoveSelection();
-        playerInput.actions["Start"].performed -= ctx => InitiateMatchStart();
+        playerInput.actions["NextSkin"].performed -= OnNextSkinPerformed;
+        playerInput.actions["PreviousSkin"].performed -= OnPreviousSkinPerformed;
+        playerInput.actions["JoinGame"].performed -= OnAddAIPerformed;
+        playerInput.actions["Remove"].performed -= OnRemoveSelectionPerformed;
+        playerInput.actions["Start"].performed -= OnStartPerformed;
+    }
+
+    private void OnNextSkinPerformed(InputAction.CallbackContext ctx)
+    {
+        CycleNextSkin();
+    }
+
+    private void OnPreviousSkinPerformed(InputAction.CallbackContext ctx)
+    {
+        CyclePreviousSkin();
+    }
+
+    private void OnAddAIPerformed(InputAction.CallbackContext ctx)
+    {
+        AddAI();
+    }
+
+    private void OnRemoveSelectionPerformed(InputAction.CallbackContext ctx)
+    {
+        RemoveSelection();
+    }
+
+    private void OnStartPerformed(InputAction.CallbackContext ctx)
+    {
+        InitiateMatchStart();
     }
 
     public void DisableConfigurationController(Scene scene)
@@ -98,7 +120,7 @@ public class PlayerConfigurationController : MonoBehaviour
 
     public void InitiateMatchStart()
     {
-       // Debug.Log($"P{playerId} has pressed the 'start' button");
+        Debug.Log($"P{playerId} has pressed the 'start' button");
         onInitiateMatchStart?.Invoke();
     }
 
@@ -180,11 +202,6 @@ public class PlayerConfigurationController : MonoBehaviour
             onAddAi?.Invoke(playerId, currentSlot, currentSkin, selectedSlot);
         }
     }
-    /*public void ResetAIOption()
-    {
-        canSelectAI = false;
-    }
-*/
     public void RemoveSelection()
     {
         onRemoveSelection?.Invoke(playerId,currentSlot,currentSkin);

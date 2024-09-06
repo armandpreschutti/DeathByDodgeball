@@ -22,8 +22,8 @@ public class PlayerIdleState : PlayerBaseState
     }
 
     public override void FixedUpdateState()
-    { 
-
+    {
+        Ctx.Rb.velocity = Vector2.zero;
     }
 
     public override void ExitState()

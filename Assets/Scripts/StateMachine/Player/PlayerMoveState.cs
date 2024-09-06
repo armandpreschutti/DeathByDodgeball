@@ -19,13 +19,14 @@ public class PlayerMoveState : PlayerBaseState
         CheckSwitchState();
         Ctx.CurrentSubState = "Move State";
 
-        Ctx.transform.Translate(Ctx.MoveDirection * Ctx.MoveSpeed * Time.deltaTime);
+        //Ctx.transform.Translate(Ctx.MoveDirection * Ctx.MoveSpeed * Time.deltaTime);
+
         Ctx.SetPlayerOrientation();
     }
 
     public override void FixedUpdateState()
     {
-       
+        Ctx.Rb.velocity = Ctx.MoveDirection * Ctx.MoveSpeed;
     }
 
     public override void ExitState()

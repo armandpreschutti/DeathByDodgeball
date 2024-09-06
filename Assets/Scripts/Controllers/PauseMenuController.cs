@@ -14,7 +14,6 @@ public class PauseMenuController : MonoBehaviour
     public EventSystem eventSystem;
 
     public static Action<bool> OnGamePaused;
-    public static Action<bool> OnReturnToMenu;
 
     private void Awake()
     {
@@ -25,11 +24,12 @@ public class PauseMenuController : MonoBehaviour
     {
         UserController.onPausePressed += SetPauseMenuState;
     }
+
     private void OnDisable()
     {
         UserController.onPausePressed -= SetPauseMenuState;
-        ResetPauseMenu();
     }
+
     public void SetPauseMenuState()
     {
         _pauseMenu.SetActive(!_pauseMenu.activeSelf);
@@ -43,23 +43,4 @@ public class PauseMenuController : MonoBehaviour
         }
     }
 
-    public void ReturnToMenu()
-    {
-        OnReturnToMenu?.Invoke(true);
-    }   
-
-    // Set input values
-    private void ResetPauseMenu()
-    {
-        // Set up input actions for player controls
-        //_pauseControls.Player.Pause.performed -= ctx => SetPauseMenuState(/*ctx.ReadValue<Vector2>()*/);
-        _pauseMenu.SetActive(!_pauseMenu.activeSelf);
-        OnGamePaused?.Invoke(_pauseMenu.activeSelf);
-        isPaused = _pauseMenu.activeSelf;
-        if (isPaused)
-        {
-            eventSystem.SetSelectedGameObject(firstSelected);
-        }
-        //  _pauseControls.Player.Navigate.performed -= ctx => SetPauseNavigationInput();
-    }
 }

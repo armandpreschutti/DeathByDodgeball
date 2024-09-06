@@ -9,6 +9,7 @@ public class BallManager : MonoBehaviour
     public int owningTeam;
     public bool isEquipped;
     public bool isBallActive;
+    public bool isSuperBall;
     
 
     [Header("Components")]
@@ -20,6 +21,8 @@ public class BallManager : MonoBehaviour
     public GameObject _explosionImpact;
     public Sprite _ballSprite;
     public Sprite _bombSprite;
+    public ParticleSystem _normalTrail;
+    public ParticleSystem _superTrail;
 
     [Header("Variables")]
     public Transform _parent;
@@ -67,16 +70,29 @@ public class BallManager : MonoBehaviour
         isEquipped = true;
         owningTeam = stateMachine.GetComponent<PawnManager>().teamId;
         isBallActive = false;
+        SetBallTrailVFX(false);
+        isSuperBall = false;
     }
 
-   /* public void SetBallActiveState(bool value)
+    public void SetTrajectory(bool value, Vector2 direction, bool super)
     {
         isBallActive = value;
-    }
-*/
-    public void SetTrajectory(bool value, Vector2 direction)
-    {
-        isBallActive = value;
+        isSuperBall = super;
         GetComponent<Rigidbody2D>().AddForce(direction, ForceMode2D.Impulse);
+        SetBallTrailVFX(true);
+    }
+
+    public void SetBallTrailVFX(bool value)
+    {
+        ParticleSystem particleSystem = isSuperBall ? _superTrail : _normalTrail;
+        if (value)
+        {
+            particleSystem.Play();
+
+        }
+        else
+        {
+            particleSystem.Stop();
+        }
     }
 }
