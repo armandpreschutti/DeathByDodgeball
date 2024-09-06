@@ -25,6 +25,7 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] Transform _holdPosition;
     [SerializeField] Transform _holdRightPosition;
     [SerializeField] Transform _holdLeftPosition;
+
     [SerializeField] bool _isFacingRight;
     [SerializeField] bool _canRespawn;
     [SerializeField] float _respawnDelay;
@@ -32,6 +33,9 @@ public class PlayerStateMachine : MonoBehaviour
 
     [Header("Melee")]
     [SerializeField] Vector3 _aimDirection;
+    [SerializeField] GameObject _currentTarget;
+    [SerializeField] Transform _aimRightPosition;
+    [SerializeField] Transform _aimLeftPosition;
     [SerializeField] float _minThrowPower = 4f;
     [SerializeField] float _maxThrowPower = 20f;
     [SerializeField] float _superThrowPower = 35;
@@ -91,6 +95,9 @@ public class PlayerStateMachine : MonoBehaviour
     public float RespawnDelay { get { return _respawnDelay; } set { _respawnDelay = value; } }
 
     public Vector3 AimDirection { get { return _aimDirection; } set { _aimDirection = value; } }
+    public GameObject CurrentTarget { get { return _currentTarget; } set { _currentTarget = value; } }
+    public Transform AimRightPosition { get { return _aimRightPosition; } set {_aimRightPosition = value; } }
+    public Transform AimLeftPosition { get { return _aimLeftPosition; } set {_aimLeftPosition = value; } }
     public float MinThrowPower { get { return _minThrowPower; } set { _minThrowPower = value; } }
     public float MaxThrowPower { get { return _maxThrowPower; } set { _maxThrowPower = value; } }
     public float SuperThrowPower { get { return _superThrowPower; } set { _superThrowPower = value; } }

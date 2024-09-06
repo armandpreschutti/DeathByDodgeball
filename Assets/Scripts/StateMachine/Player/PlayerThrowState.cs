@@ -38,6 +38,9 @@ public class PlayerThrowState : PlayerBaseState
         Ctx.IsThrowing = false;
         Ctx.CurrentThrowPower = Ctx.MinThrowPower;
         Ctx.OnThrow?.Invoke(false);
+        Ctx.AimRightPosition.gameObject.SetActive(false);
+        Ctx.AimLeftPosition.gameObject.SetActive(false);
+        Ctx.CurrentTarget = null;
     }
 
     public override void CheckSwitchState()

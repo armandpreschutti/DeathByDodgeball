@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public bool isPaused;
     public PlayerInputManager playerInputManager;
     public string winningTeam;
+    public bool isDebugging;
+
     public static GameManager GetInstance()
     {
         return gameInstance;
@@ -99,12 +101,6 @@ public class GameManager : MonoBehaviour
 
                 currentPlayers[i] = null;
             }
-            // Loop through each player
-/*            for (int i = 0; i < PlayerInput.all.Count; i++)
-            {
-                // Destroy the player GameObject
-                Destroy(PlayerInput.all[i].gameObject);
-            }*/
             isPaused = false;
             Time.timeScale = 1.0f;
         }
@@ -116,10 +112,5 @@ public class GameManager : MonoBehaviour
         {
             playerInputManager.DisableJoining();
         }*/
-    }
-
-    public void EnablePlayerJoin()
-    {
-
     }
 }

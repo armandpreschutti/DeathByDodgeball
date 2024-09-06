@@ -605,10 +605,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    - target: {fileID: 1749952654997528082, guid: 9d75c95ea8874184287a5a372bec9b83, type: 3}
-      propertyPath: m_JoinAction.m_Reference
-      value: 
-      objectReference: {fileID: -4754829573774515203, guid: 232aaa4fc64a85841bc4f54ba855ef60, type: 3}
     - target: {fileID: 5298344005680597871, guid: 9d75c95ea8874184287a5a372bec9b83, type: 3}
       propertyPath: m_RootOrder
       value: 3

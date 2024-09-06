@@ -70,7 +70,10 @@ public class MatchInstanceManager : MonoBehaviour
 
             matchWinner = "Draw";
             onInitializeMatchInstance?.Invoke();
-           // PlayCutScene(matchBeginCS);
+            if (!GameManager.gameInstance.isDebugging)
+            {
+                PlayCutScene(matchBeginCS);
+            }
         }
         if(scene.name == "MainMenu")
         {

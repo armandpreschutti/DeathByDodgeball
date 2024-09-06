@@ -17,17 +17,29 @@ public class HealthSystem : MonoBehaviour
 
     private void Awake()
     {
+        if(GameManager.gameInstance.isDebugging)
+        {
+            this.enabled = false;
+        }
         playerStateMachine = GetComponent<PlayerStateMachine>();
         pawnManager = GetComponent<PawnManager>();
         slotId = pawnManager.slotId;
     }
     private void OnEnable()
     {
-        playerStateMachine.OnDeath += RemoveLife;
+        if(playerStateMachine!= null)
+        {
+            playerStateMachine.OnDeath += RemoveLife;
+        }
+
     }
     private void OnDisable()
     { 
-        playerStateMachine.OnDeath -= RemoveLife;
+        if(playerStateMachine!= null)
+        {
+            playerStateMachine.OnDeath -= RemoveLife;
+        }
+
     }
     private void Start()
     {

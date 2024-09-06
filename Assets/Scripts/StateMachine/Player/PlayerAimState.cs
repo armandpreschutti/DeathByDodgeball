@@ -44,6 +44,8 @@ public class PlayerAimState : PlayerBaseState
         Ctx.BaseAnim.SetBool("IsAiming", false);
         Ctx.SkinAnim.SetBool("IsAiming", false);
         Ctx.OnAim?.Invoke(false);
+
+
     }
 
     public override void CheckSwitchState()
@@ -74,17 +76,36 @@ public class PlayerAimState : PlayerBaseState
     public void SetAimDirection()
     {
         bool flipped;
-        if (Ctx.AimInput.magnitude > .75f)
+        flipped = Ctx.transform.position.x > 0f ? true : false;
+/*        if (Ctx.AimInput.magnitude > .75f)
         {
             flipped = Ctx.AimInput.x < 0 ? true : false;
         }
         else
         {
             flipped = Ctx.transform.position.x > 0f ? true : false;
-        }
+        }*/
         Ctx.GetComponent<SpriteRenderer>().flipX = flipped;
         Ctx.HoldPosition = flipped ? Ctx.HoldRightPosition : Ctx.HoldLeftPosition;
-        Ctx.AimDirection = new Vector3(flipped ? -1 : 1, 0, 0);
+        if (flipped)
+        {
+            Ctx.AimRightPosition.gameObject.SetActive(false);
+            Ctx.AimLeftPosition.gameObject.SetActive(true);
+        }
+        else
+        {
+            Ctx.AimRightPosition.gameObject.SetActive(true);
+            Ctx.AimLeftPosition.gameObject.SetActive(false);
+        }
+        if(Ctx.CurrentTarget != null)
+        {
+            //Set aim direction to target position normalized
+            Ctx.AimDirection = (Ctx.CurrentTarget.transform.position - Ctx.transform.position).normalized;
+        }
+        else
+        {
+            Ctx.AimDirection = new Vector3(flipped ? -1 : 1, 0, 0);
+        }
 
     }
     public void SetThrowPower()

@@ -53,6 +53,8 @@ MonoBehaviour:
   playerConfigurations: []
   isPaused: 0
   playerInputManager: {fileID: 1749952654997528082}
+  winningTeam: 
+  isDebugging: 0
 --- !u!114 &1749952654997528082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,7 +96,7 @@ MonoBehaviour:
         m_Action: Join
         m_Flags: 0
       m_Flags: 0
-    m_Reference: {fileID: 3326124738188771902, guid: 232aaa4fc64a85841bc4f54ba855ef60, type: 3}
+    m_Reference: {fileID: -4754829573774515203, guid: 232aaa4fc64a85841bc4f54ba855ef60, type: 3}
   m_PlayerPrefab: {fileID: 5200011997215567144, guid: d5ddbdf0b2958b943bf1632550ef0fe7, type: 3}
   m_SplitScreen: 0
   m_MaintainAspectRatioInSplitScreen: 0
