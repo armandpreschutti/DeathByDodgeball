@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4f6ed5d506e00a4f93224577da0b267, type: 3}
-  m_Name: DebugCPU
+  m_Name: DebugP2
   m_EditorClassIdentifier: 
-  playerId: 0
-  teamId: 1
-  skinID: 5
-  slotId: 2
-  playerName: CPU
+  playerId: 2
+  teamId: 2
+  skinID: 3
+  slotId: 3
+  playerName: P2

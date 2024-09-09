@@ -22,6 +22,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     [Header("General")]
     [SerializeField] GameObject _equippedBall = null;
+    [SerializeField] GameObject _closestBall = null;
     [SerializeField] Transform _holdPosition;
     [SerializeField] Transform _holdRightPosition;
     [SerializeField] Transform _holdLeftPosition;
@@ -36,6 +37,7 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] GameObject _currentTarget;
     [SerializeField] Transform _aimRightPosition;
     [SerializeField] Transform _aimLeftPosition;
+    [SerializeField] Transform _catchArea;
     [SerializeField] float _minThrowPower = 4f;
     [SerializeField] float _maxThrowPower = 20f;
     [SerializeField] float _superThrowPower = 35;
@@ -87,6 +89,7 @@ public class PlayerStateMachine : MonoBehaviour
     public Rigidbody2D Rb { get { return _rb; } set { _rb = value; } }  
 
     public GameObject EquippedBall { get {return _equippedBall;} set { _equippedBall = value; } }
+    public GameObject ClosestBall { get { return _closestBall; } set { _closestBall = value; } }
     public Transform HoldPosition { get { return _holdPosition; } set { _holdPosition = value; } }
     public Transform HoldRightPosition { get { return _holdRightPosition; } set { _holdRightPosition = value; } }
     public Transform HoldLeftPosition { get { return _holdLeftPosition; } set { _holdLeftPosition = value; } }
@@ -98,6 +101,7 @@ public class PlayerStateMachine : MonoBehaviour
     public GameObject CurrentTarget { get { return _currentTarget; } set { _currentTarget = value; } }
     public Transform AimRightPosition { get { return _aimRightPosition; } set {_aimRightPosition = value; } }
     public Transform AimLeftPosition { get { return _aimLeftPosition; } set {_aimLeftPosition = value; } }
+    public Transform CatchArea { get { return _catchArea; } set { _catchArea = value; } }
     public float MinThrowPower { get { return _minThrowPower; } set { _minThrowPower = value; } }
     public float MaxThrowPower { get { return _maxThrowPower; } set { _maxThrowPower = value; } }
     public float SuperThrowPower { get { return _superThrowPower; } set { _superThrowPower = value; } }
@@ -222,7 +226,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void ThrowBall()
     {
-        _equippedBall.GetComponent<BallManager>().SetTrajectory(true, _aimDirection * _currentThrowPower, _currentThrowPower <= _maxThrowPower ? false : true);
+        _equippedBall.GetComponent<BallManager>().Launch(true, _aimDirection * _currentThrowPower, _currentThrowPower <= _maxThrowPower ? false : true, _currentTarget, _currentThrowPower);
         UnequipBall(_equippedBall);
     }
 

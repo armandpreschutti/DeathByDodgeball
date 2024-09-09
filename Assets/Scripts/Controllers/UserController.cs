@@ -72,7 +72,7 @@ public class UserController : MonoBehaviour
         if (playerStateMachine != null && isActivated && !GameManager.gameInstance.isPaused)
         {
             //Debug.Log("Dodge called on controller");
-            if (playerStateMachine.MoveInput != Vector2.zero && !playerStateMachine.IsDodging && !playerStateMachine.IsCatching && !playerStateMachine.IsDead && !playerStateMachine.IsThrowing && !playerStateMachine.IsAiming)
+            if (playerStateMachine.MoveInput != Vector2.zero && !playerStateMachine.IsDodging && !playerStateMachine.IsCatching && !playerStateMachine.IsDead && !playerStateMachine.IsThrowing)
             {
                 playerStateMachine.IsDodgePressed = value;
             }

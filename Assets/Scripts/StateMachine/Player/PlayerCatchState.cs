@@ -16,7 +16,16 @@ public class PlayerCatchState : PlayerBaseState
         Ctx.IsCatching = true;
         Ctx.BaseAnim.SetBool("IsCatching", true);
         Ctx.SkinAnim.SetBool("IsCatching", true);
+        Ctx.CatchArea.gameObject.SetActive(true);
         Ctx.OnCatch?.Invoke(true);
+        if (Ctx.ClosestBall != null)
+        {
+            
+        }
+        else
+        {
+            Ctx.Rb.velocity = Vector2.zero;
+        }
     }
 
     public override void UpdateState()
@@ -29,7 +38,7 @@ public class PlayerCatchState : PlayerBaseState
 
     public override void FixedUpdateState()
     {
-
+      
     }
 
     public override void ExitState()
@@ -37,6 +46,7 @@ public class PlayerCatchState : PlayerBaseState
         Ctx.BaseAnim.SetBool("IsCatching", false);
         Ctx.SkinAnim.SetBool("IsCatching", false);
         Ctx.IsCatching = false;
+        Ctx.CatchArea.gameObject.SetActive(false);
         Ctx.OnCatch?.Invoke(false);
     }
 

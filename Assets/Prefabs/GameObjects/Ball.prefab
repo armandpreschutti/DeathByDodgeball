@@ -112,7 +112,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 2
+  m_Interpolate: 1
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
@@ -169,6 +169,9 @@ MonoBehaviour:
   isEquipped: 0
   isBallActive: 0
   isSuperBall: 0
+  target: {fileID: 0}
+  currentPower: 0
+  originPoint: {x: 0, y: 0}
   _col: {fileID: 0}
   _rb: {fileID: 0}
   _spriteRenderer: {fileID: 0}

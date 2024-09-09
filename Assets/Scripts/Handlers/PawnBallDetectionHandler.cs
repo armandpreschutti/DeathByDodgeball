@@ -2,20 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PawnAimingHandler : MonoBehaviour
+public class PawnBallDetectionHandler : MonoBehaviour
 {
     //public Transform player; // Reference to the player
     public PawnManager _pawnManager;
-    public GameObject _crossHairs;
-    public Transform mainTarget; // Closest target to the player
+    public Transform closestBall; // Closest target to the player
     public PlayerStateMachine playerStateMachine;
     private Collider2D[] objectsInArea = new Collider2D[10]; // Fixed size array to store objects in the area
     private int objectCount = 0; // Tracks the number of objects in the array
 
+
+    private void OnDisable()
+    {
+        playerStateMachine.ClosestBall = null;
+    }
     // Called when an object enters the trigger area
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && objectCount < objectsInArea.Length)
+        if (collision.CompareTag("Ball") && objectCount < objectsInArea.Length)
         {
             objectsInArea[objectCount] = collision;
             objectCount++;
@@ -44,44 +48,22 @@ public class PawnAimingHandler : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        mainTarget = GetClosestTarget();
-        if (objectCount > 0 && mainTarget != null)
+        closestBall = GetClosestTarget();
+        if (objectCount > 0 && closestBall != null)
         {
-            playerStateMachine.CurrentTarget = mainTarget.gameObject;
+            //playerStateMachine.CurrentTarget = mainTarget.gameObject;
+            playerStateMachine.ClosestBall = closestBall.gameObject;
             // Here you can set mainTarget as the current target, or perform any logic
-            //  Debug.Log("Main Target: " + mainTarget.name);
         }
         else
         {
-            mainTarget = null;
+            closestBall = null;
             playerStateMachine.CurrentTarget = null;
         }
 
     }
 
-    private Transform GetClosestTarget()
-    {
-        Transform closest = null;
-        float minDistance = Mathf.Infinity;
-
-        for (int i = 0; i < objectCount; i++)
-        {
-            // Get the collider's center position
-            Vector3 targetCenter = objectsInArea[i].bounds.center;
-            // Calculate distance only on the y-axis
-            float distance = Mathf.Abs(transform.position.y - targetCenter.y);
-
-            if (distance < minDistance && !objectsInArea[i].GetComponent<PlayerStateMachine>().IsDead && objectsInArea[i].GetComponent<PlayerStateMachine>() != null)
-            {
-                minDistance = distance;
-                closest = objectsInArea[i].transform;
-            }
-        }
-
-        return closest;
-    }
-
-    /*// Function to get the closest target to the player
+    // Function to get the closest target to the player
     private Transform GetClosestTarget()
     {
         Transform closest = null;
@@ -90,7 +72,7 @@ public class PawnAimingHandler : MonoBehaviour
         for (int i = 0; i < objectCount; i++)
         {
             float distance = Vector3.Distance(transform.position, objectsInArea[i].transform.position);
-            if (distance < minDistance && !objectsInArea[i].GetComponent<PlayerStateMachine>().IsDead && objectsInArea[i].GetComponent<PlayerStateMachine>() != null)
+            if (distance < minDistance)
             {
                 minDistance = distance;
                 closest = objectsInArea[i].transform;
@@ -98,5 +80,5 @@ public class PawnAimingHandler : MonoBehaviour
         }
 
         return closest;
-    }*/
+    }
 }

@@ -16,6 +16,7 @@ public class PlayerDeathState: PlayerBaseState
         Ctx.BaseAnim.SetBool("Die", true);
         Ctx.SkinAnim.SetBool("Die", true);
         Ctx.OnDeath?.Invoke(true);
+        Ctx.MoveInput = Vector2.zero;
         if(Ctx.CanRespawn)
         {
             Ctx.StartCoroutine(RespawnAfterDelay());
@@ -30,7 +31,7 @@ public class PlayerDeathState: PlayerBaseState
 
     public override void FixedUpdateState()
     {
-
+        Ctx.Rb.velocity = Vector2.zero;
     }
 
 
