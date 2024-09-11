@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -16,16 +17,18 @@ public class PlayerManager : MonoBehaviour
     [Header("Components")]
     public PlayerInput playerInput;
     public UserController userController;
-
+    public ControllerVibrationHandler controllerVibrationHandler;
     public static Action<int, GameObject> onJoin;
 
     private void OnEnable()
     {
         //SceneManager.sceneLoaded += DestroyPlayerInstance;
+        MatchInstanceManager.onInitializeMatchInstance += EnableInputVibration;
     }
     private void OnDisable()
     {
-       // SceneManager.sceneLoaded -= DestroyPlayerInstance;
+        // SceneManager.sceneLoaded -= DestroyPlayerInstance;
+        MatchInstanceManager.onInitializeMatchInstance -= EnableInputVibration;
     }
 
     private void Awake()
@@ -44,14 +47,16 @@ public class PlayerManager : MonoBehaviour
     {
         playerInput= GetComponent<PlayerInput>();
         userController= GetComponent<UserController>();
-    }
-/*    public void DestroyPlayerInstance(Scene scene, LoadSceneMode mode)
-    {
-        if(scene.name == "MainMenu")
+        if (GetComponent<ControllerVibrationHandler>() != null)
         {
-            Destroy(gameObject);
+            controllerVibrationHandler = GetComponent<ControllerVibrationHandler>();
         }
-
     }
-*/
+    public void EnableInputVibration()
+    {
+        if (GetComponent<UserController>() != null)
+        {
+            controllerVibrationHandler.enabled= true;
+        }
+    }
 }

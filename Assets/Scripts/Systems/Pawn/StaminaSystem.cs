@@ -1,18 +1,111 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class StaminaSystem : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public PlayerStateMachine playerStateMachine;
+    public int currentDodges;
+    public int maxDodges;
+    public int minDodges;
+    public float replenishTime; // Time in seconds between each dodge refill
+    public float replenishDelay;
+    public Action<int, bool> onDodgeAdded;
+    public Action<int, bool> onDodgeRemoved;
+    public Action<bool> onDodgeDepeleted;
+    public Action<bool> onDodgeReplenished;
+
+    private Coroutine dodgeReplenishCoroutine;
+    private Coroutine replenishDelayCoroutine;
+
+    private void Awake()
     {
-        
+        playerStateMachine = GetComponent<PlayerStateMachine>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        playerStateMachine.OnDodge += SpendDodge;
+    }
+
+    private void OnDisable()
+    {
+        playerStateMachine.OnDodge -= SpendDodge;
+    }
+
+    private void Start()
+    {
+        currentDodges = maxDodges;
+    }
+
+    private void Update()
+    {
+        // You can handle other updates here
+    }
+
+    public void SpendDodge(bool value)
+    {
+        if (value)
+        {
+            if(currentDodges == maxDodges)
+            {
+                onDodgeDepeleted?.Invoke(true);
+            }
+            currentDodges--;
+            onDodgeRemoved?.Invoke(currentDodges, false);
+            if (replenishDelayCoroutine == null)
+            {
+                replenishDelayCoroutine = StartCoroutine(StartReplenishDelay());
+            }
+            else
+            {
+                if(replenishDelayCoroutine != null)
+                {
+                    StopCoroutine(replenishDelayCoroutine);
+                }
+
+                if(dodgeReplenishCoroutine != null)
+                {
+                    StopCoroutine(dodgeReplenishCoroutine);
+                }
+
+                replenishDelayCoroutine = StartCoroutine(StartReplenishDelay());
+            }
+            if (currentDodges <= 0)
+            {
+                currentDodges = 0; // Ensure it doesn't go below 0
+                playerStateMachine.IsExhausted = true;
+            }
+        }
+    }
+
+    private IEnumerator StartReplenishDelay()
+    {
+        yield return new WaitForSeconds(replenishDelay);
+        dodgeReplenishCoroutine = StartCoroutine(ReplenishDodges());
+
+    }
+
+    private IEnumerator ReplenishDodges()
+    {
+        yield return new WaitForSeconds(replenishTime); // Wait for the replenish time
+        playerStateMachine.IsExhausted = false;
+        currentDodges++; // Refill by 1
+        onDodgeAdded?.Invoke(currentDodges, true);    
+        currentDodges = Mathf.Clamp(currentDodges, minDodges, maxDodges); // Ensure it doesn't go over maxDodges
+        if(currentDodges < maxDodges)
+        {
+            dodgeReplenishCoroutine = StartCoroutine(ReplenishDodges());
+        }
+        else
+        {
+            dodgeReplenishCoroutine = null; // Stop the coroutine when dodges are full
+            Debug.Log("stamina system disabled");
+            onDodgeDepeleted?.Invoke(false);
+            onDodgeReplenished?.Invoke(true);
+        }
+
+
     }
 }

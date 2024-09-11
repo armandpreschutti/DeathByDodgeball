@@ -15,6 +15,8 @@ public class BallManager : MonoBehaviour
     public GameObject target;
     public float currentPower;
     public Vector2 originPoint;
+    public Vector2 currentDirection;
+
 
     [Header("Components")]
     public Collider2D _col;
@@ -22,53 +24,21 @@ public class BallManager : MonoBehaviour
     public SpriteRenderer _spriteRenderer;
 
     [Header("VFX")]
-    public GameObject _explosionImpact;
+    public GameObject _hitVfx;
+    public GameObject _explosionVfx;
     public Sprite _ballSprite;
     public Sprite _bombSprite;
     public ParticleSystem _normalTrail;
     public ParticleSystem _superTrail;
 
-    [Header("Variables")]
-    public Transform _parent;
-    public float _ballDamage;
     public float _knockBackPower;
-    public Vector2 Trajectory;
+
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
     }
 
-    /*    private void OnCollisionEnter2D(Collision2D collision)
-        {
-            if (collision.gameObject.GetComponent<PlayerStateMachine>() != null)
-            {
-                PlayerStateMachine stateMachine = collision.gameObject.GetComponent<PlayerStateMachine>();
-                if (!hasOwner)
-                {
-                    if (!stateMachine.IsEquipped)
-                    {
-                        EquiptBall(stateMachine);
-                    }
-                }
-                else
-                {
-                    if (stateMachine != owner && isBallActive && stateMachine.GetComponent<PawnManager>().teamId != owningTeam)
-                    {
-                        if (stateMachine.IsCatching)
-                        {
-                            EquiptBall(stateMachine);
-                        }
-                        else if (!stateMachine.IsDead)
-                        {
-                            stateMachine.IsDead = true;
-                            Destroy(gameObject);
-                        }
-
-                    }
-                }
-            }
-        }*/
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.GetComponent<PlayerStateMachine>() != null)
@@ -83,7 +53,7 @@ public class BallManager : MonoBehaviour
             }
             else
             {
-                if (/*stateMachine != owner &&*/ isBallActive && stateMachine.GetComponent<PawnManager>().teamId != owningTeam)
+                if (isBallActive && stateMachine.GetComponent<PawnManager>().teamId != owningTeam)
                 {
                     if (stateMachine.IsCatching)
                     {
@@ -93,9 +63,19 @@ public class BallManager : MonoBehaviour
                     {
                         stateMachine.IsDead = true;
                         isBallActive = false;
+                        if (isSuperBall)
+                        {
+                            Instantiate(_explosionVfx, transform.position, Quaternion.identity,null );
+                            Destroy(gameObject);
 
-                        _rb.velocity = new Vector2(_rb.velocity.x, originPoint.y < transform.position.y ? 7.5f : -7.5f); 
-                        Destroy(gameObject, 1f);
+                        }
+                        else
+                        {
+                            Instantiate(_hitVfx, transform.position, Quaternion.identity, null);
+                            _rb.velocity = new Vector2(_rb.velocity.x, originPoint.y < transform.position.y ? 7.5f : -7.5f);
+                            Destroy(gameObject, 1f);
+                        }
+
                     }
                 }
             }
@@ -108,7 +88,6 @@ public class BallManager : MonoBehaviour
         {
             SetTrajectory();
         }
-
     }
 
     public void EquiptBall(PlayerStateMachine stateMachine)
@@ -121,8 +100,9 @@ public class BallManager : MonoBehaviour
         isBallActive = false;
         SetBallTrailVFX(false);
         isSuperBall = false;
-        target = null;
-        currentPower = 0.0f;
+        _rb.velocity = Vector2.zero;
+        //target = null;
+        currentDirection = Vector2.zero;
         originPoint = stateMachine.transform.position;
     }
 
@@ -132,7 +112,8 @@ public class BallManager : MonoBehaviour
         target = playerTarget;
         isBallActive = value;
         isSuperBall = super;
-        _rb.AddForce(direction, ForceMode2D.Impulse);
+        currentDirection = direction;
+
         SetBallTrailVFX(true);
     }
 
@@ -149,6 +130,7 @@ public class BallManager : MonoBehaviour
             particleSystem.Stop();
         }
     }
+
     public void SetTrajectory()
     {
         if (target != null)
@@ -157,13 +139,14 @@ public class BallManager : MonoBehaviour
             Vector2 currentPosition = _rb.position;
 
             // Get the Y position of the target
-            float targetY = target.transform.position.y;
+            float targetY = target.transform.position.y + 0.4f;
 
             // Calculate the direction along Y axis only
             float directionY = targetY - currentPosition.y;
 
             // Apply velocity in the Y axis towards the target
-            _rb.velocity = new Vector2(_rb.velocity.x, directionY * (currentPower /3));
+            _rb.velocity = new Vector2(_rb.velocity.x, directionY * (currentPower / 3));
         }
     }
+    
 }

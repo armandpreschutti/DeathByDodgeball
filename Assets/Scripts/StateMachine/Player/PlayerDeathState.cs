@@ -17,10 +17,12 @@ public class PlayerDeathState: PlayerBaseState
         Ctx.SkinAnim.SetBool("Die", true);
         Ctx.OnDeath?.Invoke(true);
         Ctx.MoveInput = Vector2.zero;
-        if(Ctx.CanRespawn)
+        Ctx.IsSuper = false;
+        if (Ctx.CanRespawn)
         {
             Ctx.StartCoroutine(RespawnAfterDelay());
         }
+
     }
 
     public override void UpdateState()

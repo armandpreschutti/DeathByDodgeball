@@ -11,10 +11,12 @@ public class SpawnPointHandler : MonoBehaviour
     private void OnEnable()
     {
         MatchInstanceManager.onInitializeMatchInstance += PlacePawn;
+        PawnManager.onRespawn += RespawnPawn;
     }
     private void OnDisable()
     {
         MatchInstanceManager.onInitializeMatchInstance -= PlacePawn;
+        PawnManager.onRespawn -= RespawnPawn;
     }
     public void Start()
     {
@@ -31,6 +33,14 @@ public class SpawnPointHandler : MonoBehaviour
                 pawnOwner = avaialiblePawns[i].gameObject;
                 avaialiblePawns[i].transform.position = transform.position;
             }
+        }
+    }
+
+    public void RespawnPawn(int id)
+    {
+        if(id == slotId)
+        {
+            pawnOwner.transform.position = transform.position;
         }
 
     }

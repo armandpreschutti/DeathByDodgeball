@@ -19,9 +19,6 @@ public class PlayerMoveState : PlayerBaseState
         CheckSwitchState();
         Ctx.CurrentSubState = "Move State";
 
-        //Ctx.transform.Translate(Ctx.MoveDirection * Ctx.MoveSpeed * Time.deltaTime);
-
-        Ctx.SetPlayerOrientation();
     }
 
     public override void FixedUpdateState()
@@ -40,8 +37,9 @@ public class PlayerMoveState : PlayerBaseState
         {
             SwitchState(Factory.Idle());
         }
-        else if (Ctx.IsDodgePressed)
+        else if (Ctx.IsDodgePressed && !Ctx.IsExhausted)
         {
+            Ctx.DodgeDirection = Ctx.MoveDirection;
             SwitchState(Factory.Dodge());
         }
         else if (Ctx.IsThrowPressed)

@@ -30,7 +30,7 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] bool _isFacingRight;
     [SerializeField] bool _canRespawn;
     [SerializeField] float _respawnDelay;
-    
+    [SerializeField] bool _isSuper;
 
     [Header("Melee")]
     [SerializeField] Vector3 _aimDirection;
@@ -49,6 +49,7 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] float _currentSpeed;
     [SerializeField] float _moveSpeed = 4f;
     [SerializeField] float _aimSpeed = 2f;
+    [SerializeField] Vector2 _dodgeDirection;
     [SerializeField] float _dodgeSpeed;
 
     [Header("State Variables")]
@@ -80,6 +81,7 @@ public class PlayerStateMachine : MonoBehaviour
     public Action<bool> OnCatch;
     public Action OnRespawn;
 
+
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
 
     public Collider2D Col { get { return _col;} set { _col = value; } }
@@ -96,6 +98,7 @@ public class PlayerStateMachine : MonoBehaviour
     
     public bool CanRespawn { get { return _canRespawn; } set { _canRespawn = value; } }
     public float RespawnDelay { get { return _respawnDelay; } set { _respawnDelay = value; } }
+    public bool IsSuper { get { return _isSuper; } set { _isSuper= value; } }
 
     public Vector3 AimDirection { get { return _aimDirection; } set { _aimDirection = value; } }
     public GameObject CurrentTarget { get { return _currentTarget; } set { _currentTarget = value; } }
@@ -111,6 +114,7 @@ public class PlayerStateMachine : MonoBehaviour
     public Vector2 MoveDirection { get { return _moveDirection; } set { _moveDirection = value; } }
     public float MoveSpeed { get {return _moveSpeed;} set { _moveSpeed = value; } } 
     public float AimSpeed { get {return _aimSpeed;} set { _aimSpeed = value; } }
+    public Vector2 DodgeDirection { get { return _dodgeDirection; } set { _dodgeDirection = value; } }
     public float DodgeSpeed { get {return _dodgeSpeed;} set { _dodgeSpeed = value; } }
 
     public bool IsDead { get { return _isDead; } set { _isDead = value; } }
@@ -120,6 +124,7 @@ public class PlayerStateMachine : MonoBehaviour
     public bool IsAiming { get { return _isAiming; } set { _isAiming = value; } }
     public bool IsThrowing { get { return _isThrowing; } set { _isThrowing= value; } }
     public bool IsCatching { get { return _isCatching; } set { _isCatching = value; } }
+    public bool IsExhausted { get { return _isExhausted; } set { _isExhausted = value; } }
 
     public Vector2 AimInput { get { return _aimInput; } set { _aimInput = value; } }
     public Vector2 MoveInput { get { return _moveInput; } set { _moveInput = value; } }
@@ -132,12 +137,13 @@ public class PlayerStateMachine : MonoBehaviour
         _states = new PlayerStateFactory(this);
         _currentState = _states.Active();
         _currentState.EnterState();
+
     }
 
     void Start()
     {
         SetPlayerInitialVariables();
-        SetPlayerOrientation();
+       
     }
 
     void Update()
@@ -149,6 +155,7 @@ public class PlayerStateMachine : MonoBehaviour
         _skinAnim.SetFloat("MoveY", _moveDirection.y);
         _currentState.UpdateStates();
         SetBallEquippedPosition(_equippedBall);
+         SetPlayerOrientation();
     }
 
     private void FixedUpdate()
@@ -162,7 +169,6 @@ public class PlayerStateMachine : MonoBehaviour
         {
             ball.transform.parent = transform;
             ball.transform.position = _holdRightPosition.position;
-            ball.GetComponent<BallManager>().Trajectory = Vector2.zero;
             _equippedBall = ball;
             _isEquipped = true;
         }
@@ -226,7 +232,8 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void ThrowBall()
     {
-        _equippedBall.GetComponent<BallManager>().Launch(true, _aimDirection * _currentThrowPower, _currentThrowPower <= _maxThrowPower ? false : true, _currentTarget, _currentThrowPower);
+        _equippedBall.GetComponent<Rigidbody2D>().AddForce(_aimDirection * CurrentThrowPower, ForceMode2D.Impulse);
+        _equippedBall.GetComponent<BallManager>().Launch(true, _aimDirection, _currentThrowPower <= _maxThrowPower ? false : true, _currentTarget, CurrentThrowPower);
         UnequipBall(_equippedBall);
     }
 
@@ -263,4 +270,6 @@ public class PlayerStateMachine : MonoBehaviour
     {
         _isThrowing = false;
     }
+
+    
 }

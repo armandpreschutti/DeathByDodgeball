@@ -10,6 +10,7 @@ public class UserController : MonoBehaviour
     public PlayerStateMachine playerStateMachine;
     public bool isActivated;
     public static Action onPausePressed;
+    public static Action onInputError;
 
     private void Awake()
     { 
@@ -44,9 +45,13 @@ public class UserController : MonoBehaviour
         if(playerStateMachine != null && isActivated && !GameManager.gameInstance.isPaused)
         {
             //Debug.Log("Move called on controller");
-            if (!playerStateMachine.IsDodging && !playerStateMachine.IsDead)
+            if (/*!playerStateMachine.IsDodging &&*/ !playerStateMachine.IsDead)
             {
                 playerStateMachine.MoveInput = value;
+            }
+            else
+            {
+                playerStateMachine.MoveInput = Vector2.zero;
             }
         }
         else
@@ -74,7 +79,14 @@ public class UserController : MonoBehaviour
             //Debug.Log("Dodge called on controller");
             if (playerStateMachine.MoveInput != Vector2.zero && !playerStateMachine.IsDodging && !playerStateMachine.IsCatching && !playerStateMachine.IsDead && !playerStateMachine.IsThrowing)
             {
-                playerStateMachine.IsDodgePressed = value;
+                if (!playerStateMachine.IsExhausted)
+                {
+                    playerStateMachine.IsDodgePressed = value;
+                }
+                else
+                {
+                    onInputError?.Invoke();
+                }
             }
         }
     }

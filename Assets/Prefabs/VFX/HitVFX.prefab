@@ -14455,7 +14455,7 @@ GameObject:
   - component: {fileID: 5024009746357069192}
   - component: {fileID: 5024009746357069195}
   m_Layer: 0
-  m_Name: HurtVFX
+  m_Name: HitVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -18,7 +18,8 @@ public class PlayerAimState : PlayerBaseState
         Ctx.IsAiming= true;
         Ctx.BaseAnim.SetBool("IsAiming", true);
         Ctx.SkinAnim.SetBool("IsAiming", true);
-        Ctx.OnAim?.Invoke(true);
+        Ctx.OnAim?.Invoke(true);    
+
     }
 
     public override void UpdateState()
@@ -28,9 +29,6 @@ public class PlayerAimState : PlayerBaseState
 
         SetAimDirection();
         SetThrowPower();
-        //Ctx.transform.Translate(Ctx.MoveDirection * (Ctx.CurrentThrowPower >= Ctx.MaxThrowPower ? Ctx.AimSpeed : Ctx.MoveSpeed) * Time.deltaTime);
-
-        Ctx.SetPlayerOrientation();
     }
 
     public override void FixedUpdateState()
@@ -44,7 +42,8 @@ public class PlayerAimState : PlayerBaseState
         Ctx.BaseAnim.SetBool("IsAiming", false);
         Ctx.SkinAnim.SetBool("IsAiming", false);
         Ctx.OnAim?.Invoke(false);
-
+        Ctx.AimRightPosition.gameObject.SetActive(false);
+        Ctx.AimLeftPosition.gameObject.SetActive(false);
 
     }
 
@@ -59,9 +58,10 @@ public class PlayerAimState : PlayerBaseState
             Ctx.IsThrowPressed = false;
             SwitchState(Factory.Death());
         }
-        else if(Ctx.IsDodgePressed) 
+        else if(Ctx.IsDodgePressed && !Ctx.IsExhausted) 
         {
             Ctx.IsThrowPressed = false;
+            Ctx.DodgeDirection = Ctx.MoveDirection;
             SwitchState(Factory.Dodge());
         }
     }
@@ -69,50 +69,37 @@ public class PlayerAimState : PlayerBaseState
     public override void InitializeSubState() 
     {
 
-    }
-
-    
+    }    
 
     public void SetAimDirection()
     {
         bool flipped;
         flipped = Ctx.transform.position.x > 0f ? true : false;
-/*        if (Ctx.AimInput.magnitude > .75f)
-        {
-            flipped = Ctx.AimInput.x < 0 ? true : false;
-        }
-        else
-        {
-            flipped = Ctx.transform.position.x > 0f ? true : false;
-        }*/
-        Ctx.GetComponent<SpriteRenderer>().flipX = flipped;
-        Ctx.HoldPosition = flipped ? Ctx.HoldRightPosition : Ctx.HoldLeftPosition;
         if (flipped)
         {
             Ctx.AimRightPosition.gameObject.SetActive(false);
             Ctx.AimLeftPosition.gameObject.SetActive(true);
+            Ctx.AimDirection = new Vector3(-1, 0, 0);
         }
         else
         {
             Ctx.AimRightPosition.gameObject.SetActive(true);
             Ctx.AimLeftPosition.gameObject.SetActive(false);
-        }
-        if(Ctx.CurrentTarget != null)
-        {
-            //Set aim direction to target position normalized
-            Ctx.AimDirection = (Ctx.CurrentTarget.transform.position - Ctx.transform.position).normalized;
-        }
-        else
-        {
-            Ctx.AimDirection = new Vector3(flipped ? -1 : 1, 0, 0);
+            Ctx.AimDirection = new Vector3(1, 0, 0);
         }
 
     }
+
     public void SetThrowPower()
     {
         if (Ctx.CurrentThrowPower >= Ctx.MaxThrowPower)
         {
             Ctx.CurrentThrowPower = Ctx.SuperThrowPower;
+            Ctx.IsSuper = true;
+        }
+        else if(Ctx.CurrentThrowPower < Ctx.MinThrowPower)
+        {
+            Ctx.CurrentThrowPower = Ctx.MinThrowPower;
         }
         Ctx.CurrentThrowPower += Ctx.ThrowPowerIncreaseRate * Time.deltaTime;
     }

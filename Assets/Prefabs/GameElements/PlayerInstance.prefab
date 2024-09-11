@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -5604491223695184902}
   - component: {fileID: 5960546502413962516}
   - component: {fileID: -1561138645488108633}
+  - component: {fileID: 7121534899531451364}
   m_Layer: 0
   m_Name: PlayerInstance
   m_TagString: Untagged
@@ -82,6 +83,7 @@ MonoBehaviour:
   _slotId: 0
   playerInput: {fileID: 0}
   userController: {fileID: 0}
+  controllerVibrationHandler: {fileID: 0}
 --- !u!114 &-1561138645488108633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,6 +100,29 @@ MonoBehaviour:
   playerManager: {fileID: 0}
   playerStateMachine: {fileID: 0}
   isActivated: 0
+--- !u!114 &7121534899531451364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5200011997215567144}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c353425e3f5e2694ab3fbc4a38b78de5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerId: 0
+  _userController: {fileID: 0}
+  _playerStateMachine: {fileID: 0}
+  _playerManager: {fileID: 0}
+  _playerInput: {fileID: 0}
+  DodgeRumbleTime: 0.1
+  DodgeLowIntensity: 0.3
+  DodgeHighIntensity: 0.5
+  ErrorRumbleTime: 0.25
+  ErrorLowIntesitiy: 0.5
+  ErrorHighIntesitiy: 1
 --- !u!1001 &3788591499665059875
 PrefabInstance:
   m_ObjectHideFlags: 0

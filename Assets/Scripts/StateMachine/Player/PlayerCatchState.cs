@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class PlayerCatchState : PlayerBaseState
 {
@@ -18,14 +19,15 @@ public class PlayerCatchState : PlayerBaseState
         Ctx.SkinAnim.SetBool("IsCatching", true);
         Ctx.CatchArea.gameObject.SetActive(true);
         Ctx.OnCatch?.Invoke(true);
-        if (Ctx.ClosestBall != null)
+     /*   if (Ctx.ClosestBall != null)
         {
-            
+            Vector2 direction = (new Vector2(Ctx.ClosestBall.transform.position.x, Ctx.ClosestBall.transform.position.y) - Ctx.Rb.position).normalized;
+            Ctx.Rb.velocity = direction * Ctx.MoveSpeed;
         }
         else
         {
             Ctx.Rb.velocity = Vector2.zero;
-        }
+        }*/
     }
 
     public override void UpdateState()
@@ -33,12 +35,20 @@ public class PlayerCatchState : PlayerBaseState
         CheckSwitchState();
         Ctx.CurrentSubState = "Catch State";
 
-        Ctx.SetPlayerOrientation();
+        //Ctx.SetPlayerOrientation();
     }
 
     public override void FixedUpdateState()
     {
-      
+        if (Ctx.ClosestBall != null)
+        {
+            Vector2 direction = (new Vector2(Ctx.ClosestBall.transform.position.x, Ctx.ClosestBall.transform.position.y) - Ctx.Rb.position).normalized;
+            Ctx.Rb.velocity = direction * Ctx.DodgeSpeed;
+        }
+        else
+        {
+            Ctx.Rb.velocity = Vector2.zero;
+        }
     }
 
     public override void ExitState()

@@ -14,7 +14,8 @@ public class PawnManager : MonoBehaviour
     public bool isEliminated;
     public PlayerStateMachine playerStateMachine;
 
-    public static Action<int, GameObject> onPlayerLoaded;
+    public static Action<int, int, GameObject> onPlayerLoaded;
+    public static Action<int> onRespawn;
 
 
     private void Awake()
@@ -23,8 +24,22 @@ public class PawnManager : MonoBehaviour
         playerName = playerId != 0 ? $"P{playerId}" : "CPU";
     }
 
+    private void OnEnable()
+    {
+        playerStateMachine.OnRespawn += BroadcastRespawn;
+    }
+    private void OnDisable()
+    {
+        playerStateMachine.OnRespawn -= BroadcastRespawn;
+    }
+
     private void Start()
     {
-        onPlayerLoaded?.Invoke(slotId, gameObject);
+        onPlayerLoaded?.Invoke(slotId, playerId, gameObject);
+    }
+
+    public void BroadcastRespawn()
+    {
+        onRespawn?.Invoke(slotId);
     }
 }

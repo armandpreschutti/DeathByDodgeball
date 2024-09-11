@@ -14,24 +14,26 @@ public class PlayerDodgeState : PlayerBaseState
     public override void EnterState()
     {
         Ctx.IsDodgePressed = false;
-
         Ctx.IsDodging = true;
         Ctx.BaseAnim.SetBool("IsDodging", true);
         Ctx.SkinAnim.SetBool("IsDodging", true);
         Ctx.OnDodge?.Invoke(true);
+        Ctx.AimRightPosition.gameObject.SetActive(false);
+        Ctx.AimLeftPosition.gameObject.SetActive(false);
+        Ctx.IsSuper = false; 
     }
 
     public override void UpdateState()
     {
         CheckSwitchState();
         Ctx.CurrentSubState = "Dodge State";
-        // Ctx.transform.Translate(Ctx.MoveDirection * Ctx.DodgeSpeed * Time.deltaTime);
+       
 
     }
 
     public override void FixedUpdateState()
     {
-        Ctx.Rb.velocity = Ctx.MoveDirection * Ctx.DodgeSpeed;
+        Ctx.Rb.velocity = Ctx.DodgeDirection * Ctx.DodgeSpeed;
     }
 
 

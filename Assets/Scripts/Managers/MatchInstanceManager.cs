@@ -93,7 +93,7 @@ public class MatchInstanceManager : MonoBehaviour
         Instantiate(pawn, transform.position, Quaternion.identity);
     }
 
-    public void AddPlayerToMatch(int slotId, GameObject pawn)
+    public void AddPlayerToMatch(int slotId, int pId, GameObject pawn)
     {
         switch (slotId)
         {
