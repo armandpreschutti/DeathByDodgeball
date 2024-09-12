@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,28 @@ public class ControllerVibrationHandler : MonoBehaviour
     public float DodgeLowIntensity;
     public float DodgeHighIntensity;
 
+    public float ExplosionRumbleTime;
+    public float ExplosionLowIntensity;
+    public float ExplosionHighIntensity;
+
+    public float SuperLowIntensity;
+    public float SuperHighIntensity;
+
+    public float AimLowIntensity;
+    public float AimHighIntensity;
+
+    public float CatchRumbleTime;
+    public float CatchLowIntensity;
+    public float CatchHighIntensity;
+
+    public float ContactRumbleTime;
+    public float ContactLowIntensity;
+    public float ContactHighIntensity;
+
+    public float DeathRumbleTime;
+    public float DeathLowIntensity;
+    public float DeathHighIntensity;
+
     public float ErrorRumbleTime;
     public float ErrorLowIntesitiy;
     public float ErrorHighIntesitiy;
@@ -26,26 +49,33 @@ public class ControllerVibrationHandler : MonoBehaviour
         _playerManager = GetComponent<PlayerManager>();
         _userController = GetComponent<UserController>();
         _playerInput = GetComponent<PlayerInput>();
-        playerId = _playerManager._playerId;
-        //_stateMachine = GameObject.Find($"PlayablePawn{_playerManager._playerId}(Clone)")/*.GetComponent<PlayerStateMachine>()*/;
-        
+       // playerId = _playerManager._playerId;
     }
 
     private void OnEnable()
     {
+        BallManager.onExplosion += PerformExplosionRumble;
         PawnManager.onPlayerLoaded += SetStateMachine;
-        UserController.onInputError += ErrorRumble;
+        _userController.onInputError += ErrorRumble;
         PauseMenuController.OnGamePaused += StopAllRumble;
 
     }
 
     private void OnDisable()
     {
+        BallManager.onExplosion -= PerformExplosionRumble;
         PawnManager.onPlayerLoaded -= SetStateMachine;
-        _playerStateMachine.OnDodge -= DodgeRumble;
-        UserController.onInputError -= ErrorRumble;
+        _userController.onInputError -= ErrorRumble;
         PauseMenuController.OnGamePaused -= StopAllRumble;
+
+        _playerStateMachine.OnDodge -= PerformDodgeRumble;
+        _playerStateMachine.OnSuperState -= PerformSuperRumble;
+        _playerStateMachine.OnAim -= PerformAimRumble;
+        _playerStateMachine.OnBallCaught -= PerformCatchRumble;
+        _playerStateMachine.OnBallContact -= PerformContactRumble;
+        _playerStateMachine.OnDeath -= PerformDeathRumble;
     }
+
 
     void Start()
     {
@@ -57,12 +87,64 @@ public class ControllerVibrationHandler : MonoBehaviour
         }
     }
 
-    public void DodgeRumble(bool value)
+    public void PerformDodgeRumble(bool value)
     {
         if(value)
         {
             gamepad.SetMotorSpeeds(DodgeLowIntensity, DodgeHighIntensity);
             StartCoroutine(StopRumble(DodgeRumbleTime));
+        }
+
+    }
+
+    public void PerformExplosionRumble()
+    {
+        gamepad.SetMotorSpeeds(ExplosionLowIntensity, ExplosionHighIntensity);
+        StartCoroutine(StopRumble(ExplosionRumbleTime));
+    }
+
+    public void PerformSuperRumble(bool value)
+    {
+        if (value)
+        {
+            gamepad.SetMotorSpeeds(SuperLowIntensity, SuperHighIntensity);
+        }
+        else
+        {
+            gamepad.SetMotorSpeeds(0f, 0f);
+        }
+    }
+
+    public void PerformAimRumble(bool value)
+    {
+        if (value)
+        {
+            gamepad.SetMotorSpeeds(AimLowIntensity, AimHighIntensity);
+        }
+        else
+        {
+            gamepad.SetMotorSpeeds(0f, 0f);
+        }
+    }
+
+    public void PerformCatchRumble()
+    {
+        gamepad.SetMotorSpeeds(CatchLowIntensity, CatchHighIntensity);
+        StartCoroutine(StopRumble(CatchRumbleTime));
+    }
+
+    public void PerformContactRumble()
+    {
+        gamepad.SetMotorSpeeds(ContactLowIntensity, ContactHighIntensity);
+        StartCoroutine(StopRumble(ContactRumbleTime));
+    }
+
+    public void PerformDeathRumble(bool value)
+    {
+        if(value)
+        {
+            gamepad.SetMotorSpeeds(DeathLowIntensity, DeathHighIntensity);
+            StartCoroutine(StopRumble(DeathRumbleTime));
         }
 
     }
@@ -92,7 +174,12 @@ public class ControllerVibrationHandler : MonoBehaviour
         if(pId == playerId)
         {
             _playerStateMachine = stateMachine.GetComponent<PlayerStateMachine>();
-            _playerStateMachine.OnDodge += DodgeRumble;
+            _playerStateMachine.OnDodge += PerformDodgeRumble;
+            _playerStateMachine.OnSuperState += PerformSuperRumble;
+            _playerStateMachine.OnAim += PerformAimRumble;
+            _playerStateMachine.OnBallCaught += PerformCatchRumble;
+            _playerStateMachine.OnBallContact += PerformContactRumble;
+            _playerStateMachine.OnDeath += PerformDeathRumble;
         }
     }
 }

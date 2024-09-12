@@ -34,7 +34,7 @@ public class MatchInstanceManager : MonoBehaviour
             return;
         }
         Instance = this;
-       // DontDestroyOnLoad(gameObject);
+       
 
         playableDirector = GetComponent<PlayableDirector>();
     }

@@ -92,25 +92,34 @@ public class GameManager : MonoBehaviour
         {
             for(int i = 0; i < currentPlayers.Length; i++)
             {
-
                 if (currentPlayers[i].gameObject != null)
                 {
                     Destroy(currentPlayers[i].gameObject);
                 }
-
-
                 currentPlayers[i] = null;
+            }
+            for (int i = 0; i < playerConfigurations.Length; i++)
+            {
+             /*   if (playerConfigurations[i] != null)
+                {
+                    
+                }*/
+                playerConfigurations[i] = null;
             }
             isPaused = false;
             Time.timeScale = 1.0f;
         }
-      /*  if(scene.name == "PlayerSelection")
+        if (!isDebugging)
         {
-            playerInputManager.EnableJoining();
+            if (scene.name == "PlayerSelection")
+            {
+                playerInputManager.EnableJoining();
+            }
+            else
+            {
+                playerInputManager.DisableJoining();
+            }
         }
-        else
-        {
-            playerInputManager.DisableJoining();
-        }*/
+
     }
 }

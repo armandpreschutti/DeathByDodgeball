@@ -54,9 +54,15 @@ public class PlayerManager : MonoBehaviour
     }
     public void EnableInputVibration()
     {
-        if (GetComponent<UserController>() != null)
+        if(SceneManager.GetActiveScene().name == "MatchInstance" || SceneManager.GetActiveScene().name == "Debug")
         {
-            controllerVibrationHandler.enabled= true;
+            if (controllerVibrationHandler != null)
+            {
+                controllerVibrationHandler.playerId = _playerId;
+                controllerVibrationHandler.enabled = true;
+            }
+
         }
+
     }
 }

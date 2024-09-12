@@ -101,7 +101,6 @@ public class StaminaSystem : MonoBehaviour
         else
         {
             dodgeReplenishCoroutine = null; // Stop the coroutine when dodges are full
-            Debug.Log("stamina system disabled");
             onDodgeDepeleted?.Invoke(false);
             onDodgeReplenished?.Invoke(true);
         }

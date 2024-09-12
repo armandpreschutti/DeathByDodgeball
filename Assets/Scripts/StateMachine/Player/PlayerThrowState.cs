@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerThrowState : PlayerBaseState
 {
+    Vector2 moveDirection;
     public PlayerThrowState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory) : base(currentContext, playerStateFactory)
     {
 
@@ -14,7 +15,7 @@ public class PlayerThrowState : PlayerBaseState
         Ctx.SkinAnim.SetBool("IsThrowing", true);
         Ctx.IsThrowing = true;
         Ctx.OnThrow?.Invoke(true);
-       
+        moveDirection = Ctx.MoveInput;
 
     }
 
@@ -38,8 +39,6 @@ public class PlayerThrowState : PlayerBaseState
         Ctx.IsThrowing = false;
         Ctx.CurrentThrowPower = Ctx.MinThrowPower;
         Ctx.OnThrow?.Invoke(false);
-        Ctx.AimRightPosition.gameObject.SetActive(false);
-        Ctx.AimLeftPosition.gameObject.SetActive(false);
         Ctx.CurrentTarget = null;
         Ctx.IsSuper = false;
     }
@@ -60,8 +59,9 @@ public class PlayerThrowState : PlayerBaseState
     
     public void SetThrowDirection()
     {
-        if (Ctx.CurrentTarget != null)
+/*        if (Ctx.CurrentTarget != null)
         {
+            
             Ctx.Rb.velocity = (Ctx.CurrentTarget.transform.position - Ctx.transform.position).normalized * (Ctx.MoveSpeed * 1.5f);
         }
         else
@@ -69,9 +69,10 @@ public class PlayerThrowState : PlayerBaseState
             bool flipped;
             flipped = Ctx.transform.position.x > 0f ? true : false;
             Vector3 throwDirection = new Vector3(flipped ? -1 : 1, 0, 0);
-        }
+            Ctx.Rb.velocity = throwDirection * (Ctx.MoveSpeed * 1.5f);
+        }*/
+        Ctx.Rb.velocity = moveDirection * (Ctx.MoveSpeed * 1.5f);
 
-        
 
     }
 }

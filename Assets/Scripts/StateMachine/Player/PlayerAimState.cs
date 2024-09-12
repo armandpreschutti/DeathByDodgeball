@@ -42,9 +42,9 @@ public class PlayerAimState : PlayerBaseState
         Ctx.BaseAnim.SetBool("IsAiming", false);
         Ctx.SkinAnim.SetBool("IsAiming", false);
         Ctx.OnAim?.Invoke(false);
-        Ctx.AimRightPosition.gameObject.SetActive(false);
-        Ctx.AimLeftPosition.gameObject.SetActive(false);
-
+/*        Ctx.AimRightPosition.gameObject.SetActive(false);
+        Ctx.AimLeftPosition.gameObject.SetActive(false);*/
+        Ctx.OnSuperState?.Invoke(false);
     }
 
     public override void CheckSwitchState()
@@ -60,9 +60,13 @@ public class PlayerAimState : PlayerBaseState
         }
         else if(Ctx.IsDodgePressed && !Ctx.IsExhausted) 
         {
+            Debug.LogWarning("Pre Dodge exit logic called");
             Ctx.IsThrowPressed = false;
             Ctx.DodgeDirection = Ctx.MoveDirection;
+            Ctx.IsSuper = false;
+            Ctx.CurrentTarget = null;
             SwitchState(Factory.Dodge());
+            Debug.LogWarning("Post Dodge exit logic called");
         }
     }
 
@@ -77,14 +81,10 @@ public class PlayerAimState : PlayerBaseState
         flipped = Ctx.transform.position.x > 0f ? true : false;
         if (flipped)
         {
-            Ctx.AimRightPosition.gameObject.SetActive(false);
-            Ctx.AimLeftPosition.gameObject.SetActive(true);
             Ctx.AimDirection = new Vector3(-1, 0, 0);
         }
         else
         {
-            Ctx.AimRightPosition.gameObject.SetActive(true);
-            Ctx.AimLeftPosition.gameObject.SetActive(false);
             Ctx.AimDirection = new Vector3(1, 0, 0);
         }
 
@@ -92,16 +92,26 @@ public class PlayerAimState : PlayerBaseState
 
     public void SetThrowPower()
     {
-        if (Ctx.CurrentThrowPower >= Ctx.MaxThrowPower)
+        if (Ctx.IsAiming)
         {
-            Ctx.CurrentThrowPower = Ctx.SuperThrowPower;
-            Ctx.IsSuper = true;
+            if (Ctx.CurrentThrowPower > Ctx.MaxThrowPower)
+            {
+                Ctx.CurrentThrowPower = Ctx.SuperThrowPower;
+
+                if (!Ctx.IsSuper)
+                {
+
+                    Ctx.OnSuperState?.Invoke(true);
+                    Ctx.IsSuper = true;
+                }
+            }
+            else if (Ctx.CurrentThrowPower < Ctx.MinThrowPower)
+            {
+                Ctx.CurrentThrowPower = Ctx.MinThrowPower;
+            }
+            Ctx.CurrentThrowPower += Ctx.ThrowPowerIncreaseRate * Time.deltaTime;
         }
-        else if(Ctx.CurrentThrowPower < Ctx.MinThrowPower)
-        {
-            Ctx.CurrentThrowPower = Ctx.MinThrowPower;
-        }
-        Ctx.CurrentThrowPower += Ctx.ThrowPowerIncreaseRate * Time.deltaTime;
+
     }
     
 }

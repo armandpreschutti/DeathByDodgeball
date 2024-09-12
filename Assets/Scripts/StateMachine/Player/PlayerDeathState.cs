@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerDeathState: PlayerBaseState
 {
+    float stateTime;
     public PlayerDeathState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory) : base(currentContext, playerStateFactory) 
     {
         IsRootState = true;
@@ -12,16 +13,18 @@ public class PlayerDeathState: PlayerBaseState
 
     public override void EnterState()
     { 
+
         Ctx.DestroyBall();
         Ctx.BaseAnim.SetBool("Die", true);
         Ctx.SkinAnim.SetBool("Die", true);
         Ctx.OnDeath?.Invoke(true);
         Ctx.MoveInput = Vector2.zero;
-        Ctx.IsSuper = false;
+       // Ctx.Rb.velocity = Vector2.zero;
         if (Ctx.CanRespawn)
         {
             Ctx.StartCoroutine(RespawnAfterDelay());
         }
+
 
     }
 
@@ -29,11 +32,16 @@ public class PlayerDeathState: PlayerBaseState
     {
         CheckSwitchState();
         Ctx.CurrentSuperState = "Death State";
+        stateTime += Time.deltaTime;
+        if(stateTime > .25)
+        {
+            Ctx.Rb.velocity = Vector2.zero;
+        }
     }
 
     public override void FixedUpdateState()
     {
-        Ctx.Rb.velocity = Vector2.zero;
+       
     }
 
 
@@ -63,4 +71,5 @@ public class PlayerDeathState: PlayerBaseState
         yield return new WaitForSeconds(Ctx.RespawnDelay);
         Ctx.IsDead = false;
     }
+
 }

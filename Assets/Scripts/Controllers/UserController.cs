@@ -10,7 +10,7 @@ public class UserController : MonoBehaviour
     public PlayerStateMachine playerStateMachine;
     public bool isActivated;
     public static Action onPausePressed;
-    public static Action onInputError;
+    public Action onInputError;
 
     private void Awake()
     { 

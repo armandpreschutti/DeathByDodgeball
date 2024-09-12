@@ -27,10 +27,12 @@ public class PawnManager : MonoBehaviour
     private void OnEnable()
     {
         playerStateMachine.OnRespawn += BroadcastRespawn;
+        MatchInstanceManager.onEndMatch += DisableStateMachine;
     }
     private void OnDisable()
     {
         playerStateMachine.OnRespawn -= BroadcastRespawn;
+        MatchInstanceManager.onEndMatch -= DisableStateMachine;
     }
 
     private void Start()
@@ -41,5 +43,10 @@ public class PawnManager : MonoBehaviour
     public void BroadcastRespawn()
     {
         onRespawn?.Invoke(slotId);
+    }
+
+    public void DisableStateMachine()
+    {
+        playerStateMachine.enabled = false;
     }
 }

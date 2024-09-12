@@ -110,12 +110,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 868263789702493377}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4747675520440633601}
+  m_Father: {fileID: 813526790926541191}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7456868853329033524
@@ -131,7 +131,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pawnManager: {fileID: 0}
-  _crossHairs: {fileID: 0}
   mainTarget: {fileID: 0}
   playerStateMachine: {fileID: 868135169106175682}
 --- !u!61 &2877036307670270668
@@ -254,13 +253,12 @@ Transform:
   - {fileID: 2620207465713008395}
   - {fileID: 2241914423583041677}
   - {fileID: 5385778965750491722}
-  - {fileID: 6370283081632541372}
-  - {fileID: 5925269748690016949}
   - {fileID: 7059104295296491486}
   - {fileID: 7635993354536207809}
   - {fileID: 8321356005148012678}
   - {fileID: 4946939517705844235}
   - {fileID: 914747692736371680}
+  - {fileID: 813526790926541191}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -276,9 +274,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad43722eaace87f4d8f771153eef5c2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotId: 4
-  skinId: 5
-  playerId: 0
+  slotId: 3
+  skinId: 0
+  playerId: 2
   teamId: 2
   playerName: 
   isEliminated: 0
@@ -311,8 +309,6 @@ MonoBehaviour:
   _isSuper: 0
   _aimDirection: {x: 0, y: 0, z: 0}
   _currentTarget: {fileID: 0}
-  _aimRightPosition: {fileID: 5925269748690016949}
-  _aimLeftPosition: {fileID: 6370283081632541372}
   _catchArea: {fileID: 7635993354536207809}
   _minThrowPower: 4
   _maxThrowPower: 25
@@ -406,8 +402,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f84c4cec64123cd4db8a4a3eb3456cb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  superVfx: {fileID: 4093828332102899368}
-  exhaustedVfx: {fileID: 1688902136755092520}
+  superVfx: {fileID: 5590861579516194027}
+  exhaustedVfx: {fileID: 3347781817462366277}
+  dodgeVfx: {fileID: 2568905917224572106, guid: 138aac65291183742b02363f87c7a9af, type: 3}
 --- !u!114 &1589821398973727664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1149,6 +1146,55 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &4818955339451226985
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 813526790926541191}
+  - component: {fileID: 5914627631069983828}
+  m_Layer: 0
+  m_Name: AimBoxes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &813526790926541191
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4818955339451226985}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6370283081632541372}
+  - {fileID: 5925269748690016949}
+  m_Father: {fileID: 4747675520440633601}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5914627631069983828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4818955339451226985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7039e9f0d00d7f246b09f7521a315c2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerStateMachine: {fileID: 0}
+  AimLeftPosition: {fileID: 7224899537634401856}
+  AimRightPosition: {fileID: 868263789702493377}
 --- !u!1 &5604407272122694164
 GameObject:
   m_ObjectHideFlags: 0
@@ -1236,12 +1282,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7224899537634401856}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4747675520440633601}
+  m_Father: {fileID: 813526790926541191}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2079734173715029460
@@ -1257,7 +1303,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pawnManager: {fileID: 0}
-  _crossHairs: {fileID: 0}
   mainTarget: {fileID: 0}
   playerStateMachine: {fileID: 868135169106175682}
 --- !u!61 &9061981174935721584
@@ -1543,9 +1588,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5058000344205765520, guid: 1226df486f299dd4db81fa55f1487b07, type: 3}
   m_PrefabInstance: {fileID: 5368421244089200752}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &1688902136755092520 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6769008260674980952, guid: 1226df486f299dd4db81fa55f1487b07, type: 3}
+--- !u!1 &3347781817462366277 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7274935723143450677, guid: 1226df486f299dd4db81fa55f1487b07, type: 3}
   m_PrefabInstance: {fileID: 5368421244089200752}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7168698126961855614
@@ -1613,9 +1658,9 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e0e1d4cb077df14b91b7c7cfe751a9f, type: 3}
---- !u!198 &4093828332102899368 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6605768942096849622, guid: 7e0e1d4cb077df14b91b7c7cfe751a9f, type: 3}
+--- !u!1 &5590861579516194027 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3380776202059964565, guid: 7e0e1d4cb077df14b91b7c7cfe751a9f, type: 3}
   m_PrefabInstance: {fileID: 7168698126961855614}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &8321356005148012678 stripped

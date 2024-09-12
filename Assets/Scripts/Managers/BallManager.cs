@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -32,7 +33,8 @@ public class BallManager : MonoBehaviour
     public ParticleSystem _superTrail;
 
     public float _knockBackPower;
-
+    public static Action onHit;
+    public static Action onExplosion;
 
     private void Awake()
     {
@@ -46,7 +48,7 @@ public class BallManager : MonoBehaviour
             PlayerStateMachine stateMachine = collision.GetComponent<PlayerStateMachine>();
             if (!hasOwner)
             {
-                if (!stateMachine.IsEquipped)
+                if (!stateMachine.IsEquipped && !stateMachine.IsDead)
                 {
                     EquiptBall(stateMachine);
                 }
@@ -55,23 +57,27 @@ public class BallManager : MonoBehaviour
             {
                 if (isBallActive && stateMachine.GetComponent<PawnManager>().teamId != owningTeam)
                 {
-                    if (stateMachine.IsCatching)
+                    if (stateMachine.IsCatching )
                     {
+                        stateMachine.OnBallCaught?.Invoke();
                         EquiptBall(stateMachine);
                     }
                     else if (!stateMachine.IsDead)
                     {
                         stateMachine.IsDead = true;
+                        stateMachine.Rb.AddForce(new Vector2(stateMachine.transform.position.x - transform.position.x , 0).normalized * currentPower, ForceMode2D.Impulse);
                         isBallActive = false;
                         if (isSuperBall)
                         {
                             Instantiate(_explosionVfx, transform.position, Quaternion.identity,null );
+                            onExplosion?.Invoke();
                             Destroy(gameObject);
 
                         }
                         else
                         {
                             Instantiate(_hitVfx, transform.position, Quaternion.identity, null);
+                            owner.OnBallContact?.Invoke();
                             _rb.velocity = new Vector2(_rb.velocity.x, originPoint.y < transform.position.y ? 7.5f : -7.5f);
                             Destroy(gameObject, 1f);
                         }
@@ -133,7 +139,7 @@ public class BallManager : MonoBehaviour
 
     public void SetTrajectory()
     {
-        if (target != null)
+        if (target != null )
         {
             // Get the current position of the object
             Vector2 currentPosition = _rb.position;

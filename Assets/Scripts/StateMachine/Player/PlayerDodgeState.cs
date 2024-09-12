@@ -18,9 +18,7 @@ public class PlayerDodgeState : PlayerBaseState
         Ctx.BaseAnim.SetBool("IsDodging", true);
         Ctx.SkinAnim.SetBool("IsDodging", true);
         Ctx.OnDodge?.Invoke(true);
-        Ctx.AimRightPosition.gameObject.SetActive(false);
-        Ctx.AimLeftPosition.gameObject.SetActive(false);
-        Ctx.IsSuper = false; 
+        Ctx.CurrentTarget = null;
     }
 
     public override void UpdateState()

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3986500930379919405}
   - component: {fileID: 533187261443525760}
   - component: {fileID: 4758824329777804612}
+  - component: {fileID: 2931421076106043307}
   m_Layer: 0
   m_Name: ExplosionVFX
   m_TagString: Untagged
@@ -4924,6 +4925,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2931421076106043307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1021809899100821560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c62e8129f0a0d604b94aab3d4b2b8345, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DestructionTime: 4
 --- !u!1 &3295906833170424806
 GameObject:
   m_ObjectHideFlags: 0
@@ -9779,7 +9793,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -19551,7 +19565,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0

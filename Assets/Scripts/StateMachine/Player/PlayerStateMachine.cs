@@ -35,8 +35,6 @@ public class PlayerStateMachine : MonoBehaviour
     [Header("Melee")]
     [SerializeField] Vector3 _aimDirection;
     [SerializeField] GameObject _currentTarget;
-    [SerializeField] Transform _aimRightPosition;
-    [SerializeField] Transform _aimLeftPosition;
     [SerializeField] Transform _catchArea;
     [SerializeField] float _minThrowPower = 4f;
     [SerializeField] float _maxThrowPower = 20f;
@@ -79,7 +77,11 @@ public class PlayerStateMachine : MonoBehaviour
     public Action<bool> OnAim;
     public Action<bool> OnThrow;
     public Action<bool> OnCatch;
+
     public Action OnRespawn;
+    public Action<bool> OnSuperState;
+    public Action OnBallCaught;
+    public Action OnBallContact;
 
 
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
@@ -102,8 +104,6 @@ public class PlayerStateMachine : MonoBehaviour
 
     public Vector3 AimDirection { get { return _aimDirection; } set { _aimDirection = value; } }
     public GameObject CurrentTarget { get { return _currentTarget; } set { _currentTarget = value; } }
-    public Transform AimRightPosition { get { return _aimRightPosition; } set {_aimRightPosition = value; } }
-    public Transform AimLeftPosition { get { return _aimLeftPosition; } set {_aimLeftPosition = value; } }
     public Transform CatchArea { get { return _catchArea; } set { _catchArea = value; } }
     public float MinThrowPower { get { return _minThrowPower; } set { _minThrowPower = value; } }
     public float MaxThrowPower { get { return _maxThrowPower; } set { _maxThrowPower = value; } }
@@ -155,7 +155,7 @@ public class PlayerStateMachine : MonoBehaviour
         _skinAnim.SetFloat("MoveY", _moveDirection.y);
         _currentState.UpdateStates();
         SetBallEquippedPosition(_equippedBall);
-         SetPlayerOrientation();
+        SetPlayerOrientation();
     }
 
     private void FixedUpdate()
