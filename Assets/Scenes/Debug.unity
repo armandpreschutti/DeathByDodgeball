@@ -2377,6 +2377,7 @@ GameObject:
   - component: {fileID: 268496578}
   - component: {fileID: 268496580}
   - component: {fileID: 268496579}
+  - component: {fileID: 268496581}
   m_Layer: 7
   m_Name: EastCollector
   m_TagString: GarbageCollector
@@ -2392,7 +2393,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 268496577}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 12, y: 0, z: 0}
+  m_LocalPosition: {x: 11, y: 0, z: 0}
   m_LocalScale: {x: 0.099999994, y: 15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2496,6 +2497,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &268496581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 268496577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c185c57e4efb6434bb36f72377b52e2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &268716845 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3519793934339306210, guid: 9860e42fbadd6db4db848324b38d48e2, type: 3}
@@ -3642,6 +3655,7 @@ GameObject:
   - component: {fileID: 462931409}
   - component: {fileID: 462931411}
   - component: {fileID: 462931410}
+  - component: {fileID: 462931412}
   m_Layer: 7
   m_Name: SouthCollector
   m_TagString: GarbageCollector
@@ -3657,7 +3671,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 462931408}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -7.5, z: 0}
+  m_LocalPosition: {x: 0, y: -6.5, z: 0}
   m_LocalScale: {x: 24, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3761,6 +3775,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &462931412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 462931408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c185c57e4efb6434bb36f72377b52e2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &469422359
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11982,6 +12008,7 @@ GameObject:
   - component: {fileID: 1436074852}
   - component: {fileID: 1436074854}
   - component: {fileID: 1436074853}
+  - component: {fileID: 1436074855}
   m_Layer: 7
   m_Name: NorthCollector
   m_TagString: GarbageCollector
@@ -11997,7 +12024,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1436074851}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 7.5, z: 0}
+  m_LocalPosition: {x: 0, y: 6.5, z: 0}
   m_LocalScale: {x: 24, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12101,6 +12128,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1436074855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436074851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c185c57e4efb6434bb36f72377b52e2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1459773839
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16081,6 +16120,7 @@ GameObject:
   - component: {fileID: 1810231701}
   - component: {fileID: 1810231703}
   - component: {fileID: 1810231702}
+  - component: {fileID: 1810231704}
   m_Layer: 7
   m_Name: WestCollector
   m_TagString: GarbageCollector
@@ -16096,7 +16136,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1810231700}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12, y: 0, z: 0}
+  m_LocalPosition: {x: -11, y: 0, z: 0}
   m_LocalScale: {x: 0.099999994, y: 15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16200,6 +16240,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1810231704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1810231700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c185c57e4efb6434bb36f72377b52e2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1812984948
 GameObject:
   m_ObjectHideFlags: 0

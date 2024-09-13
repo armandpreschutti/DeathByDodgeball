@@ -120,7 +120,7 @@ public class PlayerConfigurationController : MonoBehaviour
 
     public void InitiateMatchStart()
     {
-        Debug.Log($"P{playerId} has pressed the 'start' button");
+       // Debug.Log($"P{playerId} has pressed the 'start' button");
         onInitiateMatchStart?.Invoke();
     }
 

@@ -42,10 +42,10 @@ public class UserController : MonoBehaviour
 
     public void SetMoveInput(Vector2 value)
     {
-        if(playerStateMachine != null && isActivated && !GameManager.gameInstance.isPaused)
+        if(playerStateMachine != null /*&& isActivated*/ && !GameManager.gameInstance.isPaused)
         {
             //Debug.Log("Move called on controller");
-            if (/*!playerStateMachine.IsDodging &&*/ !playerStateMachine.IsDead)
+            if (!playerStateMachine.IsDead)
             {
                 playerStateMachine.MoveInput = value;
             }
@@ -117,8 +117,11 @@ public class UserController : MonoBehaviour
 
     public void SetPauseInput(bool value)
     {
-        onPausePressed?.Invoke();
-        
+        if (isActivated)
+        {
+            onPausePressed?.Invoke();
+        }
+  
     }
     public void SubscribeToActions()
     {

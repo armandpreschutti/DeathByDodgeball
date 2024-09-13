@@ -100,13 +100,13 @@ public class GameManager : MonoBehaviour
             }
             for (int i = 0; i < playerConfigurations.Length; i++)
             {
-             /*   if (playerConfigurations[i] != null)
-                {
-                    
-                }*/
                 playerConfigurations[i] = null;
             }
             isPaused = false;
+            Time.timeScale = 1.0f;
+        }
+        else if(scene.name != "MatchInstance")
+        {
             Time.timeScale = 1.0f;
         }
         if (!isDebugging)

@@ -19,7 +19,10 @@ public class PlayerDeathState: PlayerBaseState
         Ctx.SkinAnim.SetBool("Die", true);
         Ctx.OnDeath?.Invoke(true);
         Ctx.MoveInput = Vector2.zero;
-       // Ctx.Rb.velocity = Vector2.zero;
+        Ctx.IsAiming = false;
+        Ctx.IsThrowing = false;
+        Ctx.IsDodging= false;
+        Ctx.IsCatching = false;
         if (Ctx.CanRespawn)
         {
             Ctx.StartCoroutine(RespawnAfterDelay());

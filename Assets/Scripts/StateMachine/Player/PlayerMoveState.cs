@@ -50,10 +50,10 @@ public class PlayerMoveState : PlayerBaseState
         {
             SwitchState(Factory.Catch());
         }
-        else if (Ctx.IsDead)
+/*        else if (Ctx.IsDead)
         {
             SwitchState(Factory.Death());
-        }
+        }*/
     }
 
     public override void InitializeSubState()

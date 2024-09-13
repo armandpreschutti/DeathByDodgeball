@@ -15,7 +15,7 @@ public class StaminaSystem : MonoBehaviour
     public Action<int, bool> onDodgeRemoved;
     public Action<bool> onDodgeDepeleted;
     public Action<bool> onDodgeReplenished;
-
+    public Action onDodgeReset;
     private Coroutine dodgeReplenishCoroutine;
     private Coroutine replenishDelayCoroutine;
 
@@ -27,21 +27,18 @@ public class StaminaSystem : MonoBehaviour
     private void OnEnable()
     {
         playerStateMachine.OnDodge += SpendDodge;
+        playerStateMachine.OnDeath += ResetDodge;
     }
 
     private void OnDisable()
     {
         playerStateMachine.OnDodge -= SpendDodge;
+        playerStateMachine.OnDeath -= ResetDodge;
     }
 
     private void Start()
     {
         currentDodges = maxDodges;
-    }
-
-    private void Update()
-    {
-        // You can handle other updates here
     }
 
     public void SpendDodge(bool value)
@@ -104,7 +101,23 @@ public class StaminaSystem : MonoBehaviour
             onDodgeDepeleted?.Invoke(false);
             onDodgeReplenished?.Invoke(true);
         }
+    }
 
+    public void ResetDodge(bool value)
+    {
+        if (value)
+        {
+            onDodgeReset?.Invoke();
+            currentDodges = maxDodges;
+            if (replenishDelayCoroutine != null)
+            {
+                StopCoroutine(replenishDelayCoroutine);
+            }
 
+            if (dodgeReplenishCoroutine != null)
+            {
+                StopCoroutine(dodgeReplenishCoroutine);
+            }
+        }
     }
 }

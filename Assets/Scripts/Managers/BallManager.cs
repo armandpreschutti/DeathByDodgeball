@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
@@ -36,6 +37,13 @@ public class BallManager : MonoBehaviour
     public static Action onHit;
     public static Action onExplosion;
 
+
+    public string playerName;
+    public GameObject crosshair;  // The RectTransform of your canvas UI element
+    public GameObject targetObject;             // The target GameObject you want to match
+    public Vector2 offset;
+    public TextMeshPro aimerName;
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -57,13 +65,14 @@ public class BallManager : MonoBehaviour
             {
                 if (isBallActive && stateMachine.GetComponent<PawnManager>().teamId != owningTeam)
                 {
-                    if (stateMachine.IsCatching )
+                    if (stateMachine.IsCatching && !isSuperBall)
                     {
                         stateMachine.OnBallCaught?.Invoke();
                         EquiptBall(stateMachine);
                     }
                     else if (!stateMachine.IsDead)
                     {
+                        crosshair.gameObject.SetActive(false);
                         stateMachine.IsDead = true;
                         stateMachine.Rb.AddForce(new Vector2(stateMachine.transform.position.x - transform.position.x , 0).normalized * currentPower, ForceMode2D.Impulse);
                         isBallActive = false;
@@ -86,6 +95,17 @@ public class BallManager : MonoBehaviour
                 }
             }
         }
+        else if(collision.GetComponent<BallManager>() != null && isBallActive)
+        {
+            if(collision.GetComponent<BallManager>().isBallActive)
+            {
+                Instantiate(_hitVfx, transform.position, Quaternion.identity, null);
+                target = null;
+                _rb.velocity = new Vector2(-_rb.velocity.x, originPoint.y < transform.position.y ? 7.5f : -7.5f);
+                Destroy(gameObject, 3f);
+            }
+
+        }
     }
 
     private void FixedUpdate()
@@ -93,6 +113,7 @@ public class BallManager : MonoBehaviour
         if (isBallActive)
         {
             SetTrajectory();
+            SetCrosshairs();
         }
     }
 
@@ -107,9 +128,11 @@ public class BallManager : MonoBehaviour
         SetBallTrailVFX(false);
         isSuperBall = false;
         _rb.velocity = Vector2.zero;
-        //target = null;
+        target = null;
+        crosshair.gameObject.SetActive(false);
         currentDirection = Vector2.zero;
         originPoint = stateMachine.transform.position;
+        playerName = owner.GetComponent<PawnManager>().playerName;
     }
 
     public void Launch(bool value, Vector2 direction, bool super, GameObject playerTarget, float power)
@@ -119,7 +142,6 @@ public class BallManager : MonoBehaviour
         isBallActive = value;
         isSuperBall = super;
         currentDirection = direction;
-
         SetBallTrailVFX(true);
     }
 
@@ -139,13 +161,13 @@ public class BallManager : MonoBehaviour
 
     public void SetTrajectory()
     {
-        if (target != null )
+        if (target != null)
         {
             // Get the current position of the object
             Vector2 currentPosition = _rb.position;
 
             // Get the Y position of the target
-            float targetY = target.transform.position.y + 0.4f;
+            float targetY = target.transform.position.y + 0.5f;
 
             // Calculate the direction along Y axis only
             float directionY = targetY - currentPosition.y;
@@ -154,5 +176,20 @@ public class BallManager : MonoBehaviour
             _rb.velocity = new Vector2(_rb.velocity.x, directionY * (currentPower / 3));
         }
     }
-    
+    void SetCrosshairs()
+    {
+        //targetObject = owner.CurrentTarget;
+        if (target != null)
+        {
+            // Set the crosshair's position on the screen
+            crosshair.transform.position = target.transform.position;
+            // Ensure the crosshair is visible
+            crosshair.gameObject.SetActive(true);
+            aimerName.text = playerName;
+        }
+        else
+        {
+            crosshair.gameObject.SetActive(false);
+        }
+    }
 }

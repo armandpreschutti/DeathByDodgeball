@@ -55,7 +55,8 @@ public class ControllerVibrationHandler : MonoBehaviour
     private void OnEnable()
     {
         BallManager.onExplosion += PerformExplosionRumble;
-        PawnManager.onPlayerLoaded += SetStateMachine;
+        PawnManager.onPlayerLoaded += SubscribeToStateMachine;
+        PawnManager.onPlayerUnloaded += UnsubscribeFromStateMachine;
         _userController.onInputError += ErrorRumble;
         PauseMenuController.OnGamePaused += StopAllRumble;
 
@@ -64,16 +65,17 @@ public class ControllerVibrationHandler : MonoBehaviour
     private void OnDisable()
     {
         BallManager.onExplosion -= PerformExplosionRumble;
-        PawnManager.onPlayerLoaded -= SetStateMachine;
+        PawnManager.onPlayerLoaded -= SubscribeToStateMachine;
+        PawnManager.onPlayerUnloaded -= UnsubscribeFromStateMachine;
         _userController.onInputError -= ErrorRumble;
         PauseMenuController.OnGamePaused -= StopAllRumble;
 
-        _playerStateMachine.OnDodge -= PerformDodgeRumble;
+      /*  _playerStateMachine.OnDodge -= PerformDodgeRumble;
         _playerStateMachine.OnSuperState -= PerformSuperRumble;
         _playerStateMachine.OnAim -= PerformAimRumble;
         _playerStateMachine.OnBallCaught -= PerformCatchRumble;
         _playerStateMachine.OnBallContact -= PerformContactRumble;
-        _playerStateMachine.OnDeath -= PerformDeathRumble;
+        _playerStateMachine.OnDeath -= PerformDeathRumble;*/
     }
 
 
@@ -169,10 +171,17 @@ public class ControllerVibrationHandler : MonoBehaviour
         }
     }
 
-    public void SetStateMachine(int slotId, int pId, GameObject stateMachine)
+    public void SubscribeToStateMachine(int slotId, int pId, GameObject stateMachine)
     {
-        if(pId == playerId)
+        gamepad = _playerInput.devices.OfType<Gamepad>().FirstOrDefault();
+        if (gamepad == null)
         {
+            //this.enabled = false;
+            Destroy(this);
+        }
+        if (pId == playerId)
+        {
+            Debug.LogWarning($"Player {pId} subscribed to vibrations");
             _playerStateMachine = stateMachine.GetComponent<PlayerStateMachine>();
             _playerStateMachine.OnDodge += PerformDodgeRumble;
             _playerStateMachine.OnSuperState += PerformSuperRumble;
@@ -180,6 +189,20 @@ public class ControllerVibrationHandler : MonoBehaviour
             _playerStateMachine.OnBallCaught += PerformCatchRumble;
             _playerStateMachine.OnBallContact += PerformContactRumble;
             _playerStateMachine.OnDeath += PerformDeathRumble;
+        }
+    }
+    public void UnsubscribeFromStateMachine(int slotId, int pId, GameObject stateMachine)
+    {
+        if (pId == playerId)
+        {
+            Debug.LogWarning($"Player {pId} unsubscribed from vibrations");
+            _playerStateMachine = stateMachine.GetComponent<PlayerStateMachine>();
+            _playerStateMachine.OnDodge -= PerformDodgeRumble;
+            _playerStateMachine.OnSuperState -= PerformSuperRumble;
+            _playerStateMachine.OnAim -= PerformAimRumble;
+            _playerStateMachine.OnBallCaught -= PerformCatchRumble;
+            _playerStateMachine.OnBallContact -= PerformContactRumble;
+            _playerStateMachine.OnDeath -= PerformDeathRumble;
         }
     }
 }

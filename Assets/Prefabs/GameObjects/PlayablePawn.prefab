@@ -229,6 +229,7 @@ GameObject:
   - component: {fileID: 7754080829793167634}
   - component: {fileID: 3223174439667077122}
   - component: {fileID: 2619317501389014449}
+  - component: {fileID: 8664884554455096490}
   - component: {fileID: 7912552293992239797}
   - component: {fileID: 8783256453849170620}
   m_Layer: 0
@@ -274,9 +275,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad43722eaace87f4d8f771153eef5c2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotId: 3
-  skinId: 0
-  playerId: 2
+  slotId: 4
+  skinId: 5
+  playerId: 0
   teamId: 2
   playerName: 
   isEliminated: 0
@@ -288,7 +289,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2230309673918977745}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9535a73d32a29ff4aa4323630d4ff6df, type: 3}
   m_Name: 
@@ -311,8 +312,8 @@ MonoBehaviour:
   _currentTarget: {fileID: 0}
   _catchArea: {fileID: 7635993354536207809}
   _minThrowPower: 4
-  _maxThrowPower: 25
-  _superThrowPower: 25
+  _maxThrowPower: 20
+  _superThrowPower: 20
   _currentThrowPower: 0
   _throwPowerIncreaseRate: 10
   _moveDirection: {x: 0, y: 0}
@@ -505,6 +506,23 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8664884554455096490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2230309673918977745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 243202fc08708b04286502dcd23dd028, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DodgeSfx: {fileID: 8300000, guid: 1e112e21d48c54240a25b61e463ba230, type: 3}
+  ThrowSfx: {fileID: 8300000, guid: c849bb5e960db8a42bd07a3920c555af, type: 3}
+  CatchSfx: {fileID: 8300000, guid: 077e2f011edbf784da3d376c36038411, type: 3}
+  DeathSFX: {fileID: 8300000, guid: 1c94bb3568e384e459898a68e539af3f, type: 3}
+  SuperStateSfx: {fileID: 0}
 --- !u!82 &7912552293992239797
 AudioSource:
   m_ObjectHideFlags: 0

@@ -50,7 +50,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  playerConfigurations: []
+  playerConfigurations:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   isPaused: 0
   playerInputManager: {fileID: 1749952654997528082}
   winningTeam: 

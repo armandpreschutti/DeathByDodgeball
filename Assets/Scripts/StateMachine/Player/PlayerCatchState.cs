@@ -19,23 +19,12 @@ public class PlayerCatchState : PlayerBaseState
         Ctx.SkinAnim.SetBool("IsCatching", true);
         Ctx.CatchArea.gameObject.SetActive(true);
         Ctx.OnCatch?.Invoke(true);
-     /*   if (Ctx.ClosestBall != null)
-        {
-            Vector2 direction = (new Vector2(Ctx.ClosestBall.transform.position.x, Ctx.ClosestBall.transform.position.y) - Ctx.Rb.position).normalized;
-            Ctx.Rb.velocity = direction * Ctx.MoveSpeed;
-        }
-        else
-        {
-            Ctx.Rb.velocity = Vector2.zero;
-        }*/
     }
 
     public override void UpdateState()
     {
         CheckSwitchState();
         Ctx.CurrentSubState = "Catch State";
-
-        //Ctx.SetPlayerOrientation();
     }
 
     public override void FixedUpdateState()

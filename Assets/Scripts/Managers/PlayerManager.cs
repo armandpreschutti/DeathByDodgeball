@@ -22,12 +22,12 @@ public class PlayerManager : MonoBehaviour
 
     private void OnEnable()
     {
-        //SceneManager.sceneLoaded += DestroyPlayerInstance;
+        SceneManager.sceneLoaded += SetSceneState;
         MatchInstanceManager.onInitializeMatchInstance += EnableInputVibration;
     }
     private void OnDisable()
     {
-        // SceneManager.sceneLoaded -= DestroyPlayerInstance;
+        SceneManager.sceneLoaded -= SetSceneState;
         MatchInstanceManager.onInitializeMatchInstance -= EnableInputVibration;
     }
 
@@ -61,8 +61,22 @@ public class PlayerManager : MonoBehaviour
                 controllerVibrationHandler.playerId = _playerId;
                 controllerVibrationHandler.enabled = true;
             }
-
         }
+        
 
+    }
+    public void SetSceneState(Scene scene, LoadSceneMode mode)
+    {
+        if (SceneManager.GetActiveScene().name == "PostMatch")
+        {
+            userController.enabled = false;
+            playerInput.enabled = false;
+           // controllerVibrationHandler.enabled = false;
+        }
+        else if (SceneManager.GetActiveScene().name == "MatchInstance")
+        {
+            userController.enabled = true;
+            playerInput.enabled = true;
+        }
     }
 }

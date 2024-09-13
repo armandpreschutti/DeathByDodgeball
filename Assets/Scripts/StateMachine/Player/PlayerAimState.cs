@@ -42,8 +42,6 @@ public class PlayerAimState : PlayerBaseState
         Ctx.BaseAnim.SetBool("IsAiming", false);
         Ctx.SkinAnim.SetBool("IsAiming", false);
         Ctx.OnAim?.Invoke(false);
-/*        Ctx.AimRightPosition.gameObject.SetActive(false);
-        Ctx.AimLeftPosition.gameObject.SetActive(false);*/
         Ctx.OnSuperState?.Invoke(false);
     }
 
@@ -52,11 +50,6 @@ public class PlayerAimState : PlayerBaseState
         if (!Ctx.IsThrowPressed)
         {
             SwitchState(Factory.Throw());
-        }
-        else if (Ctx.IsDead)
-        {
-            Ctx.IsThrowPressed = false;
-            SwitchState(Factory.Death());
         }
         else if(Ctx.IsDodgePressed && !Ctx.IsExhausted) 
         {
@@ -100,7 +93,6 @@ public class PlayerAimState : PlayerBaseState
 
                 if (!Ctx.IsSuper)
                 {
-
                     Ctx.OnSuperState?.Invoke(true);
                     Ctx.IsSuper = true;
                 }

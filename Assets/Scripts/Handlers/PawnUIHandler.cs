@@ -32,12 +32,14 @@ public class PawnUIHandler : MonoBehaviour
         staminaSystem.onDodgeAdded += AddDodgeValue;
         staminaSystem.onDodgeRemoved+= RemoveDodgeValue;
         staminaSystem.onDodgeDepeleted += ActivateDodgeContainer;
+        staminaSystem.onDodgeReset += ResetValues;
     }
     private void OnDisable()
     {
         staminaSystem.onDodgeAdded -= AddDodgeValue;
         staminaSystem.onDodgeRemoved -= RemoveDodgeValue;
         staminaSystem.onDodgeDepeleted -= ActivateDodgeContainer;
+        staminaSystem.onDodgeReset -= ResetValues;
     }
     public void RemoveDodgeValue(int dodges, bool value)
     {
@@ -92,5 +94,17 @@ public class PawnUIHandler : MonoBehaviour
     {
         yield return new WaitForSeconds(delayAfterReplenish);
         dodgeContainer.SetActive(false);
+    }
+
+    public void ResetValues()
+    {
+        dodgeContainer.SetActive(false);
+        dodge1.SetActive(true);
+        dodge2.SetActive(true);
+        dodge3.SetActive(true);
+        if (disableDodgeUI != null)
+        {
+            StopCoroutine(disableDodgeUI);
+        }
     }
 }

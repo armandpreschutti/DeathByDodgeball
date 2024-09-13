@@ -15,6 +15,7 @@ public class PawnManager : MonoBehaviour
     public PlayerStateMachine playerStateMachine;
 
     public static Action<int, int, GameObject> onPlayerLoaded;
+    public static Action<int, int, GameObject> onPlayerUnloaded;
     public static Action<int> onRespawn;
 
 
@@ -27,22 +28,37 @@ public class PawnManager : MonoBehaviour
     private void OnEnable()
     {
         playerStateMachine.OnRespawn += BroadcastRespawn;
+        MatchInstanceManager.onEnablePawnControl += EnableStateMachine;
         MatchInstanceManager.onEndMatch += DisableStateMachine;
     }
     private void OnDisable()
     {
         playerStateMachine.OnRespawn -= BroadcastRespawn;
+        MatchInstanceManager.onEnablePawnControl -= EnableStateMachine;
         MatchInstanceManager.onEndMatch -= DisableStateMachine;
+    }
+    public void OnDestroy()
+    {
+        onPlayerUnloaded?.Invoke(slotId, playerId, gameObject);
     }
 
     private void Start()
     {
         onPlayerLoaded?.Invoke(slotId, playerId, gameObject);
+        if (GameManager.gameInstance.isDebugging)
+        {
+            playerStateMachine.enabled = true;
+        }
     }
 
     public void BroadcastRespawn()
     {
         onRespawn?.Invoke(slotId);
+    }
+
+    public void EnableStateMachine()
+    {
+        playerStateMachine.enabled = true;
     }
 
     public void DisableStateMachine()

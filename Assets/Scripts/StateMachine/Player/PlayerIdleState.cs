@@ -33,6 +33,7 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void CheckSwitchState() 
     {
+
         if(Ctx.MoveInput != Vector2.zero)
         {
             SwitchState(Factory.Move());
@@ -48,10 +49,6 @@ public class PlayerIdleState : PlayerBaseState
         else if (Ctx.IsCatchPressed)
         {
             SwitchState(Factory.Catch());
-        }
-        else if (Ctx.IsDead)
-        {
-            SwitchState(Factory.Death());
         }
     }
 
