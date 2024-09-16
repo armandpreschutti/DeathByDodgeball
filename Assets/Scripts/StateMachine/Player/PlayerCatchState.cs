@@ -51,14 +51,21 @@ public class PlayerCatchState : PlayerBaseState
 
     public override void CheckSwitchState()
     {
-        if (Ctx.IsCatching == false)
+        if (Ctx.IsDead)
         {
-            SwitchState(Factory.Idle());
+            SwitchState(Factory.Death());
         }
-        else if (Ctx.IsEquipped)
+        else
         {
-            SwitchState(Factory.Idle());
-        }
+            if (Ctx.IsCatching == false)
+            {
+                SwitchState(Factory.Idle());
+            }
+            else if (Ctx.IsEquipped)
+            {
+                SwitchState(Factory.Idle());
+            }
+        }       
     }
 
     public override void InitializeSubState()

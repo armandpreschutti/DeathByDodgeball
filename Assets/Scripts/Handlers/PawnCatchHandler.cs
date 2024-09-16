@@ -68,7 +68,7 @@ public class PawnCatchHandler : MonoBehaviour
         else
         {
             closestBall = null;
-            playerStateMachine.CurrentTarget = null;
+            //playerStateMachine.CurrentTarget = null;
         }
     }
 

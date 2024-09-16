@@ -69,13 +69,6 @@ public class ControllerVibrationHandler : MonoBehaviour
         PawnManager.onPlayerUnloaded -= UnsubscribeFromStateMachine;
         _userController.onInputError -= ErrorRumble;
         PauseMenuController.OnGamePaused -= StopAllRumble;
-
-      /*  _playerStateMachine.OnDodge -= PerformDodgeRumble;
-        _playerStateMachine.OnSuperState -= PerformSuperRumble;
-        _playerStateMachine.OnAim -= PerformAimRumble;
-        _playerStateMachine.OnBallCaught -= PerformCatchRumble;
-        _playerStateMachine.OnBallContact -= PerformContactRumble;
-        _playerStateMachine.OnDeath -= PerformDeathRumble;*/
     }
 
 
@@ -181,7 +174,7 @@ public class ControllerVibrationHandler : MonoBehaviour
         }
         if (pId == playerId)
         {
-            Debug.LogWarning($"Player {pId} subscribed to vibrations");
+            //Debug.LogWarning($"Player {pId} subscribed to vibrations");
             _playerStateMachine = stateMachine.GetComponent<PlayerStateMachine>();
             _playerStateMachine.OnDodge += PerformDodgeRumble;
             _playerStateMachine.OnSuperState += PerformSuperRumble;
@@ -195,7 +188,7 @@ public class ControllerVibrationHandler : MonoBehaviour
     {
         if (pId == playerId)
         {
-            Debug.LogWarning($"Player {pId} unsubscribed from vibrations");
+            //Debug.LogWarning($"Player {pId} unsubscribed from vibrations");
             _playerStateMachine = stateMachine.GetComponent<PlayerStateMachine>();
             _playerStateMachine.OnDodge -= PerformDodgeRumble;
             _playerStateMachine.OnSuperState -= PerformSuperRumble;

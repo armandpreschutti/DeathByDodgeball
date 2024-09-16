@@ -121,21 +121,21 @@ MonoBehaviour:
   DodgeLowIntensity: 0.3
   DodgeHighIntensity: 0.5
   ExplosionRumbleTime: 0.5
-  ExplosionLowIntensity: 0.75
-  ExplosionHighIntensity: 0.6
-  SuperLowIntensity: 0.75
-  SuperHighIntensity: 0
-  AimLowIntensity: 0.1
-  AimHighIntensity: 0.05
+  ExplosionLowIntensity: 0.6
+  ExplosionHighIntensity: 0.75
+  SuperLowIntensity: 0.4
+  SuperHighIntensity: 0.5
+  AimLowIntensity: 0
+  AimHighIntensity: 0
   CatchRumbleTime: 0.2
-  CatchLowIntensity: 0.6
-  CatchHighIntensity: 0.3
+  CatchLowIntensity: 0.3
+  CatchHighIntensity: 0.6
   ContactRumbleTime: 0.25
-  ContactLowIntensity: 0.65
-  ContactHighIntensity: 0.5
+  ContactLowIntensity: 0.5
+  ContactHighIntensity: 0.65
   DeathRumbleTime: 0.3
-  DeathLowIntensity: 0.75
-  DeathHighIntensity: 0.6
+  DeathLowIntensity: 0.6
+  DeathHighIntensity: 0.75
   ErrorRumbleTime: 0.25
   ErrorLowIntesitiy: 0.5
   ErrorHighIntesitiy: 1

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditorInternal;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -14,7 +15,6 @@ public class BallManager : MonoBehaviour
     public bool isEquipped;
     public bool isBallActive;
     public bool isSuperBall;
-    public GameObject target;
     public float currentPower;
     public Vector2 originPoint;
     public Vector2 currentDirection;
@@ -37,13 +37,6 @@ public class BallManager : MonoBehaviour
     public static Action onHit;
     public static Action onExplosion;
 
-
-    public string playerName;
-    public GameObject crosshair;  // The RectTransform of your canvas UI element
-    public GameObject targetObject;             // The target GameObject you want to match
-    public Vector2 offset;
-    public TextMeshPro aimerName;
-
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -63,16 +56,15 @@ public class BallManager : MonoBehaviour
             }
             else
             {
-                if (isBallActive && stateMachine.GetComponent<PawnManager>().teamId != owningTeam)
+                if (isBallActive)
                 {
-                    if (stateMachine.IsCatching && !isSuperBall)
+                    if (stateMachine.IsCatching)
                     {
                         stateMachine.OnBallCaught?.Invoke();
                         EquiptBall(stateMachine);
                     }
-                    else if (!stateMachine.IsDead)
+                    else if (!stateMachine.IsDead && stateMachine.GetComponent<PawnManager>().teamId != owningTeam)
                     {
-                        crosshair.gameObject.SetActive(false);
                         stateMachine.IsDead = true;
                         stateMachine.Rb.AddForce(new Vector2(stateMachine.transform.position.x - transform.position.x , 0).normalized * currentPower, ForceMode2D.Impulse);
                         isBallActive = false;
@@ -81,7 +73,6 @@ public class BallManager : MonoBehaviour
                             Instantiate(_explosionVfx, transform.position, Quaternion.identity,null );
                             onExplosion?.Invoke();
                             Destroy(gameObject);
-
                         }
                         else
                         {
@@ -99,23 +90,23 @@ public class BallManager : MonoBehaviour
         {
             if(collision.GetComponent<BallManager>().isBallActive)
             {
-                Instantiate(_hitVfx, transform.position, Quaternion.identity, null);
-                target = null;
-                _rb.velocity = new Vector2(-_rb.velocity.x, originPoint.y < transform.position.y ? 7.5f : -7.5f);
-                Destroy(gameObject, 3f);
+                if (isSuperBall)
+                {
+                    Instantiate(_explosionVfx, transform.position, Quaternion.identity, null);
+                    onExplosion?.Invoke();
+                    Destroy(gameObject);
+
+                }
+                else
+                {
+                    Instantiate(_hitVfx, transform.position, Quaternion.identity, null);
+                    _rb.velocity = new Vector2(-_rb.velocity.x, 0);
+                }
             }
 
         }
     }
 
-    private void FixedUpdate()
-    {
-        if (isBallActive)
-        {
-            SetTrajectory();
-            SetCrosshairs();
-        }
-    }
 
     public void EquiptBall(PlayerStateMachine stateMachine)
     {
@@ -128,17 +119,15 @@ public class BallManager : MonoBehaviour
         SetBallTrailVFX(false);
         isSuperBall = false;
         _rb.velocity = Vector2.zero;
-        target = null;
-        crosshair.gameObject.SetActive(false);
+      //  crosshair.gameObject.SetActive(false);
         currentDirection = Vector2.zero;
         originPoint = stateMachine.transform.position;
-        playerName = owner.GetComponent<PawnManager>().playerName;
+      //  playerName = owner.GetComponent<PawnManager>().playerName;
     }
 
-    public void Launch(bool value, Vector2 direction, bool super, GameObject playerTarget, float power)
+    public void Launch(bool value, Vector2 direction, bool super, /*GameObject playerTarget,*/ float power)
     {
         currentPower = power;
-        target = playerTarget;
         isBallActive = value;
         isSuperBall = super;
         currentDirection = direction;
@@ -159,37 +148,16 @@ public class BallManager : MonoBehaviour
         }
     }
 
-    public void SetTrajectory()
+    public void SelfDestruct()
     {
-        if (target != null)
-        {
-            // Get the current position of the object
-            Vector2 currentPosition = _rb.position;
-
-            // Get the Y position of the target
-            float targetY = target.transform.position.y + 0.5f;
-
-            // Calculate the direction along Y axis only
-            float directionY = targetY - currentPosition.y;
-
-            // Apply velocity in the Y axis towards the target
-            _rb.velocity = new Vector2(_rb.velocity.x, directionY * (currentPower / 3));
-        }
+        Debug.Log("Ball has self destructed");
+       // crosshair.gameObject.SetActive(false);
+        owner.IsDead = true;
+        owner.Rb.AddForce(new Vector2(owner.transform.position.x - transform.position.x, 0).normalized * currentPower, ForceMode2D.Impulse);
+        isBallActive = false;
+        Instantiate(_explosionVfx, transform.position, Quaternion.identity, null);
+        onExplosion?.Invoke();
+        Destroy(gameObject);
     }
-    void SetCrosshairs()
-    {
-        //targetObject = owner.CurrentTarget;
-        if (target != null)
-        {
-            // Set the crosshair's position on the screen
-            crosshair.transform.position = target.transform.position;
-            // Ensure the crosshair is visible
-            crosshair.gameObject.SetActive(true);
-            aimerName.text = playerName;
-        }
-        else
-        {
-            crosshair.gameObject.SetActive(false);
-        }
-    }
+
 }

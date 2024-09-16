@@ -1,17 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PawnUIHandler : MonoBehaviour
 {
     private StaminaSystem staminaSystem;
-
+    private PlayerStateMachine playerStateMachine;
+    public Animator anim;
     public GameObject dodgeContainer;
     public GameObject dodge1;
     public GameObject dodge2;
     public GameObject dodge3;
+    public GameObject throwPowerBar;
+    public Slider throwPowerSlider;
     public float delayAfterReplenish = 1f;
     public Coroutine disableDodgeUI;
+
 
     private void Awake()
     {
@@ -22,25 +27,46 @@ public class PawnUIHandler : MonoBehaviour
         else
         {
             Debug.LogError("PawnUIHandler requires a Stamina System component");
-            Destroy(this);
         }
-
+        playerStateMachine = GetComponent<PlayerStateMachine>();
+        
     }
 
     private void OnEnable()
     {
-        staminaSystem.onDodgeAdded += AddDodgeValue;
-        staminaSystem.onDodgeRemoved+= RemoveDodgeValue;
-        staminaSystem.onDodgeDepeleted += ActivateDodgeContainer;
-        staminaSystem.onDodgeReset += ResetValues;
+        if(staminaSystem!= null)
+        {
+            staminaSystem.onDodgeAdded += AddDodgeValue;
+            staminaSystem.onDodgeRemoved += RemoveDodgeValue;
+            staminaSystem.onDodgeDepeleted += ActivateDodgeContainer;
+            staminaSystem.onDodgeReset += ResetDodgeValues;
+        }
+        playerStateMachine.OnAim += SetThrowBarState;
+        playerStateMachine.OnSuperState += SetSuperThrowBarState;
     }
+
     private void OnDisable()
-    {
-        staminaSystem.onDodgeAdded -= AddDodgeValue;
-        staminaSystem.onDodgeRemoved -= RemoveDodgeValue;
-        staminaSystem.onDodgeDepeleted -= ActivateDodgeContainer;
-        staminaSystem.onDodgeReset -= ResetValues;
+    {   
+        if(staminaSystem!= null)
+        {
+            staminaSystem.onDodgeAdded -= AddDodgeValue;
+            staminaSystem.onDodgeRemoved -= RemoveDodgeValue;
+            staminaSystem.onDodgeDepeleted -= ActivateDodgeContainer;
+            staminaSystem.onDodgeReset -= ResetDodgeValues;
+            playerStateMachine.OnAim -= SetThrowBarState;
+        }
+        playerStateMachine.OnAim -= SetThrowBarState;
+        playerStateMachine.OnSuperState -= SetSuperThrowBarState;
     }
+
+    private void Update()
+    {
+        if (playerStateMachine.IsAiming)
+        {
+            throwPowerSlider.value = playerStateMachine.CurrentThrowPower;
+        }
+    }
+
     public void RemoveDodgeValue(int dodges, bool value)
     {
         switch(dodges)
@@ -96,7 +122,7 @@ public class PawnUIHandler : MonoBehaviour
         dodgeContainer.SetActive(false);
     }
 
-    public void ResetValues()
+    public void ResetDodgeValues()
     {
         dodgeContainer.SetActive(false);
         dodge1.SetActive(true);
@@ -107,4 +133,28 @@ public class PawnUIHandler : MonoBehaviour
             StopCoroutine(disableDodgeUI);
         }
     }
+
+    public void SetThrowBarState(bool value)
+    {
+        throwPowerBar.SetActive(value);
+        throwPowerSlider.minValue = playerStateMachine.MinThrowPower;
+        throwPowerSlider.maxValue = playerStateMachine.MaxThrowPower;
+        throwPowerSlider.value = playerStateMachine.CurrentThrowPower;
+        RectTransform rectTransform = throwPowerBar.GetComponent<RectTransform>();
+        Vector2 newAnchoredPosition = rectTransform.anchoredPosition;
+        newAnchoredPosition.x = transform.position.x > 0 ? 400 : -400;
+        rectTransform.anchoredPosition = newAnchoredPosition;
+    }
+    public void SetSuperThrowBarState(bool value)
+    {
+        if (value)
+        {
+            anim.Play("SuperThrowBarFlash");
+        }
+        else
+        {
+            anim.Play("Idle");
+        }
+    }
+
 }

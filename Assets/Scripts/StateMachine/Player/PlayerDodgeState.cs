@@ -18,7 +18,7 @@ public class PlayerDodgeState : PlayerBaseState
         Ctx.BaseAnim.SetBool("IsDodging", true);
         Ctx.SkinAnim.SetBool("IsDodging", true);
         Ctx.OnDodge?.Invoke(true);
-        Ctx.CurrentTarget = null;
+        //Ctx.CurrentTarget = null;
     }
 
     public override void UpdateState()
@@ -45,17 +45,24 @@ public class PlayerDodgeState : PlayerBaseState
 
     public override void CheckSwitchState() 
     {
-        if(Ctx.IsDodging == false)
+        if(Ctx.IsDead)
         {
-            if(Ctx.MoveInput != Vector2.zero)
-            {
-                SwitchState(Factory.Move());
-            }
-            else
-            {
-                SwitchState(Factory.Idle());
-            }
+            SwitchState(Factory.Death());
         }
+        else
+        {
+            if (Ctx.IsDodging == false)
+            {
+                if (Ctx.MoveInput != Vector2.zero)
+                {
+                    SwitchState(Factory.Move());
+                }
+                else
+                {
+                    SwitchState(Factory.Idle());
+                }
+            }
+        }       
     }
 
     public override void InitializeSubState() 

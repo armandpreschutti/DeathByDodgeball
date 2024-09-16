@@ -34,7 +34,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     [Header("Melee")]
     [SerializeField] Vector3 _aimDirection;
-    [SerializeField] GameObject _currentTarget;
+    //[SerializeField] GameObject _currentTarget;
     [SerializeField] Transform _catchArea;
     [SerializeField] float _minThrowPower = 4f;
     [SerializeField] float _maxThrowPower = 20f;
@@ -80,6 +80,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     public Action OnRespawn;
     public Action<bool> OnSuperState;
+    public Action<bool> OnExhausted;
     public Action OnBallCaught;
     public Action OnBallContact;
 
@@ -103,7 +104,7 @@ public class PlayerStateMachine : MonoBehaviour
     public bool IsSuper { get { return _isSuper; } set { _isSuper= value; } }
 
     public Vector3 AimDirection { get { return _aimDirection; } set { _aimDirection = value; } }
-    public GameObject CurrentTarget { get { return _currentTarget; } set { _currentTarget = value; } }
+    //public GameObject CurrentTarget { get { return _currentTarget; } set { _currentTarget = value; } }
     public Transform CatchArea { get { return _catchArea; } set { _catchArea = value; } }
     public float MinThrowPower { get { return _minThrowPower; } set { _minThrowPower = value; } }
     public float MaxThrowPower { get { return _maxThrowPower; } set { _maxThrowPower = value; } }
@@ -191,6 +192,11 @@ public class PlayerStateMachine : MonoBehaviour
             return;
         }
     }
+    public void SelfDestruct()
+    {
+        _equippedBall.GetComponent<BallManager>().SelfDestruct();
+        UnequipBall(_equippedBall);
+    }
     public void DestroyBall()
     {
         if(_equippedBall !=null)
@@ -233,7 +239,7 @@ public class PlayerStateMachine : MonoBehaviour
     public void ThrowBall()
     {
         _equippedBall.GetComponent<Rigidbody2D>().AddForce(_aimDirection * CurrentThrowPower, ForceMode2D.Impulse);
-        _equippedBall.GetComponent<BallManager>().Launch(true, _aimDirection, _currentThrowPower <= _maxThrowPower ? false : true, _currentTarget, CurrentThrowPower);
+        _equippedBall.GetComponent<BallManager>().Launch(true, _aimDirection, _currentThrowPower <= _maxThrowPower ? false : true/*, _currentTarget*/, CurrentThrowPower);
         UnequipBall(_equippedBall);
     }
 

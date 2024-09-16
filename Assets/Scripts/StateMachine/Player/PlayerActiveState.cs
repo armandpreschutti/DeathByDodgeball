@@ -36,10 +36,10 @@ public class PlayerActiveState : PlayerBaseState
 
     public override void CheckSwitchState() 
     {
-        if(Ctx.IsDead)
+       /* if(Ctx.IsDead)
         {
             SwitchState(Factory.Death());
-        }
+        }*/
     }
 
     public override void InitializeSubState()

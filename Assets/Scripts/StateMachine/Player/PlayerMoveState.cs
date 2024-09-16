@@ -33,27 +33,31 @@ public class PlayerMoveState : PlayerBaseState
 
     public override void CheckSwitchState()
     {
-        if(Ctx.MoveInput == Vector2.zero)
-        {
-            SwitchState(Factory.Idle());
-        }
-        else if (Ctx.IsDodgePressed && !Ctx.IsExhausted)
-        {
-            Ctx.DodgeDirection = Ctx.MoveDirection;
-            SwitchState(Factory.Dodge());
-        }
-        else if (Ctx.IsThrowPressed)
-        {
-            SwitchState(Factory.Aim());
-        }
-        else if (Ctx.IsCatchPressed)
-        {
-            SwitchState(Factory.Catch());
-        }
-/*        else if (Ctx.IsDead)
+        if (Ctx.IsDead)
         {
             SwitchState(Factory.Death());
-        }*/
+        }
+        else
+        {
+            if (Ctx.MoveInput == Vector2.zero)
+            {
+                SwitchState(Factory.Idle());
+            }
+            else if (Ctx.IsDodgePressed && !Ctx.IsExhausted)
+            {
+                Ctx.DodgeDirection = Ctx.MoveDirection;
+                SwitchState(Factory.Dodge());
+            }
+            else if (Ctx.IsThrowPressed)
+            {
+                SwitchState(Factory.Aim());
+            }
+            else if (Ctx.IsCatchPressed)
+            {
+                SwitchState(Factory.Catch());
+            }
+        }
+       
     }
 
     public override void InitializeSubState()

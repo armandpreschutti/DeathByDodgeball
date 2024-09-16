@@ -39,17 +39,23 @@ public class PlayerThrowState : PlayerBaseState
         Ctx.IsThrowing = false;
         Ctx.CurrentThrowPower = Ctx.MinThrowPower;
         Ctx.OnThrow?.Invoke(false);
-        Ctx.CurrentTarget = null;
+        //Ctx.CurrentTarget = null;
         Ctx.IsSuper = false;
     }
 
     public override void CheckSwitchState()
     {
-        if (!Ctx.IsThrowing)
+        if (Ctx.IsDead)
         {
-            SwitchState(Factory.Idle());
+            SwitchState(Factory.Death());
         }
-
+        else
+        {
+            if (!Ctx.IsThrowing)
+            {
+                SwitchState(Factory.Idle());
+            }
+        }
     }
 
     public override void InitializeSubState()
@@ -59,17 +65,9 @@ public class PlayerThrowState : PlayerBaseState
     
     public void SetThrowDirection()
     {
-        if (Ctx.CurrentTarget != null)
-        {
-
-            Ctx.Rb.velocity = (Ctx.CurrentTarget.transform.position - Ctx.transform.position).normalized * (Ctx.MoveSpeed * 1.5f);
-        }
-        else
-        {
-            bool flipped;
-            flipped = Ctx.transform.position.x > 0f ? true : false;
-            Vector3 throwDirection = new Vector3(flipped ? -1 : 1, 0, 0);
-            Ctx.Rb.velocity = throwDirection * (Ctx.MoveSpeed * 1.5f);
-        }
+        bool flipped;
+        flipped = Ctx.transform.position.x > 0f ? true : false;
+        Vector3 throwDirection = new Vector3(flipped ? -1 : 1, 0, 0);
+        Ctx.Rb.velocity = throwDirection * (Ctx.MoveSpeed * 1.5f);
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PawnSFXHandler : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class PawnSFXHandler : MonoBehaviour
     {
         _playerStateMachine = GetComponent<PlayerStateMachine>();
         _audioSource = GetComponent<AudioSource>();
+
     }
     private void OnEnable()
     {

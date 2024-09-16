@@ -73,6 +73,7 @@ public class StaminaSystem : MonoBehaviour
             {
                 currentDodges = 0; // Ensure it doesn't go below 0
                 playerStateMachine.IsExhausted = true;
+                playerStateMachine.OnExhausted?.Invoke(true);
             }
         }
     }
@@ -88,6 +89,7 @@ public class StaminaSystem : MonoBehaviour
     {
         yield return new WaitForSeconds(replenishTime); // Wait for the replenish time
         playerStateMachine.IsExhausted = false;
+        playerStateMachine.OnExhausted?.Invoke(false);
         currentDodges++; // Refill by 1
         onDodgeAdded?.Invoke(currentDodges, true);    
         currentDodges = Mathf.Clamp(currentDodges, minDodges, maxDodges); // Ensure it doesn't go over maxDodges
@@ -109,6 +111,7 @@ public class StaminaSystem : MonoBehaviour
         {
             onDodgeReset?.Invoke();
             currentDodges = maxDodges;
+            playerStateMachine.OnExhausted?.Invoke(false);
             if (replenishDelayCoroutine != null)
             {
                 StopCoroutine(replenishDelayCoroutine);

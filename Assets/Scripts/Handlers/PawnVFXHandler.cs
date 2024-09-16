@@ -17,22 +17,23 @@ public class PawnVFXHandler : MonoBehaviour
     private void OnEnable()
     {
         playerStateMachine.OnDodge += SetDodgeVFX;
+        playerStateMachine.OnExhausted += SetExhaustedVFX;
         playerStateMachine.OnSuperState += SetSuperVFX;
     }
 
     private void OnDisable()
     {
         playerStateMachine.OnDodge -= SetDodgeVFX;
+        playerStateMachine.OnExhausted -= SetExhaustedVFX;
         playerStateMachine.OnSuperState -= SetSuperVFX;
     }
 
-
+/*
     private void Update()
     {
-        //SetSuperVFX(playerStateMachine.IsSuper);
         SetExhaustedVFX(playerStateMachine.IsExhausted);
     }
-
+*/
     public void SetSuperVFX(bool valule)
     {
         superVfx.gameObject.SetActive(valule);

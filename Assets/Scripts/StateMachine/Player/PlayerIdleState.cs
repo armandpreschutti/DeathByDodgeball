@@ -33,23 +33,29 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void CheckSwitchState() 
     {
-
-        if(Ctx.MoveInput != Vector2.zero)
+        if(Ctx.IsDead)
         {
-            SwitchState(Factory.Move());
+            SwitchState(Factory.Death());
         }
-        else if (Ctx.IsDodgePressed)
+        else
         {
-            SwitchState(Factory.Dodge());
-        }
-        else if (Ctx.IsThrowPressed)
-        {
-            SwitchState(Factory.Aim());
-        }
-        else if (Ctx.IsCatchPressed)
-        {
-            SwitchState(Factory.Catch());
-        }
+            if (Ctx.MoveInput != Vector2.zero)
+            {
+                SwitchState(Factory.Move());
+            }
+            else if (Ctx.IsDodgePressed)
+            {
+                SwitchState(Factory.Dodge());
+            }
+            else if (Ctx.IsThrowPressed)
+            {
+                SwitchState(Factory.Aim());
+            }
+            else if (Ctx.IsCatchPressed)
+            {
+                SwitchState(Factory.Catch());
+            }
+        }      
     }
 
     public override void InitializeSubState() 

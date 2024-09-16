@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PawnAimingHandler : MonoBehaviour
 {
-    //public Transform player; // Reference to the player
+/*    //public Transform player; // Reference to the player
     public PawnManager _pawnManager;
     public Transform mainTarget; // Closest target to the player
     public PlayerStateMachine playerStateMachine;
@@ -79,7 +79,7 @@ public class PawnAimingHandler : MonoBehaviour
 
         return closest;
     }
-
+*/
    /* // Function to get the closest target to the player
     private Transform GetClosestTargetToPlayer()
     {

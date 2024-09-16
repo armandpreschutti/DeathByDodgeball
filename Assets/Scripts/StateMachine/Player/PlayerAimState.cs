@@ -7,6 +7,7 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class PlayerAimState : PlayerBaseState
 {
+    float superTime;
     public PlayerAimState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory): base(currentContext, playerStateFactory) 
     {
 
@@ -47,20 +48,26 @@ public class PlayerAimState : PlayerBaseState
 
     public override void CheckSwitchState()
     {
-        if (!Ctx.IsThrowPressed)
+        if (Ctx.IsDead)
         {
-            SwitchState(Factory.Throw());
+            SwitchState(Factory.Death());
         }
-        else if(Ctx.IsDodgePressed && !Ctx.IsExhausted) 
+        else
         {
-            Debug.LogWarning("Pre Dodge exit logic called");
-            Ctx.IsThrowPressed = false;
-            Ctx.DodgeDirection = Ctx.MoveDirection;
-            Ctx.IsSuper = false;
-            Ctx.CurrentTarget = null;
-            SwitchState(Factory.Dodge());
-            Debug.LogWarning("Post Dodge exit logic called");
+            if (!Ctx.IsThrowPressed)
+            {
+                SwitchState(Factory.Throw());
+            }
+            else if (Ctx.IsDodgePressed && !Ctx.IsExhausted)
+            {
+                Ctx.IsThrowPressed = false;
+                Ctx.DodgeDirection = Ctx.MoveDirection;
+                Ctx.IsSuper = false;
+                //Ctx.CurrentTarget = null;
+                SwitchState(Factory.Dodge());
+            }
         }
+      
     }
 
     public override void InitializeSubState() 
@@ -103,7 +110,18 @@ public class PlayerAimState : PlayerBaseState
             }
             Ctx.CurrentThrowPower += Ctx.ThrowPowerIncreaseRate * Time.deltaTime;
         }
-
+        if (Ctx.IsSuper)
+        {
+            superTime += Time.deltaTime;
+            if(superTime >= 1.5)
+            {
+                Debug.Log("Player has held for too long");
+                Ctx.SelfDestruct();
+                Ctx.IsThrowPressed = false;
+                Ctx.IsSuper = false;
+                SwitchState(Factory.Idle());
+            }
+        }
     }
     
 }

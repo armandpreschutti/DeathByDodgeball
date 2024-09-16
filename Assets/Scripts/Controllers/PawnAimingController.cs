@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PawnAimingController : MonoBehaviour
 {
-    public PlayerStateMachine playerStateMachine;
+   /* public PlayerStateMachine playerStateMachine;
     public GameObject AimLeftPosition;
     public GameObject AimRightPosition;
 
@@ -38,5 +38,5 @@ public class PawnAimingController : MonoBehaviour
         }
        
       
-    }
+    }*/
 }

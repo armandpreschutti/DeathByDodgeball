@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PawnCrosshairHandler : MonoBehaviour
 {
-    public PlayerStateMachine playerStateMachine;
+ /*   public PlayerStateMachine playerStateMachine;
     public string playerName;
     public GameObject crosshair;  // The RectTransform of your canvas UI element
     public GameObject targetObject;             // The target GameObject you want to match
@@ -31,5 +31,5 @@ public class PawnCrosshairHandler : MonoBehaviour
         {
             crosshair.gameObject.SetActive(false);
         }
-    }
+    }*/
 }
