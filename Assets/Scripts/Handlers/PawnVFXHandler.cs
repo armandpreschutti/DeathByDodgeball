@@ -8,6 +8,7 @@ public class PawnVFXHandler : MonoBehaviour
     public GameObject superVfx;
     public GameObject exhaustedVfx;
     public GameObject dodgeVfx;
+    public GameObject healVfx;
 
     private void Awake()
     {
@@ -19,6 +20,7 @@ public class PawnVFXHandler : MonoBehaviour
         playerStateMachine.OnDodge += SetDodgeVFX;
         playerStateMachine.OnExhausted += SetExhaustedVFX;
         playerStateMachine.OnSuperState += SetSuperVFX;
+        playerStateMachine.OnHeal += SetHealVFX;
     }
 
     private void OnDisable()
@@ -26,14 +28,9 @@ public class PawnVFXHandler : MonoBehaviour
         playerStateMachine.OnDodge -= SetDodgeVFX;
         playerStateMachine.OnExhausted -= SetExhaustedVFX;
         playerStateMachine.OnSuperState -= SetSuperVFX;
+        playerStateMachine.OnHeal -= SetHealVFX;
     }
 
-/*
-    private void Update()
-    {
-        SetExhaustedVFX(playerStateMachine.IsExhausted);
-    }
-*/
     public void SetSuperVFX(bool valule)
     {
         superVfx.gameObject.SetActive(valule);
@@ -52,5 +49,10 @@ public class PawnVFXHandler : MonoBehaviour
         {
             Instantiate(dodgeVfx, transform.position, Quaternion.identity, null);
         }
+    }
+
+    public void SetHealVFX()
+    {
+        healVfx.gameObject.SetActive(true);
     }
 }

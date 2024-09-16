@@ -548,6 +548,7 @@ MonoBehaviour:
   superVfx: {fileID: 5590861579516194027}
   exhaustedVfx: {fileID: 3347781817462366277}
   dodgeVfx: {fileID: 2568905917224572106, guid: 138aac65291183742b02363f87c7a9af, type: 3}
+  healVfx: {fileID: 2750596769483889004}
 --- !u!114 &1589821398973727664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1860,7 +1861,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4185597164601965099}
   m_Layer: 0
-  m_Name: FX
+  m_Name: StateFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1880,6 +1881,7 @@ Transform:
   m_Children:
   - {fileID: 8321356005148012678}
   - {fileID: 914747692736371680}
+  - {fileID: 4566483558777012654}
   m_Father: {fileID: 4747675520440633601}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2162,6 +2164,81 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1001 &2128488358989770271
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4185597164601965099}
+    m_Modifications:
+    - target: {fileID: 2510335097802289073, guid: 68f7d8beaf564fc4887caa998e7eefcf, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2510335097802289073, guid: 68f7d8beaf564fc4887caa998e7eefcf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2510335097802289073, guid: 68f7d8beaf564fc4887caa998e7eefcf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2510335097802289073, guid: 68f7d8beaf564fc4887caa998e7eefcf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2510335097802289073, guid: 68f7d8beaf564fc4887caa998e7eefcf, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2510335097802289073, guid: 68f7d8beaf564fc4887caa998e7eefcf, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2510335097802289073, guid: 68f7d8beaf564fc4887caa998e7eefcf, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2510335097802289073, guid: 68f7d8beaf564fc4887caa998e7eefcf, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2510335097802289073, guid: 68f7d8beaf564fc4887caa998e7eefcf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 2510335097802289073, guid: 68f7d8beaf564fc4887caa998e7eefcf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2510335097802289073, guid: 68f7d8beaf564fc4887caa998e7eefcf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4298120501660694387, guid: 68f7d8beaf564fc4887caa998e7eefcf, type: 3}
+      propertyPath: m_Name
+      value: HealedVFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 4298120501660694387, guid: 68f7d8beaf564fc4887caa998e7eefcf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 68f7d8beaf564fc4887caa998e7eefcf, type: 3}
+--- !u!1 &2750596769483889004 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4298120501660694387, guid: 68f7d8beaf564fc4887caa998e7eefcf, type: 3}
+  m_PrefabInstance: {fileID: 2128488358989770271}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4566483558777012654 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2510335097802289073, guid: 68f7d8beaf564fc4887caa998e7eefcf, type: 3}
+  m_PrefabInstance: {fileID: 2128488358989770271}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5368421244089200752
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2216,7 +2293,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7274935723143450677, guid: 1226df486f299dd4db81fa55f1487b07, type: 3}
       propertyPath: m_Name
-      value: ExhaustIndicator
+      value: ExhaustedVFX
       objectReference: {fileID: 0}
     - target: {fileID: 7274935723143450677, guid: 1226df486f299dd4db81fa55f1487b07, type: 3}
       propertyPath: m_IsActive
@@ -2291,7 +2368,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3380776202059964565, guid: 7e0e1d4cb077df14b91b7c7cfe751a9f, type: 3}
       propertyPath: m_Name
-      value: SuperIndicator
+      value: SuperVFX
       objectReference: {fileID: 0}
     - target: {fileID: 3380776202059964565, guid: 7e0e1d4cb077df14b91b7c7cfe751a9f, type: 3}
       propertyPath: m_IsActive

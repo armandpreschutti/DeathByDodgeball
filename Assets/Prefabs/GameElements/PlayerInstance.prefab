@@ -136,6 +136,9 @@ MonoBehaviour:
   DeathRumbleTime: 0.3
   DeathLowIntensity: 0.6
   DeathHighIntensity: 0.75
+  HealRumbleTime: 0.1
+  HealLowIntensity: 0.5
+  HealHighIntensity: 0.25
   ErrorRumbleTime: 0.25
   ErrorLowIntesitiy: 0.5
   ErrorHighIntesitiy: 1

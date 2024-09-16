@@ -27,7 +27,7 @@ public class PlayerThrowState : PlayerBaseState
 
     public override void FixedUpdateState()
     {
-        SetThrowDirection();
+        //SetThrowDirection();
     }
 
     public override void ExitState()

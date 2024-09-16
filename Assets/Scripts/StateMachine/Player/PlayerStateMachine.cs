@@ -83,6 +83,7 @@ public class PlayerStateMachine : MonoBehaviour
     public Action<bool> OnExhausted;
     public Action OnBallCaught;
     public Action OnBallContact;
+    public Action OnHeal;
 
 
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
@@ -238,7 +239,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void ThrowBall()
     {
-        _equippedBall.GetComponent<Rigidbody2D>().AddForce(_aimDirection * CurrentThrowPower, ForceMode2D.Impulse);
+       
         _equippedBall.GetComponent<BallManager>().Launch(true, _aimDirection, _currentThrowPower <= _maxThrowPower ? false : true/*, _currentTarget*/, CurrentThrowPower);
         UnequipBall(_equippedBall);
     }

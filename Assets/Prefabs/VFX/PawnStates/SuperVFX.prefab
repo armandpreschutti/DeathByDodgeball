@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6605768942096849622}
   - component: {fileID: 6479193142542452104}
   m_Layer: 0
-  m_Name: SuperIndicator
+  m_Name: SuperVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

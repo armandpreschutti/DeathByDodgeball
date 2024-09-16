@@ -40,6 +40,10 @@ public class ControllerVibrationHandler : MonoBehaviour
     public float DeathLowIntensity;
     public float DeathHighIntensity;
 
+    public float HealRumbleTime;
+    public float HealLowIntensity;
+    public float HealHighIntensity;
+
     public float ErrorRumbleTime;
     public float ErrorLowIntesitiy;
     public float ErrorHighIntesitiy;
@@ -141,7 +145,12 @@ public class ControllerVibrationHandler : MonoBehaviour
             gamepad.SetMotorSpeeds(DeathLowIntensity, DeathHighIntensity);
             StartCoroutine(StopRumble(DeathRumbleTime));
         }
+    }
 
+    public void PerformHealRumble()
+    {
+        gamepad.SetMotorSpeeds(HealLowIntensity, HealHighIntensity);
+        StartCoroutine(StopRumble(HealRumbleTime));
     }
 
     public void StopAllRumble(bool value)
@@ -182,6 +191,7 @@ public class ControllerVibrationHandler : MonoBehaviour
             _playerStateMachine.OnBallCaught += PerformCatchRumble;
             _playerStateMachine.OnBallContact += PerformContactRumble;
             _playerStateMachine.OnDeath += PerformDeathRumble;
+            _playerStateMachine.OnHeal += PerformHealRumble;
         }
     }
     public void UnsubscribeFromStateMachine(int slotId, int pId, GameObject stateMachine)
@@ -196,6 +206,7 @@ public class ControllerVibrationHandler : MonoBehaviour
             _playerStateMachine.OnBallCaught -= PerformCatchRumble;
             _playerStateMachine.OnBallContact -= PerformContactRumble;
             _playerStateMachine.OnDeath -= PerformDeathRumble;
+            _playerStateMachine.OnHeal -= PerformHealRumble;
         }
     }
 }

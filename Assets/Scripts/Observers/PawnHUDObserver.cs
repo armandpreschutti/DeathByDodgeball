@@ -18,10 +18,12 @@ public class PawnHUDObserver : MonoBehaviour
     {
 
     }
+
     private void OnEnable()
     {
         HealthSystem.onHealthInitialized += SetHealthSystemUI;
         HealthSystem.onPlayerDeath += RemoveLife;
+        HealthSystem.onPlayerHealed += AddLife;
         HealthSystem.onPlayerElimination += SetEliminationPrompt;
     }
 
@@ -29,6 +31,7 @@ public class PawnHUDObserver : MonoBehaviour
     {
         HealthSystem.onHealthInitialized += SetHealthSystemUI;
         HealthSystem.onPlayerDeath -= RemoveLife;
+        HealthSystem.onPlayerHealed -= AddLife;
         HealthSystem.onPlayerElimination -= SetEliminationPrompt;
     }
 
@@ -70,6 +73,25 @@ public class PawnHUDObserver : MonoBehaviour
                     break;
                 case 0:
                     heart3.gameObject.SetActive(false);
+                    break;
+            }
+        }
+    }
+
+    public void AddLife(int slot, int lives)
+    {
+        if (slotId == slot)
+        {
+            switch (lives)
+            {
+                case 3:
+                    heart1.gameObject.SetActive(true);
+                    break;
+                case 2:
+                    heart2.gameObject.SetActive(true);
+                    break;
+                case 1:
+                    heart3.gameObject.SetActive(true);
                     break;
             }
         }

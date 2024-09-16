@@ -12,6 +12,7 @@ public class HealthSystem : MonoBehaviour
     public PlayerStateMachine playerStateMachine;
     public PawnManager pawnManager;
     public static Action<int, int> onPlayerDeath;
+    public static Action<int, int> onPlayerHealed;
     public static Action<int> onPlayerElimination;
     public static Action<int, string, HealthSystem> onHealthInitialized;
 
@@ -49,7 +50,7 @@ public class HealthSystem : MonoBehaviour
 
     public void RemoveLife(bool value)
     {
-        if(value)
+        if (value)
         {
             currentLives--;
             onPlayerDeath?.Invoke(slotId, currentLives);
@@ -60,6 +61,14 @@ public class HealthSystem : MonoBehaviour
                 onPlayerElimination?.Invoke(slotId);
             }
         }
-
     } 
+
+    public void AddLife()
+    {
+        if(currentLives != maxLives)
+        {
+            currentLives++;
+        }
+        onPlayerHealed?.Invoke(slotId, currentLives);
+    }
 }
