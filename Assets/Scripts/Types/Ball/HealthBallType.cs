@@ -20,4 +20,15 @@ public class HealthBallType : BallManager
         }
         Destroy(gameObject);
     }
+
+    public override void SelfDestruct()
+    {
+        base.SelfDestruct();
+        if (owner.TryGetComponent(out HealthSystem healthSystem))
+        {
+            healthSystem.AddLife();
+            owner.OnHeal?.Invoke();
+        }
+        Destroy(gameObject);
+    }
 }

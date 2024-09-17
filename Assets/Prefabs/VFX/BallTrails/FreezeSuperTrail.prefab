@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 246824506833600991}
   - component: {fileID: 83491943682746233}
   m_Layer: 0
-  m_Name: SuperBallTrail
+  m_Name: FreezeSuperTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -61,6 +61,8 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] bool _isThrowing;
     [SerializeField] bool _isCatching;
     [SerializeField] bool _isExhausted;
+    [SerializeField] bool _isFrozen;
+
 
 
     [Header("Input Booleans")]

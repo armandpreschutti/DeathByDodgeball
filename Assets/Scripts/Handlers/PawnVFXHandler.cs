@@ -5,37 +5,47 @@ using UnityEngine;
 public class PawnVFXHandler : MonoBehaviour
 {
     private PlayerStateMachine playerStateMachine;
+    private PawnAbilityHandler pawnAbilityHandler;
+    public Animator anim;
     public GameObject superVfx;
     public GameObject exhaustedVfx;
     public GameObject dodgeVfx;
     public GameObject healVfx;
+    public GameObject frozenVfx;
+    public GameObject superFrozenVfx;
 
     private void Awake()
     {
         playerStateMachine = GetComponent<PlayerStateMachine>();
+        pawnAbilityHandler = GetComponent<PawnAbilityHandler>();
     }
 
     private void OnEnable()
     {
         playerStateMachine.OnDodge += SetDodgeVFX;
         playerStateMachine.OnExhausted += SetExhaustedVFX;
-        playerStateMachine.OnSuperState += SetSuperVFX;
+        //playerStateMachine.OnSuperState += SetSuperVFX;
         playerStateMachine.OnHeal += SetHealVFX;
+        pawnAbilityHandler.onFrozen += SetFrozenVFX;
+        pawnAbilityHandler.onSuperFrozen += SetSuperFrozenVFX;
+
     }
 
     private void OnDisable()
     {
         playerStateMachine.OnDodge -= SetDodgeVFX;
         playerStateMachine.OnExhausted -= SetExhaustedVFX;
-        playerStateMachine.OnSuperState -= SetSuperVFX;
+       // playerStateMachine.OnSuperState -= SetSuperVFX;
         playerStateMachine.OnHeal -= SetHealVFX;
+        pawnAbilityHandler.onFrozen -= SetFrozenVFX;
+        pawnAbilityHandler.onSuperFrozen -= SetSuperFrozenVFX;
     }
 
-    public void SetSuperVFX(bool valule)
+/*    public void SetSuperVFX(bool valule)
     {
         superVfx.gameObject.SetActive(valule);
 
-    }
+    }*/
 
     public void SetExhaustedVFX(bool valule)
     {
@@ -54,5 +64,19 @@ public class PawnVFXHandler : MonoBehaviour
     public void SetHealVFX()
     {
         healVfx.gameObject.SetActive(true);
+    }
+
+    public void SetFrozenVFX(bool value)
+    {
+        frozenVfx.gameObject.SetActive(value);
+       // exhaustedVfx.gameObject.SetActive(value);
+    }
+
+    public void SetSuperFrozenVFX(bool value)
+    {
+        SetFrozenVFX(value);
+        superFrozenVfx.gameObject.SetActive(value);
+        anim.speed = value ? 0 : 1;
+
     }
 }

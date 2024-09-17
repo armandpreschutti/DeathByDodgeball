@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2854043584310951671}
   - component: {fileID: 348922710456274381}
   m_Layer: 0
-  m_Name: DodgeVFX
+  m_Name: DodgeInteraction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

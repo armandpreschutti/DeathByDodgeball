@@ -22,9 +22,6 @@ public class BallManager : MonoBehaviour
 
     [Header("Components")]
     protected Rigidbody2D _rb;
-
-
-    public float _knockBackPower;
     public static Action onHit;
     public static Action onExplosion;
 
