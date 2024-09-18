@@ -4,30 +4,50 @@ using UnityEngine;
 
 public class BallSpawnHandler : MonoBehaviour
 {
-    public GameObject _projectilePrefab;
+    public BallTypesSO spawnableBalls;
     public float _spawnRate = 1f;
     public bool _spawnFull;
-    
-    public void TriggerRespawn()
+    public GameObject currentBall;
+    public float time;
+
+    private void Start()
     {
-        StartCoroutine(SpawnBall());
+        SpawnBall();
     }
 
-    private IEnumerator SpawnBall()
+    private void Update()
     {
-        _spawnFull = false;
-        yield return new WaitForSeconds(_spawnRate);
-        GameObject ball = Instantiate(_projectilePrefab, transform.position, transform.rotation, this.transform);
-        _spawnFull= true;
+        RespawnTimer();
+        EmptyDetector();
     }
 
-    private void OnTriggerEnter2D(Collider2D collider)
+    public void SpawnBall()
     {
-        if(collider.CompareTag("Player")
-           && _spawnFull
-           && !collider.GetComponent<PlayerStateMachine>().IsEquipped)
+        GameObject ball = spawnableBalls.ballTypes[Random.Range(0, spawnableBalls.ballTypes.Length)];
+        GameObject ballInstance = Instantiate(ball, transform.position, transform.rotation, this.transform);
+        ballInstance.transform.parent = transform;
+    }
+
+    public void RespawnTimer()
+    {
+        if (!_spawnFull)
         {
-            TriggerRespawn();           
+            time += Time.deltaTime;
+        }
+        else
+        {
+            time = 0;
+        }
+    }
+    public void EmptyDetector()
+    {
+        if (transform.childCount == 0)
+        {
+            _spawnFull = false;
+        }
+        else
+        {
+            _spawnFull = true;
         }
     }
 }

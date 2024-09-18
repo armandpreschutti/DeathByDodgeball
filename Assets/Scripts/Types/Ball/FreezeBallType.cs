@@ -33,7 +33,19 @@ public class FreezeBallType : BallManager
     {
         base.Launch(value, direction, super, power);
         _rb.AddForce(currentDirection * currentPower, ForceMode2D.Impulse);
+        _rb.AddTorque(25f);
         SetBallTrailVFX(true);
+    }
+
+    public override void SelfDestruct()
+    {
+        Instantiate(frozenInteraction, transform.position, Quaternion.identity, null);
+        if (owner.TryGetComponent(out PawnAbilityHandler pawnAbilityHandler))
+        {
+            pawnAbilityHandler.SetFrozenState(true, frozenSpeed, frozenTime);
+        }
+        owner.OnBallContact?.Invoke();
+        Destroy(gameObject);
     }
 
     public void SetBallTrailVFX(bool value)
@@ -50,14 +62,4 @@ public class FreezeBallType : BallManager
         }
     }
 
-    public override void SelfDestruct()
-    {
-        Instantiate(frozenInteraction, transform.position, Quaternion.identity, null);
-        if (owner.TryGetComponent(out PawnAbilityHandler pawnAbilityHandler))
-        {
-            pawnAbilityHandler.SetFrozenState(true, frozenSpeed, frozenTime);
-        }
-        owner.OnBallContact?.Invoke();
-        Destroy(gameObject);
-    }
 }

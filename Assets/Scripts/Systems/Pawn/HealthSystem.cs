@@ -71,4 +71,12 @@ public class HealthSystem : MonoBehaviour
         }
         onPlayerHealed?.Invoke(slotId, currentLives);
     }
+
+    public void RefillLives()
+    {
+        currentLives = maxLives;
+        onPlayerHealed?.Invoke(slotId, 1);
+        onPlayerHealed?.Invoke(slotId, 2);
+        onPlayerHealed?.Invoke(slotId, 3);
+    }
 }

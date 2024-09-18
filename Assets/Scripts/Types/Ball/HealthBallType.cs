@@ -4,20 +4,28 @@ using UnityEngine;
 
 public class HealthBallType : BallManager
 {
-
-    public override void EquiptBall(PlayerStateMachine stateMachine)
-    {
-        base.EquiptBall(stateMachine);
-    }
+    [Header("Health Ball Settings")]
+    public GameObject healInteraction;
+    public ParticleSystem healSymbols;
 
     public override void Launch(bool value, Vector2 direction, bool super, float power)
     {
         base.Launch(value, direction, super, power);
         if(owner.TryGetComponent(out HealthSystem healthSystem))
         {
-            healthSystem.AddLife();
-            owner.OnHeal?.Invoke();
+            if(isSuperBall)
+            {
+                healthSystem.RefillLives();
+                Instantiate(healInteraction, owner.transform.position, Quaternion.identity, null);
+            }
+            else
+            {
+                healthSystem.AddLife();      
+            }
         }
+        owner.OnHeal?.Invoke();
+        InstantiateVFX();
+
         Destroy(gameObject);
     }
 
@@ -30,5 +38,13 @@ public class HealthBallType : BallManager
             owner.OnHeal?.Invoke();
         }
         Destroy(gameObject);
+    }
+
+    public void InstantiateVFX()
+    {
+        ParticleSystem symbolsInstance = Instantiate(healSymbols, owner.transform.position, Quaternion.identity, null);
+        symbolsInstance.transform.parent = owner.transform;
+        var emission = symbolsInstance.emission;
+        emission.rateOverTime = isSuperBall? 3f : 1f;
     }
 }

@@ -83,6 +83,7 @@ public class PlayerStateMachine : MonoBehaviour
     public Action OnRespawn;
     public Action<bool> OnSuperState;
     public Action<bool> OnExhausted;
+    public Action<bool> OnEnergized;
     public Action OnBallCaught;
     public Action OnBallContact;
     public Action OnHeal;

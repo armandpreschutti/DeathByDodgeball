@@ -34,6 +34,7 @@ Transform:
   m_Children:
   - {fileID: 5612298706087697314}
   - {fileID: 2741054560904359142}
+  - {fileID: 4094603294221249995}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -164,15 +165,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasOwner: 0
-  owner: {fileID: 0}
   owningTeam: 0
-  isEquipped: 0
-  isBallActive: 0
-  isSuperBall: 0
-  currentPower: 0
-  originPoint: {x: 0, y: 0}
-  currentDirection: {x: 0, y: 0}
-  _hitVfx: {fileID: 0}
+  superStateVFX: {fileID: 8690429140251202151}
   frozenSpeed: 1
   frozenTime: 5
   _normalTrail: {fileID: 8415722646236332487}
@@ -9834,3 +9828,78 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!1001 &507955307649248693
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 613414467392065834}
+    m_Modifications:
+    - target: {fileID: 4602233146422231166, guid: 71113236a06b17449862f18567cef77e, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4602233146422231166, guid: 71113236a06b17449862f18567cef77e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4602233146422231166, guid: 71113236a06b17449862f18567cef77e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4602233146422231166, guid: 71113236a06b17449862f18567cef77e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4602233146422231166, guid: 71113236a06b17449862f18567cef77e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4602233146422231166, guid: 71113236a06b17449862f18567cef77e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4602233146422231166, guid: 71113236a06b17449862f18567cef77e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4602233146422231166, guid: 71113236a06b17449862f18567cef77e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4602233146422231166, guid: 71113236a06b17449862f18567cef77e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4602233146422231166, guid: 71113236a06b17449862f18567cef77e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4602233146422231166, guid: 71113236a06b17449862f18567cef77e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9193542197815115730, guid: 71113236a06b17449862f18567cef77e, type: 3}
+      propertyPath: m_Name
+      value: FreezeBallSuperState
+      objectReference: {fileID: 0}
+    - target: {fileID: 9193542197815115730, guid: 71113236a06b17449862f18567cef77e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 71113236a06b17449862f18567cef77e, type: 3}
+--- !u!4 &4094603294221249995 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4602233146422231166, guid: 71113236a06b17449862f18567cef77e, type: 3}
+  m_PrefabInstance: {fileID: 507955307649248693}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8690429140251202151 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9193542197815115730, guid: 71113236a06b17449862f18567cef77e, type: 3}
+  m_PrefabInstance: {fileID: 507955307649248693}
+  m_PrefabAsset: {fileID: 0}

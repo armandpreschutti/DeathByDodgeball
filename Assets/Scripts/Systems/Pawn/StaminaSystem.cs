@@ -11,6 +11,7 @@ public class StaminaSystem : MonoBehaviour
     public int minDodges;
     public float replenishTime; // Time in seconds between each dodge refill
     public float replenishDelay;
+    public bool isEnergized;
     public Action<int, bool> onDodgeAdded;
     public Action<int, bool> onDodgeRemoved;
     public Action<bool> onDodgeDepeleted;
@@ -28,12 +29,14 @@ public class StaminaSystem : MonoBehaviour
     {
         playerStateMachine.OnDodge += SpendDodge;
         playerStateMachine.OnDeath += ResetDodge;
+        playerStateMachine.OnEnergized += SetUnlimitedDodges;
     }
 
     private void OnDisable()
     {
         playerStateMachine.OnDodge -= SpendDodge;
         playerStateMachine.OnDeath -= ResetDodge;
+        playerStateMachine.OnEnergized += SetUnlimitedDodges;
     }
 
     private void Start()
@@ -43,7 +46,7 @@ public class StaminaSystem : MonoBehaviour
 
     public void SpendDodge(bool value)
     {
-        if (value)
+        if (value && !isEnergized)
         {
             if(currentDodges == maxDodges)
             {
@@ -123,4 +126,10 @@ public class StaminaSystem : MonoBehaviour
             }
         }
     }
+
+    public void SetUnlimitedDodges(bool value)
+    {
+        isEnergized = value;
+    }
+
 }

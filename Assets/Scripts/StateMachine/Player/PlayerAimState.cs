@@ -44,6 +44,10 @@ public class PlayerAimState : PlayerBaseState
         Ctx.SkinAnim.SetBool("IsAiming", false);
         Ctx.OnAim?.Invoke(false);
         Ctx.OnSuperState?.Invoke(false);
+        if(Ctx.EquippedBall != null)
+        {
+            Ctx.EquippedBall.GetComponent<BallManager>().SetBallSuperState(false);
+        }
     }
 
     public override void CheckSwitchState()
@@ -102,6 +106,10 @@ public class PlayerAimState : PlayerBaseState
                 {
                     Ctx.OnSuperState?.Invoke(true);
                     Ctx.IsSuper = true;
+                    if (Ctx.EquippedBall != null)
+                    {
+                        Ctx.EquippedBall.GetComponent<BallManager>().SetBallSuperState(true);
+                    }
                 }
             }
             else if (Ctx.CurrentThrowPower < Ctx.MinThrowPower)
@@ -113,7 +121,7 @@ public class PlayerAimState : PlayerBaseState
         if (Ctx.IsSuper)
         {
             superTime += Time.deltaTime;
-            if (superTime >= 1.5)
+            if (superTime >= 2)
             {
                 Debug.Log("Player has held for too long");
                 Ctx.SelfDestruct();

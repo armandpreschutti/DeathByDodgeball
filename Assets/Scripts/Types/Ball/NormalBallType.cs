@@ -6,6 +6,7 @@ using UnityEngine;
 public class NormalBallType : BallManager
 {
     [Header("Normal Ball Settings")]
+    public GameObject _hitVfx;
     public GameObject _explosionVfx;
     public ParticleSystem _normalTrail;
     public ParticleSystem _superTrail;
@@ -58,6 +59,7 @@ public class NormalBallType : BallManager
     {
         base.Launch(value, direction, super, power);
         _rb.AddForce(currentDirection * currentPower, ForceMode2D.Impulse);
+
         SetBallTrailVFX(true);
     }
 

@@ -9,17 +9,17 @@ using static UnityEngine.GraphicsBuffer;
 
 public class BallManager : MonoBehaviour
 {
-    public bool hasOwner;
-    public PlayerStateMachine owner;
-    public int owningTeam;
-    public bool isEquipped;
-    public bool isBallActive;
-    public bool isSuperBall;
-    public float currentPower;
-    public Vector2 originPoint;
-    public Vector2 currentDirection;
-    public GameObject _hitVfx;
-
+    protected PlayerStateMachine owner;
+    [HideInInspector] public bool hasOwner;
+    [HideInInspector] public int owningTeam;
+    protected bool isEquipped;
+    protected bool isBallActive;
+    protected bool isSuperBall;
+    protected float currentPower;
+    protected Vector2 originPoint;
+    protected Vector2 currentDirection;
+    public GameObject superStateVFX;
+  
     [Header("Components")]
     protected Rigidbody2D _rb;
     public static Action onHit;
@@ -89,6 +89,11 @@ public class BallManager : MonoBehaviour
         isBallActive = value;
         isSuperBall = super;
         currentDirection = direction;
+    }
+
+    public virtual void SetBallSuperState(bool value)
+    {
+        superStateVFX.SetActive(value);
     }
 
     public virtual void PawnCollision(PlayerStateMachine stateMachine)

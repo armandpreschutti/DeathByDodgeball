@@ -13,6 +13,9 @@ public class PawnVFXHandler : MonoBehaviour
     public GameObject healVfx;
     public GameObject frozenVfx;
     public GameObject superFrozenVfx;
+    public GameObject energizedVfx;
+    public GameObject superEnergizedVfx;
+
 
     private void Awake()
     {
@@ -28,7 +31,8 @@ public class PawnVFXHandler : MonoBehaviour
         playerStateMachine.OnHeal += SetHealVFX;
         pawnAbilityHandler.onFrozen += SetFrozenVFX;
         pawnAbilityHandler.onSuperFrozen += SetSuperFrozenVFX;
-
+        pawnAbilityHandler.onEnergized += SetEnergizedVFX;
+        pawnAbilityHandler.onSuperEnergized += SetSuperEnergizedVFX;
     }
 
     private void OnDisable()
@@ -39,6 +43,8 @@ public class PawnVFXHandler : MonoBehaviour
         playerStateMachine.OnHeal -= SetHealVFX;
         pawnAbilityHandler.onFrozen -= SetFrozenVFX;
         pawnAbilityHandler.onSuperFrozen -= SetSuperFrozenVFX;
+        pawnAbilityHandler.onEnergized -= SetEnergizedVFX;
+        pawnAbilityHandler.onSuperEnergized -= SetSuperEnergizedVFX;
     }
 
 /*    public void SetSuperVFX(bool valule)
@@ -69,7 +75,6 @@ public class PawnVFXHandler : MonoBehaviour
     public void SetFrozenVFX(bool value)
     {
         frozenVfx.gameObject.SetActive(value);
-       // exhaustedVfx.gameObject.SetActive(value);
     }
 
     public void SetSuperFrozenVFX(bool value)
@@ -77,6 +82,17 @@ public class PawnVFXHandler : MonoBehaviour
         SetFrozenVFX(value);
         superFrozenVfx.gameObject.SetActive(value);
         anim.speed = value ? 0 : 1;
+    }
 
+    public void SetEnergizedVFX(bool value)
+    {
+        anim.speed = value ? 2 : 1;
+        energizedVfx.gameObject.SetActive(value);
+    }
+
+    public void SetSuperEnergizedVFX(bool value)
+    {
+        SetEnergizedVFX(value);
+        superEnergizedVfx.gameObject.SetActive(value);
     }
 }

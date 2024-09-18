@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4877914296805543300}
   - component: {fileID: 3016086993189677222}
   m_Layer: 0
-  m_Name: SuperFrozenState
+  m_Name: FrozenSuperState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
