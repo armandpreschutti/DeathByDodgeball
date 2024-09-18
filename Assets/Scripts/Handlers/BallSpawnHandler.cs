@@ -5,21 +5,18 @@ using UnityEngine;
 public class BallSpawnHandler : MonoBehaviour
 {
     public BallTypesSO spawnableBalls;
-    public float _spawnRate = 1f;
-    public bool _spawnFull;
-    public GameObject currentBall;
-    public float time;
+    public float _spawnRate = 5f;
+        /*public bool _spawnFull;
+        public GameObject currentBall;
+        public float time;*/
+
+    public Coroutine spawnNewBall;
 
     private void Start()
     {
         SpawnBall();
     }
 
-    private void Update()
-    {
-        RespawnTimer();
-        EmptyDetector();
-    }
 
     public void SpawnBall()
     {
@@ -28,26 +25,19 @@ public class BallSpawnHandler : MonoBehaviour
         ballInstance.transform.parent = transform;
     }
 
-    public void RespawnTimer()
+    public void SpawnNewBall()
     {
-        if (!_spawnFull)
+        if(spawnNewBall == null)
         {
-            time += Time.deltaTime;
-        }
-        else
-        {
-            time = 0;
+            StartCoroutine(SpawnDelay());
         }
     }
-    public void EmptyDetector()
+
+    public IEnumerator SpawnDelay()
     {
-        if (transform.childCount == 0)
-        {
-            _spawnFull = false;
-        }
-        else
-        {
-            _spawnFull = true;
-        }
+        yield return new WaitForSeconds(_spawnRate);
+        SpawnBall();
     }
+
+
 }

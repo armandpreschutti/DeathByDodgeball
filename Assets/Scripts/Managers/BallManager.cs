@@ -73,6 +73,11 @@ public class BallManager : MonoBehaviour
     {
         hasOwner = true;
         owner = stateMachine;
+        
+        if (transform.parent != null && transform.parent.TryGetComponent(out BallSpawnHandler ballSpawnHandler))
+        {
+            ballSpawnHandler.SpawnNewBall();
+        }
         stateMachine.EquipBall(gameObject);
         isEquipped = true;
         owningTeam = stateMachine.GetComponent<PawnManager>().teamId;
