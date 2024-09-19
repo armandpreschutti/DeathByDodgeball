@@ -27,6 +27,7 @@ public class PlayerThrowState : PlayerBaseState
 
     public override void FixedUpdateState()
     {
+        Ctx.Rb.velocity = Ctx.MoveDirection * Ctx.MoveSpeed;
         //SetThrowDirection();
     }
 
@@ -63,11 +64,11 @@ public class PlayerThrowState : PlayerBaseState
 
     }
     
-    public void SetThrowDirection()
+  /*  public void SetThrowDirection()
     {
         bool flipped;
         flipped = Ctx.transform.position.x > 0f ? true : false;
         Vector3 throwDirection = new Vector3(flipped ? -1 : 1, 0, 0);
         Ctx.Rb.velocity = throwDirection * (Ctx.MoveSpeed * 1.5f);
-    }
+    }*/
 }

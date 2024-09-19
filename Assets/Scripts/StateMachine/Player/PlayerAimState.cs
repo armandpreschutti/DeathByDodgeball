@@ -123,7 +123,6 @@ public class PlayerAimState : PlayerBaseState
             superTime += Time.deltaTime;
             if (superTime >= 2)
             {
-                Debug.Log("Player has held for too long");
                 Ctx.SelfDestruct();
                 Ctx.IsThrowPressed = false;
                 Ctx.IsSuper = false;

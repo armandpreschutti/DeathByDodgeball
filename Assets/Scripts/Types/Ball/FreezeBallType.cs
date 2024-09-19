@@ -19,14 +19,22 @@ public class FreezeBallType : BallManager
         {
             pawnAbilityHandler.SetFrozenState(isSuperBall, frozenSpeed, frozenTime);
         }
-        owner.OnBallContact?.Invoke();
+        if(isSuperBall)
+        {
+            onExplosion?.Invoke();
+        }
+        else
+        {
+            owner.OnBallContact?.Invoke();
+        }
+
         Destroy(gameObject);
     }
 
     public override void EquiptBall(PlayerStateMachine stateMachine)
     {
         base.EquiptBall(stateMachine);
-        SetBallTrailVFX(false);
+        DisableTrailVFX();
     }
 
     public override void Launch(bool value, Vector2 direction, bool super, float power)
@@ -60,6 +68,12 @@ public class FreezeBallType : BallManager
         {
             particleSystem.Stop();
         }
+    }
+
+    public void DisableTrailVFX()
+    {
+        _superTrail.Stop();
+        _normalTrail.Stop();
     }
 
 }

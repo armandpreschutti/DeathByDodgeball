@@ -22,8 +22,8 @@ public class ControllerVibrationHandler : MonoBehaviour
     public float ExplosionLowIntensity;
     public float ExplosionHighIntensity;
 
-    public float SuperLowIntensity;
-    public float SuperHighIntensity;
+    public float SuperStateLowIntensity;
+    public float SuperStateHighIntensity;
 
     public float AimLowIntensity;
     public float AimHighIntensity;
@@ -40,9 +40,22 @@ public class ControllerVibrationHandler : MonoBehaviour
     public float DeathLowIntensity;
     public float DeathHighIntensity;
 
-    public float HealRumbleTime;
-    public float HealLowIntensity;
-    public float HealHighIntensity;
+    public float ThrowRumbleTime;
+    public float ThrowLowIntensity;
+    public float ThrowHighIntensity;
+
+    public float SuperThrowRumbleTime;
+    public float SuperThrowLowIntensity;
+    public float SuperThrowHighIntensity;
+
+    /*    public float HealRumbleTime;
+        public float HealLowIntensity;
+        public float HealHighIntensity;
+
+        public float EnergizedRumbleTime;
+        public float EnergizedLowIntensity;
+        public float EnergizedHighIntensity;*/
+
 
     public float ErrorRumbleTime;
     public float ErrorLowIntesitiy;
@@ -53,7 +66,6 @@ public class ControllerVibrationHandler : MonoBehaviour
         _playerManager = GetComponent<PlayerManager>();
         _userController = GetComponent<UserController>();
         _playerInput = GetComponent<PlayerInput>();
-       // playerId = _playerManager._playerId;
     }
 
     private void OnEnable()
@@ -98,15 +110,17 @@ public class ControllerVibrationHandler : MonoBehaviour
 
     public void PerformExplosionRumble()
     {
+        // Debug.Log("Explosion rumble detected");
         gamepad.SetMotorSpeeds(ExplosionLowIntensity, ExplosionHighIntensity);
         StartCoroutine(StopRumble(ExplosionRumbleTime));
     }
 
     public void PerformSuperRumble(bool value)
     {
+        //Debug.Log($"Super rumble detected on {_playerManager._playerId}");
         if (value)
         {
-            gamepad.SetMotorSpeeds(SuperLowIntensity, SuperHighIntensity);
+            gamepad.SetMotorSpeeds(SuperStateLowIntensity, SuperStateHighIntensity);
         }
         else
         {
@@ -116,6 +130,7 @@ public class ControllerVibrationHandler : MonoBehaviour
 
     public void PerformAimRumble(bool value)
     {
+        //Debug.Log("Aim rumble detected");
         if (value)
         {
             gamepad.SetMotorSpeeds(AimLowIntensity, AimHighIntensity);
@@ -134,13 +149,15 @@ public class ControllerVibrationHandler : MonoBehaviour
 
     public void PerformContactRumble()
     {
+        //Debug.Log($"Contact rumble detected on {_playerManager._playerId}");
         gamepad.SetMotorSpeeds(ContactLowIntensity, ContactHighIntensity);
         StartCoroutine(StopRumble(ContactRumbleTime));
     }
 
     public void PerformDeathRumble(bool value)
     {
-        if(value)
+        //Debug.Log($"Death rumble detected on {_playerManager._playerId}");
+        if (value)
         {
             gamepad.SetMotorSpeeds(DeathLowIntensity, DeathHighIntensity);
             StartCoroutine(StopRumble(DeathRumbleTime));
@@ -149,8 +166,35 @@ public class ControllerVibrationHandler : MonoBehaviour
 
     public void PerformHealRumble()
     {
-        gamepad.SetMotorSpeeds(HealLowIntensity, HealHighIntensity);
-        StartCoroutine(StopRumble(HealRumbleTime));
+       /* gamepad.SetMotorSpeeds(HealLowIntensity, HealHighIntensity);
+        StartCoroutine(StopRumble(HealRumbleTime));*/
+    }
+    public void PerformEnergizedRumble(bool value)
+    {
+      /*  if (value)
+        {
+            gamepad.SetMotorSpeeds(EnergizedLowIntensity, EnergizedHighIntensity);
+            StartCoroutine(StopRumble(EnergizedRumbleTime));
+        }*/
+    }
+
+    public void PerformThrowRumble(bool value)
+    {
+        if (!value)
+        {
+            if (_playerStateMachine.IsSuper)
+            {
+                gamepad.SetMotorSpeeds(SuperThrowLowIntensity, SuperThrowHighIntensity);
+                StartCoroutine(StopRumble(SuperThrowRumbleTime));
+            }
+            else
+            {
+                gamepad.SetMotorSpeeds(ThrowLowIntensity, ThrowHighIntensity);
+                StartCoroutine(StopRumble(ThrowRumbleTime));
+            }
+
+        }
+
     }
 
     public void StopAllRumble(bool value)
@@ -191,7 +235,9 @@ public class ControllerVibrationHandler : MonoBehaviour
             _playerStateMachine.OnBallCaught += PerformCatchRumble;
             _playerStateMachine.OnBallContact += PerformContactRumble;
             _playerStateMachine.OnDeath += PerformDeathRumble;
-            _playerStateMachine.OnHeal += PerformHealRumble;
+            _playerStateMachine.OnThrow += PerformThrowRumble;
+/*            _playerStateMachine.OnHeal += PerformHealRumble;
+            _playerStateMachine.OnEnergized += PerformEnergizedRumble;*/
         }
     }
     public void UnsubscribeFromStateMachine(int slotId, int pId, GameObject stateMachine)
@@ -206,7 +252,9 @@ public class ControllerVibrationHandler : MonoBehaviour
             _playerStateMachine.OnBallCaught -= PerformCatchRumble;
             _playerStateMachine.OnBallContact -= PerformContactRumble;
             _playerStateMachine.OnDeath -= PerformDeathRumble;
-            _playerStateMachine.OnHeal -= PerformHealRumble;
+            _playerStateMachine.OnThrow += PerformThrowRumble;
+            /*            _playerStateMachine.OnHeal -= PerformHealRumble;
+                        _playerStateMachine.OnEnergized += PerformEnergizedRumble;*/
         }
     }
 }

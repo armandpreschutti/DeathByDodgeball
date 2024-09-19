@@ -10,6 +10,7 @@ public class UserController : MonoBehaviour
     public PlayerStateMachine playerStateMachine;
     public bool isActivated;
     public static Action onPausePressed;
+    public static Action onInputTriggered;
     public Action onInputError;
 
     private void Awake()
@@ -38,6 +39,11 @@ public class UserController : MonoBehaviour
         playerId = playerManager._playerId;
         playerStateMachine = GameObject.Find($"PlayablePawn{playerId}(Clone)").GetComponent<PlayerStateMachine>();
         playerManager.playerInput.SwitchCurrentActionMap("Gameplay");
+    }
+
+    public void SetInputTriggered(InputAction.CallbackContext context)
+    {
+        onInputTriggered?.Invoke();
     }
 
     public void SetMoveInput(Vector2 value)
@@ -125,6 +131,7 @@ public class UserController : MonoBehaviour
     }
     public void SubscribeToActions()
     {
+        playerManager.playerInput.onActionTriggered += SetInputTriggered;
         playerManager.playerInput.actions["Move"].performed += OnMovePerformed;
         playerManager.playerInput.actions["Aim"].performed += OnAimPerformed;
         playerManager.playerInput.actions["Dodge"].performed += OnDodgePerformed;
@@ -136,6 +143,7 @@ public class UserController : MonoBehaviour
 
     public void UnsubscribeFromActions()
     {
+        playerManager.playerInput.onActionTriggered -= SetInputTriggered;
         playerManager.playerInput.actions["Move"].performed -= OnMovePerformed;
         playerManager.playerInput.actions["Aim"].performed -= OnAimPerformed;
         playerManager.playerInput.actions["Dodge"].performed -= OnDodgePerformed;

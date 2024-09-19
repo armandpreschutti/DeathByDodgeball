@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,7 +16,8 @@ public class GameManager : MonoBehaviour
     public PlayerInputManager playerInputManager;
     public string winningTeam;
     public bool isDebugging;
-
+    public float idleTime;
+    public float restartTime; 
     public static GameManager GetInstance()
     {
         return gameInstance;
@@ -34,13 +37,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        SetIdleTimer();
+    }
+
     private void OnEnable()
     {
         PlayerConfigurationController.onDestroyAllPlayers += ClearPlayersFromGame;
         PlayerManager.onJoin += AddPlayerToGame;
         PauseMenuController.OnGamePaused += PauseGame;
         SceneManager.sceneLoaded += ResetCurrentPlayers;
-        
+      //  UserController.onInputTriggered += ResetIdleTime;
     }
 
     private void OnDisable()
@@ -49,6 +57,7 @@ public class GameManager : MonoBehaviour
         PlayerManager.onJoin -= AddPlayerToGame;
         PauseMenuController.OnGamePaused -= PauseGame;
         SceneManager.sceneLoaded -= ResetCurrentPlayers;
+       // UserController.onInputTriggered -= ResetIdleTime;
     }
 
     public void AddPlayerToGame(int playerId, GameObject playerObject)
@@ -88,7 +97,7 @@ public class GameManager : MonoBehaviour
 
     public void ResetCurrentPlayers(Scene scene, LoadSceneMode mode)
     {
-        if(scene.name == "MainMenu")
+        if(scene.name == "MainMenu"|| scene.name == "TitleMenu")
         {
             for(int i = 0; i < currentPlayers.Length; i++)
             {
@@ -120,6 +129,23 @@ public class GameManager : MonoBehaviour
                 playerInputManager.DisableJoining();
             }
         }
+    }
 
+    public void SetIdleTimer()
+    {
+        if(!isDebugging)
+        {
+            idleTime += Time.deltaTime;
+            if (idleTime >= restartTime)
+            {
+                SceneManager.LoadScene("TitleMenu");
+                idleTime = 0f;
+            }
+        }
+    }
+
+    public void ResetIdleTime()
+    {
+        idleTime = 0.0f;
     }
 }

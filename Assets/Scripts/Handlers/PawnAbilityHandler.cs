@@ -8,6 +8,7 @@ public class PawnAbilityHandler : MonoBehaviour
     PlayerStateMachine playerStateMachine;
     float originalMoveSpeed;
     float originalDodgeSpeed;
+    float originalThrowRate;
 
     public Coroutine setFrozenState;
     public Action<bool> onFrozen;
@@ -34,6 +35,7 @@ public class PawnAbilityHandler : MonoBehaviour
     {
         originalMoveSpeed = playerStateMachine.MoveSpeed;
         originalDodgeSpeed = playerStateMachine.DodgeSpeed;
+        originalThrowRate = playerStateMachine.ThrowPowerIncreaseRate;
     }
 
     private void BroadCastFrozenType(bool isSuperBall, bool value)
@@ -74,6 +76,7 @@ public class PawnAbilityHandler : MonoBehaviour
         playerStateMachine.MoveSpeed = originalMoveSpeed;
         playerStateMachine.IsExhausted = false;
         BroadCastFrozenType(isSuperBall, false);
+        BroadCastFrozenType(!isSuperBall, false);
     }
 
     private void BroadCastEnergizedType(bool isSuperBall, bool value)
@@ -88,11 +91,11 @@ public class PawnAbilityHandler : MonoBehaviour
         }
     }
 
-    public void SetEnergizedState(bool isSuperBall, float energizedSpeed, float dodgeSpeed, float energizedTime)
+    public void SetEnergizedState(bool isSuperBall, float energizedSpeed, float dodgeSpeed, float throwRate, float energizedTime)
     {
         if (setEnergizedState == null)
         {
-            setEnergizedState = StartCoroutine(EnergizedStateCoroutine(isSuperBall, energizedSpeed, dodgeSpeed, energizedTime));
+            setEnergizedState = StartCoroutine(EnergizedStateCoroutine(isSuperBall, energizedSpeed, dodgeSpeed, throwRate, energizedTime));
         }
         else
         {
@@ -101,20 +104,22 @@ public class PawnAbilityHandler : MonoBehaviour
                 StopCoroutine(setEnergizedState);
             }
 
-            setEnergizedState = StartCoroutine(EnergizedStateCoroutine(isSuperBall, energizedSpeed, dodgeSpeed, energizedTime));
+            setEnergizedState = StartCoroutine(EnergizedStateCoroutine(isSuperBall, energizedSpeed, dodgeSpeed, throwRate, energizedTime));
         }
     }
 
-    public IEnumerator EnergizedStateCoroutine(bool isSuperBall, float speed, float dodgeSpeed, float time)
+    public IEnumerator EnergizedStateCoroutine(bool isSuperBall, float speed, float dodgeSpeed, float throwRate, float time)
     {
         BroadCastEnergizedType(isSuperBall, true);
         playerStateMachine.MoveSpeed = speed;
         playerStateMachine.DodgeSpeed = dodgeSpeed;
+        playerStateMachine.ThrowPowerIncreaseRate = isSuperBall? throwRate : originalThrowRate;
         if(isSuperBall)
         {
             playerStateMachine.OnEnergized?.Invoke(true);
         }
         yield return new WaitForSeconds(isSuperBall ? time * 1.5f : time);
+        playerStateMachine.ThrowPowerIncreaseRate = originalThrowRate;
         playerStateMachine.DodgeSpeed = originalDodgeSpeed;
         playerStateMachine.MoveSpeed = originalMoveSpeed;
         if (isSuperBall)
@@ -122,6 +127,7 @@ public class PawnAbilityHandler : MonoBehaviour
             playerStateMachine.OnEnergized?.Invoke(false);
         }
         BroadCastEnergizedType(isSuperBall, false);
+        BroadCastEnergizedType(!isSuperBall, false);
     }
 
     public void StopAllStates(bool value)
@@ -141,6 +147,7 @@ public class PawnAbilityHandler : MonoBehaviour
             onEnergized?.Invoke(false);
             onSuperEnergized?.Invoke(false);    
             playerStateMachine.DodgeSpeed = originalDodgeSpeed;
+            playerStateMachine.ThrowPowerIncreaseRate = originalThrowRate;
         }
     }
 

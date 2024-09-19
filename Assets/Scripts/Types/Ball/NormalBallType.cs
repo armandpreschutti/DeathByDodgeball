@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class NormalBallType : BallManager
@@ -52,7 +49,7 @@ public class NormalBallType : BallManager
     public override void EquiptBall(PlayerStateMachine stateMachine)
     {
         base.EquiptBall(stateMachine);
-        SetBallTrailVFX(false);
+        DisableTrailVFX();
     }
 
     public override void Launch(bool value, Vector2 direction, bool super, float power)
@@ -85,5 +82,11 @@ public class NormalBallType : BallManager
         {
             particleSystem.Stop();
         }
+    }
+
+    public void DisableTrailVFX()
+    {
+        _superTrail.Stop();
+        _normalTrail.Stop();
     }
 }

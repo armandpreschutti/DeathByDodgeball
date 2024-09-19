@@ -22,18 +22,16 @@ public class PawnSFXHandler : MonoBehaviour
     private void OnEnable()
     {
         _playerStateMachine.OnDodge += PlayDodgeSFX;
-        _playerStateMachine.OnThrow += PlayThrowSFX;
+        //_playerStateMachine.OnThrow += PlayThrowSFX;
         _playerStateMachine.OnBallCaught += PlayCatchSFX;
         _playerStateMachine.OnDeath += PlayDeathSFX;
-        _playerStateMachine.OnSuperState += PlaySuperSFX;
     }
     private void OnDisable()
     {
         _playerStateMachine.OnDodge -= PlayDodgeSFX;
-        _playerStateMachine.OnThrow -= PlayThrowSFX;
+        //_playerStateMachine.OnThrow -= PlayThrowSFX;
         _playerStateMachine.OnBallCaught -= PlayCatchSFX;
         _playerStateMachine.OnDeath -= PlayDeathSFX;
-        _playerStateMachine.OnSuperState -= PlaySuperSFX;
     }
 
 
@@ -67,9 +65,4 @@ public class PawnSFXHandler : MonoBehaviour
         }
 
     }
-    public void PlaySuperSFX(bool value)
-    {
-
-    }   
-
 }

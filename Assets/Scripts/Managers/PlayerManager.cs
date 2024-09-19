@@ -70,13 +70,13 @@ public class PlayerManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "PostMatch")
         {
             userController.enabled = false;
-            playerInput.enabled = false;
+          //  playerInput.enabled = false;
            // controllerVibrationHandler.enabled = false;
         }
         else if (SceneManager.GetActiveScene().name == "MatchInstance")
         {
             userController.enabled = true;
-            playerInput.enabled = true;
+            //playerInput.enabled = true;
         }
     }
 }

@@ -1,11 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
-using UnityEditorInternal;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class BallManager : MonoBehaviour
 {
@@ -19,15 +13,16 @@ public class BallManager : MonoBehaviour
     protected Vector2 originPoint;
     protected Vector2 currentDirection;
     public GameObject superStateVFX;
-  
     [Header("Components")]
     protected Rigidbody2D _rb;
+    protected AudioSource _audio;
     public static Action onHit;
     public static Action onExplosion;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _audio = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -116,5 +111,5 @@ public class BallManager : MonoBehaviour
 
     }
 
-
+    
 }

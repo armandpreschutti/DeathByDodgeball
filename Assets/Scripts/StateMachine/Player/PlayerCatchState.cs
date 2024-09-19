@@ -36,7 +36,8 @@ public class PlayerCatchState : PlayerBaseState
         }
         else
         {
-            Ctx.Rb.velocity = Vector2.zero;
+            Ctx.Rb.velocity = Ctx.MoveDirection * Ctx.MoveSpeed;
+          //  Ctx.Rb.velocity = Vector2.zero;
         }
     }
 

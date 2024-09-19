@@ -26,7 +26,7 @@ public class PlayerDeathState: PlayerBaseState
         Ctx.IsDodging= false;
         Ctx.IsCatching = false;
         Ctx.IsSuper = false;
-        Ctx.OnSuperState?.Invoke(false);
+      //  Ctx.OnSuperState?.Invoke(false);
         if (Ctx.CanRespawn)
         {
             Ctx.StartCoroutine(RespawnAfterDelay());

@@ -123,12 +123,12 @@ MonoBehaviour:
   ExplosionRumbleTime: 0.5
   ExplosionLowIntensity: 0.6
   ExplosionHighIntensity: 0.75
-  SuperLowIntensity: 0.4
-  SuperHighIntensity: 0.5
+  SuperStateLowIntensity: 0.6
+  SuperStateHighIntensity: 0.75
   AimLowIntensity: 0
   AimHighIntensity: 0
-  CatchRumbleTime: 0.2
-  CatchLowIntensity: 0.3
+  CatchRumbleTime: 0.1
+  CatchLowIntensity: 0.5
   CatchHighIntensity: 0.6
   ContactRumbleTime: 0.25
   ContactLowIntensity: 0.5
@@ -136,9 +136,12 @@ MonoBehaviour:
   DeathRumbleTime: 0.3
   DeathLowIntensity: 0.6
   DeathHighIntensity: 0.75
-  HealRumbleTime: 0.1
-  HealLowIntensity: 0.5
-  HealHighIntensity: 0.25
+  ThrowRumbleTime: 0.1
+  ThrowLowIntensity: 0.5
+  ThrowHighIntensity: 0.6
+  SuperThrowRumbleTime: 0.2
+  SuperThrowLowIntensity: 0.6
+  SuperThrowHighIntensity: 0.7
   ErrorRumbleTime: 0.25
   ErrorLowIntesitiy: 0.5
   ErrorHighIntesitiy: 1
