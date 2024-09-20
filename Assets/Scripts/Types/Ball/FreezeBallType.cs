@@ -26,6 +26,7 @@ public class FreezeBallType : BallManager
         else
         {
             owner.OnBallContact?.Invoke();
+            stateMachine.OnBallContact?.Invoke();
         }
 
         Destroy(gameObject);

@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        SetIdleTimer();
+        //SetIdleTimer();
     }
 
     private void OnEnable()

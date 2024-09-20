@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BallManager : MonoBehaviour
@@ -8,7 +9,7 @@ public class BallManager : MonoBehaviour
     [HideInInspector] public int owningTeam;
     protected bool isEquipped;
     protected bool isBallActive;
-    protected bool isSuperBall;
+    [HideInInspector] public bool isSuperBall;
     protected float currentPower;
     protected Vector2 originPoint;
     protected Vector2 currentDirection;
@@ -56,9 +57,10 @@ public class BallManager : MonoBehaviour
         }
         else if(collision.GetComponent<BallManager>() != null && isBallActive)
         {
+            BallManager ballManager = collision.GetComponent<BallManager>();
             if(collision.GetComponent<BallManager>().isBallActive)
             {
-                BallCollision();
+                BallCollision(ballManager);
             }
 
         }
@@ -101,7 +103,7 @@ public class BallManager : MonoBehaviour
         
     }
 
-    public virtual void BallCollision()
+    public virtual void BallCollision(BallManager ballManager)
     {
 
     }

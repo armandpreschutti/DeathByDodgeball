@@ -31,6 +31,7 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] bool _canRespawn;
     [SerializeField] float _respawnDelay;
     [SerializeField] bool _isSuper;
+    [SerializeField] bool _canCatch;
 
     [Header("Melee")]
     [SerializeField] Vector3 _aimDirection;
@@ -61,7 +62,7 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] bool _isThrowing;
     [SerializeField] bool _isCatching;
     [SerializeField] bool _isExhausted;
-    [SerializeField] bool _isFrozen;
+
 
 
 
@@ -106,6 +107,7 @@ public class PlayerStateMachine : MonoBehaviour
     public bool CanRespawn { get { return _canRespawn; } set { _canRespawn = value; } }
     public float RespawnDelay { get { return _respawnDelay; } set { _respawnDelay = value; } }
     public bool IsSuper { get { return _isSuper; } set { _isSuper= value; } }
+    public bool CanCatch { get { return _canCatch; } set { _canCatch = value; } }
 
     public Vector3 AimDirection { get { return _aimDirection; } set { _aimDirection = value; } }
     //public GameObject CurrentTarget { get { return _currentTarget; } set { _currentTarget = value; } }

@@ -6,6 +6,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class PlayerCatchState : PlayerBaseState
 {
+    float stateTime;
     public PlayerCatchState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory) : base(currentContext, playerStateFactory)
     {
 
@@ -36,8 +37,8 @@ public class PlayerCatchState : PlayerBaseState
         }
         else
         {
-            Ctx.Rb.velocity = Ctx.MoveDirection * Ctx.MoveSpeed;
-          //  Ctx.Rb.velocity = Vector2.zero;
+            //Ctx.Rb.velocity = Ctx.MoveDirection * Ctx.MoveSpeed;
+            Ctx.Rb.velocity = Vector2.zero;
         }
     }
 
@@ -60,6 +61,14 @@ public class PlayerCatchState : PlayerBaseState
         {
             if (Ctx.IsCatching == false)
             {
+/*                Ctx.BaseAnim.SetBool("IsCatching", false);
+                Ctx.SkinAnim.SetBool("IsCatching", false);
+                Ctx.CatchArea.gameObject.SetActive(false);
+                stateTime += Time.deltaTime;
+                if(stateTime > 1)
+                {
+                    SwitchState(Factory.Idle());
+                }*/
                 SwitchState(Factory.Idle());
             }
             else if (Ctx.IsEquipped)

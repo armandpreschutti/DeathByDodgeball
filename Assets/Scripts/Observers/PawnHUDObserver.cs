@@ -66,13 +66,14 @@ public class PawnHUDObserver : MonoBehaviour
             switch(lives)
             {
                 case 2:
-                    heart1.gameObject.SetActive(false);
+                    heart3.gameObject.SetActive(false);
                     break;
                 case 1:
                     heart2.gameObject.SetActive(false);
                     break;
                 case 0:
-                    heart3.gameObject.SetActive(false);
+                    heart1.gameObject.SetActive(false);
+
                     break;
             }
         }
@@ -85,13 +86,14 @@ public class PawnHUDObserver : MonoBehaviour
             switch (lives)
             {
                 case 3:
-                    heart1.gameObject.SetActive(true);
+                    heart3.gameObject.SetActive(true);
+
                     break;
                 case 2:
                     heart2.gameObject.SetActive(true);
                     break;
                 case 1:
-                    heart3.gameObject.SetActive(true);
+                    heart1.gameObject.SetActive(true);
                     break;
             }
         }

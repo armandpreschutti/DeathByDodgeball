@@ -52,7 +52,7 @@ public class PlayerMoveState : PlayerBaseState
             {
                 SwitchState(Factory.Aim());
             }
-            else if (Ctx.IsCatchPressed)
+            else if (Ctx.IsCatchPressed && Ctx.CanCatch)
             {
                 SwitchState(Factory.Catch());
             }

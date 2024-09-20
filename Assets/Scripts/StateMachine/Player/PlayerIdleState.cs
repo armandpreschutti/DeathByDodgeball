@@ -43,15 +43,15 @@ public class PlayerIdleState : PlayerBaseState
             {
                 SwitchState(Factory.Move());
             }
-            else if (Ctx.IsDodgePressed)
+           /* else if (Ctx.IsDodgePressed)
             {
                 SwitchState(Factory.Dodge());
-            }
+            }*/
             else if (Ctx.IsThrowPressed)
             {
                 SwitchState(Factory.Aim());
             }
-            else if (Ctx.IsCatchPressed)
+            else if (Ctx.IsCatchPressed && Ctx.CanCatch)
             {
                 SwitchState(Factory.Catch());
             }

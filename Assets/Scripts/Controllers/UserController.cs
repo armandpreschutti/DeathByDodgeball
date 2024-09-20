@@ -1,5 +1,5 @@
-
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,9 +13,12 @@ public class UserController : MonoBehaviour
     public static Action onInputTriggered;
     public Action onInputError;
 
+    private bool canCatch = true;  // Cooldown flag for catch input
+    public float catchCooldownTime = 0.25f;  // Cooldown duration in seconds
+
     private void Awake()
-    { 
-        playerManager= GetComponent<PlayerManager>();      
+    {
+        playerManager = GetComponent<PlayerManager>();
     }
 
     private void OnEnable()
@@ -48,9 +51,8 @@ public class UserController : MonoBehaviour
 
     public void SetMoveInput(Vector2 value)
     {
-        if(playerStateMachine != null /*&& isActivated*/ && !GameManager.gameInstance.isPaused)
+        if (playerStateMachine != null && !GameManager.gameInstance.isPaused)
         {
-            //Debug.Log("Move called on controller");
             if (!playerStateMachine.IsDead)
             {
                 playerStateMachine.MoveInput = value;
@@ -68,21 +70,19 @@ public class UserController : MonoBehaviour
 
     public void SetAimInput(Vector2 value)
     {
-        if(playerStateMachine != null && isActivated && !GameManager.gameInstance.isPaused)
+        if (playerStateMachine != null && isActivated && !GameManager.gameInstance.isPaused)
         {
             if (!playerStateMachine.IsDead)
             {
-                //Debug.Log("Aim called on controller");
                 playerStateMachine.AimInput = value;
             }
-        }        
+        }
     }
 
     public void SetDodgeInput(bool value)
     {
         if (playerStateMachine != null && isActivated && !GameManager.gameInstance.isPaused)
         {
-            //Debug.Log("Dodge called on controller");
             if (playerStateMachine.MoveInput != Vector2.zero && !playerStateMachine.IsDodging && !playerStateMachine.IsCatching && !playerStateMachine.IsDead && !playerStateMachine.IsThrowing)
             {
                 if (!playerStateMachine.IsExhausted)
@@ -96,24 +96,30 @@ public class UserController : MonoBehaviour
             }
         }
     }
-    
+
     public void SetCatchInput(bool value)
     {
-        if (playerStateMachine != null && isActivated && !GameManager.gameInstance.isPaused)
+        if (playerStateMachine != null && isActivated && !GameManager.gameInstance.isPaused && canCatch)
         {
-            //Debug.Log("Catch called on controller");
-            if (!playerStateMachine.IsCatching && !playerStateMachine.IsHurt && !playerStateMachine.IsThrowing && !playerStateMachine.IsDead)
+            if (!playerStateMachine.IsCatching && !playerStateMachine.IsHurt && !playerStateMachine.IsThrowing && !playerStateMachine.IsDead && playerStateMachine.CanCatch)
             {
                 playerStateMachine.IsCatchPressed = value;
+                StartCoroutine(CatchCooldown());
             }
         }
+    }
+
+    private IEnumerator CatchCooldown()
+    {
+        canCatch = false;  // Disable catch input
+        yield return new WaitForSeconds(catchCooldownTime);  // Wait for cooldown time
+        canCatch = true;  // Re-enable catch input
     }
 
     public void SetThrowInput(bool value)
     {
         if (playerStateMachine != null && isActivated && !GameManager.gameInstance.isPaused)
         {
-            //Debug.Log("Throw called on controller");
             if (!playerStateMachine.IsDodging && !playerStateMachine.IsHurt && !playerStateMachine.IsThrowing && playerStateMachine.IsEquipped)
             {
                 playerStateMachine.IsThrowPressed = value;
@@ -127,7 +133,7 @@ public class UserController : MonoBehaviour
         {
             onPausePressed?.Invoke();
         }
-  
+
     }
     public void SubscribeToActions()
     {
@@ -198,6 +204,4 @@ public class UserController : MonoBehaviour
         isActivated = false;
         playerStateMachine.MoveInput = Vector2.zero;
     }
-
-
 }

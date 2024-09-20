@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: 232aaa4fc64a85841bc4f54ba855ef60, type: 3}
-  m_NotificationBehavior: 0
+  m_NotificationBehavior: 3
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -100,6 +100,8 @@ MonoBehaviour:
   playerManager: {fileID: 0}
   playerStateMachine: {fileID: 0}
   isActivated: 0
+  catchCooldownTime: 1
+  userInputActionAsset: {fileID: -944628639613478452, guid: 232aaa4fc64a85841bc4f54ba855ef60, type: 3}
 --- !u!114 &7121534899531451364
 MonoBehaviour:
   m_ObjectHideFlags: 0

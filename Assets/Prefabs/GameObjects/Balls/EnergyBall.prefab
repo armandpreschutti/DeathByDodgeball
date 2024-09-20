@@ -164,11 +164,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasOwner: 0
   owningTeam: 0
+  isSuperBall: 0
   superStateVFX: {fileID: 2054820291960174063}
   energizedSpeed: 6
-  energizedDodgeSpeed: 16
+  energizedDodgeSpeed: 13
   energizedThrowRate: 15
-  energizedTime: 5
+  energizedTime: 4
   energizedInteraction: {fileID: 2810386672412869085, guid: bf4568e9857b6394db66e99c26da8ee7, type: 3}
 --- !u!1001 &8855605144732758762
 PrefabInstance:

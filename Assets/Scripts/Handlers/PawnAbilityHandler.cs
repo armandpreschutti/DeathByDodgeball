@@ -70,9 +70,19 @@ public class PawnAbilityHandler : MonoBehaviour
     public IEnumerator FrozenStateCoroutine(bool isSuperBall, float speed, float time)
     {
         BroadCastFrozenType(isSuperBall, true);
+        if (setEnergizedState != null)
+        {
+            StopCoroutine(setEnergizedState);
+            playerStateMachine.IsExhausted = true;
+            BroadCastEnergizedType(isSuperBall, false);
+            BroadCastEnergizedType(!isSuperBall, false);
+        }
+        playerStateMachine.DestroyBall();
         playerStateMachine.MoveSpeed = isSuperBall ? 0 : speed;
         playerStateMachine.IsExhausted = true;
+        playerStateMachine.CanCatch= isSuperBall ? false : true;
         yield return new WaitForSeconds(isSuperBall ? time * 1.5f : time);
+        playerStateMachine.CanCatch = true;
         playerStateMachine.MoveSpeed = originalMoveSpeed;
         playerStateMachine.IsExhausted = false;
         BroadCastFrozenType(isSuperBall, false);
@@ -111,6 +121,14 @@ public class PawnAbilityHandler : MonoBehaviour
     public IEnumerator EnergizedStateCoroutine(bool isSuperBall, float speed, float dodgeSpeed, float throwRate, float time)
     {
         BroadCastEnergizedType(isSuperBall, true);
+        if (setFrozenState != null)
+        {
+            StopCoroutine(setFrozenState);
+            playerStateMachine.IsExhausted = false;
+            playerStateMachine.CanCatch = true;
+            BroadCastFrozenType(isSuperBall, false);
+            BroadCastFrozenType(!isSuperBall, false);
+        }
         playerStateMachine.MoveSpeed = speed;
         playerStateMachine.DodgeSpeed = dodgeSpeed;
         playerStateMachine.ThrowPowerIncreaseRate = isSuperBall? throwRate : originalThrowRate;
@@ -118,7 +136,7 @@ public class PawnAbilityHandler : MonoBehaviour
         {
             playerStateMachine.OnEnergized?.Invoke(true);
         }
-        yield return new WaitForSeconds(isSuperBall ? time * 1.5f : time);
+        yield return new WaitForSeconds(time);
         playerStateMachine.ThrowPowerIncreaseRate = originalThrowRate;
         playerStateMachine.DodgeSpeed = originalDodgeSpeed;
         playerStateMachine.MoveSpeed = originalMoveSpeed;
@@ -137,6 +155,7 @@ public class PawnAbilityHandler : MonoBehaviour
             StopCoroutine(setFrozenState);
             playerStateMachine.IsExhausted = false;
             playerStateMachine.MoveSpeed = originalMoveSpeed;
+            playerStateMachine.CanCatch = true;
             onSuperFrozen?.Invoke(false);
             onFrozen?.Invoke(false);
         }

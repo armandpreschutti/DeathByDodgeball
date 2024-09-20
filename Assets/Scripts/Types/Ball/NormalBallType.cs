@@ -29,15 +29,17 @@ public class NormalBallType : BallManager
         }
     }
 
-    public override void BallCollision()
+    public override void BallCollision(BallManager ballManager)
     {
-        base.BallCollision();
+        base.BallCollision(ballManager);
         if (isSuperBall)
         {
-            Instantiate(_explosionVfx, transform.position, Quaternion.identity, null);
-            onExplosion?.Invoke();
-            Destroy(gameObject);
-
+            if (ballManager.isSuperBall)
+            {
+                Instantiate(_explosionVfx, transform.position, Quaternion.identity, null);
+                onExplosion?.Invoke();
+                Destroy(gameObject);
+            }
         }
         else
         {

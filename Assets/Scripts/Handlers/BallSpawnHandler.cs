@@ -6,6 +6,8 @@ public class BallSpawnHandler : MonoBehaviour
 {
     public BallTypesSO spawnableBalls;
     public float _spawnRate = 5f;
+    public GameObject lastBall;
+    public GameObject normalBall;
         /*public bool _spawnFull;
         public GameObject currentBall;
         public float time;*/
@@ -14,15 +16,24 @@ public class BallSpawnHandler : MonoBehaviour
 
     private void Start()
     {
-        SpawnBall();
+        SpawnIntitialBalls();
     }
 
 
     public void SpawnBall()
     {
         GameObject ball = spawnableBalls.ballTypes[Random.Range(0, spawnableBalls.ballTypes.Length)];
-        GameObject ballInstance = Instantiate(ball, transform.position, transform.rotation, this.transform);
-        ballInstance.transform.parent = transform;
+        if(ball != lastBall || lastBall == normalBall)
+        {
+            GameObject ballInstance = Instantiate(ball, transform.position, transform.rotation, this.transform);
+            lastBall = ball;
+            ballInstance.transform.parent = transform;
+        }
+        else
+        {
+            SpawnBall();
+        }
+
     }
 
     public void SpawnNewBall()
@@ -37,6 +48,14 @@ public class BallSpawnHandler : MonoBehaviour
     {
         yield return new WaitForSeconds(_spawnRate);
         SpawnBall();
+    }
+
+    public void SpawnIntitialBalls()
+    {
+        GameObject ball = normalBall;
+        GameObject ballInstance = Instantiate(ball, transform.position, transform.rotation, this.transform);
+        //lastBall = ball;
+        ballInstance.transform.parent = transform;
     }
 
 
