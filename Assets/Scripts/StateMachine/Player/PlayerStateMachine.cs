@@ -62,7 +62,7 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] bool _isThrowing;
     [SerializeField] bool _isCatching;
     [SerializeField] bool _isExhausted;
-
+    [SerializeField] bool _isInvicible;
 
 
 
@@ -132,6 +132,7 @@ public class PlayerStateMachine : MonoBehaviour
     public bool IsThrowing { get { return _isThrowing; } set { _isThrowing= value; } }
     public bool IsCatching { get { return _isCatching; } set { _isCatching = value; } }
     public bool IsExhausted { get { return _isExhausted; } set { _isExhausted = value; } }
+    public bool IsInvicible { get { return _isInvicible; } set { _isInvicible = value; } }
 
     public Vector2 AimInput { get { return _aimInput; } set { _aimInput = value; } }
     public Vector2 MoveInput { get { return _moveInput; } set { _moveInput = value; } }

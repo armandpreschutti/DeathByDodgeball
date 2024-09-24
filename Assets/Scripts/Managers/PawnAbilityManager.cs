@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PawnAbilityHandler : MonoBehaviour
+public class PawnAbilityManager : MonoBehaviour
 {
     PlayerStateMachine playerStateMachine;
     float originalMoveSpeed;
     float originalDodgeSpeed;
     float originalThrowRate;
+
+
 
     public Coroutine setFrozenState;
     public Action<bool> onFrozen;
@@ -18,6 +20,11 @@ public class PawnAbilityHandler : MonoBehaviour
     public Action<bool> onEnergized;
     public Action<bool> onSuperEnergized;
 
+    public Coroutine setInvicibleState;
+    public Action<bool> onInvicible;
+    public Action<bool> onSuperInvicible;
+    public float InvicibilityTime;
+
     private void Awake()
     {
         playerStateMachine = GetComponent<PlayerStateMachine>();
@@ -25,11 +32,13 @@ public class PawnAbilityHandler : MonoBehaviour
     private void OnEnable()
     {
         playerStateMachine.OnDeath += StopAllStates;
+        playerStateMachine.OnRespawn += SetInvicibileState;
     }
 
     private void OnDisable()
     {
         playerStateMachine.OnDeath -= StopAllStates;
+        playerStateMachine.OnRespawn -= SetInvicibileState;
     }
     private void Start()
     {
@@ -168,7 +177,31 @@ public class PawnAbilityHandler : MonoBehaviour
             playerStateMachine.DodgeSpeed = originalDodgeSpeed;
             playerStateMachine.ThrowPowerIncreaseRate = originalThrowRate;
         }
+        if (setInvicibleState != null)
+        {
+            StopCoroutine(setInvicibleState);
+            onInvicible?.Invoke(false);
+            playerStateMachine.IsInvicible = false;
+        }
     }
 
+    public void SetInvicibileState()
+    {
+        if(setInvicibleState != null)
+        {
+            StopCoroutine(setInvicibleState);
+        }
+        setInvicibleState = StartCoroutine(InvicibleStateCoroutine());
+    }
+
+
+    public IEnumerator InvicibleStateCoroutine()
+    {
+        onInvicible?.Invoke(true);
+        playerStateMachine.IsInvicible= true;
+        yield return new WaitForSeconds(InvicibilityTime);
+        playerStateMachine.IsInvicible = false;
+        onInvicible?.Invoke(false);
+    }
 
 }

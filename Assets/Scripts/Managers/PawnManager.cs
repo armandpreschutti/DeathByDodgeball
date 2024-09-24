@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,6 +14,7 @@ public class PawnManager : MonoBehaviour
     public string playerName;
     public bool isEliminated;
     public PlayerStateMachine playerStateMachine;
+    public TextMeshProUGUI playerTag;
 
     public static Action<int, int, GameObject> onPlayerLoaded;
     public static Action<int, int, GameObject> onPlayerUnloaded;
@@ -59,6 +61,8 @@ public class PawnManager : MonoBehaviour
     public void EnableStateMachine()
     {
         playerStateMachine.enabled = true;
+        playerTag.gameObject.SetActive(true);
+        playerTag.text = playerName;
     }
 
     public void DisableStateMachine()

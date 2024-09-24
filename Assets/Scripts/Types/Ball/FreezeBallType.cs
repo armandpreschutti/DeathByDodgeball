@@ -15,7 +15,7 @@ public class FreezeBallType : BallManager
     {
         base.PawnCollision(stateMachine);
         Instantiate(frozenInteraction, transform.position, Quaternion.identity, null);
-        if (stateMachine.TryGetComponent(out PawnAbilityHandler pawnAbilityHandler))
+        if (stateMachine.TryGetComponent(out PawnAbilityManager pawnAbilityHandler))
         {
             pawnAbilityHandler.SetFrozenState(isSuperBall, frozenSpeed, frozenTime);
         }
@@ -49,7 +49,7 @@ public class FreezeBallType : BallManager
     public override void SelfDestruct()
     {
         Instantiate(frozenInteraction, transform.position, Quaternion.identity, null);
-        if (owner.TryGetComponent(out PawnAbilityHandler pawnAbilityHandler))
+        if (owner.TryGetComponent(out PawnAbilityManager pawnAbilityHandler))
         {
             pawnAbilityHandler.SetFrozenState(true, frozenSpeed, frozenTime);
         }

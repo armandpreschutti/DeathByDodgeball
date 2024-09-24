@@ -5,7 +5,7 @@ using UnityEngine;
 public class PawnVFXHandler : MonoBehaviour
 {
     private PlayerStateMachine playerStateMachine;
-    private PawnAbilityHandler pawnAbilityHandler;
+    private PawnAbilityManager pawnAbilityHandler;
     public Animator anim;
     public GameObject superVfx;
     public GameObject exhaustedVfx;
@@ -15,12 +15,13 @@ public class PawnVFXHandler : MonoBehaviour
     public GameObject superFrozenVfx;
     public GameObject energizedVfx;
     public GameObject superEnergizedVfx;
+    public GameObject invicibleVfx;
 
 
     private void Awake()
     {
         playerStateMachine = GetComponent<PlayerStateMachine>();
-        pawnAbilityHandler = GetComponent<PawnAbilityHandler>();
+        pawnAbilityHandler = GetComponent<PawnAbilityManager>();
     }
 
     private void OnEnable()
@@ -33,6 +34,7 @@ public class PawnVFXHandler : MonoBehaviour
         pawnAbilityHandler.onSuperFrozen += SetSuperFrozenVFX;
         pawnAbilityHandler.onEnergized += SetEnergizedVFX;
         pawnAbilityHandler.onSuperEnergized += SetSuperEnergizedVFX;
+        pawnAbilityHandler.onInvicible += SetInvicibleVFX;
     }
 
     private void OnDisable()
@@ -45,13 +47,8 @@ public class PawnVFXHandler : MonoBehaviour
         pawnAbilityHandler.onSuperFrozen -= SetSuperFrozenVFX;
         pawnAbilityHandler.onEnergized -= SetEnergizedVFX;
         pawnAbilityHandler.onSuperEnergized -= SetSuperEnergizedVFX;
+        pawnAbilityHandler.onInvicible -= SetInvicibleVFX;
     }
-
-/*    public void SetSuperVFX(bool valule)
-    {
-        superVfx.gameObject.SetActive(valule);
-
-    }*/
 
     public void SetExhaustedVFX(bool valule)
     {
@@ -94,5 +91,10 @@ public class PawnVFXHandler : MonoBehaviour
     {
         SetEnergizedVFX(value);
         superEnergizedVfx.gameObject.SetActive(value);
+    }
+
+    public void SetInvicibleVFX(bool value)
+    {
+        invicibleVfx.gameObject.SetActive(value);
     }
 }

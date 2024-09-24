@@ -47,7 +47,7 @@ public class BallManager : MonoBehaviour
                         stateMachine.OnBallCaught?.Invoke();
                         EquiptBall(stateMachine);
                     }
-                    else if (!stateMachine.IsDead && stateMachine.GetComponent<PawnManager>().teamId != owningTeam)
+                    else if (!stateMachine.IsDead && stateMachine.GetComponent<PawnManager>().teamId != owningTeam && !stateMachine.IsInvicible)
                     {
                         PawnCollision(stateMachine);
 

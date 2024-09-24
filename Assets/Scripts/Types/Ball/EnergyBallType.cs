@@ -15,7 +15,7 @@ public class EnergyBallType : BallManager
     public override void Launch(bool value, Vector2 direction, bool super, float power)
     {
         base.Launch(value, direction, super, power);
-        if (owner.TryGetComponent(out PawnAbilityHandler pawnAbilityHandler))
+        if (owner.TryGetComponent(out PawnAbilityManager pawnAbilityHandler))
         {
             pawnAbilityHandler.SetEnergizedState(isSuperBall, energizedSpeed, energizedDodgeSpeed, energizedThrowRate, energizedTime);
         }
@@ -27,7 +27,7 @@ public class EnergyBallType : BallManager
     public override void SelfDestruct()
     {
         base.SelfDestruct();
-        if (owner.TryGetComponent(out PawnAbilityHandler pawnAbilityHandler))
+        if (owner.TryGetComponent(out PawnAbilityManager pawnAbilityHandler))
         {
             pawnAbilityHandler.SetEnergizedState(isSuperBall, energizedSpeed, energizedDodgeSpeed, energizedThrowRate, energizedTime);
         }
