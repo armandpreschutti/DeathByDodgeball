@@ -7,8 +7,7 @@ public class PlayerDeathState: PlayerBaseState
     float stateTime;
     public PlayerDeathState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory) : base(currentContext, playerStateFactory) 
     {
-/*        IsRootState = true;
-        InitializeSubState();*/
+
     }
 
     public override void EnterState()
@@ -22,11 +21,9 @@ public class PlayerDeathState: PlayerBaseState
         Ctx.IsAiming = false;
         Ctx.IsThrowPressed = false;
         Ctx.IsThrowing = false;
-
         Ctx.IsDodging= false;
         Ctx.IsCatching = false;
         Ctx.IsSuper = false;
-      //  Ctx.OnSuperState?.Invoke(false);
         if (Ctx.CanRespawn)
         {
             Ctx.StartCoroutine(RespawnAfterDelay());

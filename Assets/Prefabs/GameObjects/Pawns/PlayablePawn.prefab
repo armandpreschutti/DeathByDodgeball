@@ -425,8 +425,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotId: 3
-  skinId: 0
-  playerId: 2
+  skinId: 8
+  playerId: 0
   teamId: 2
   playerName: 
   isEliminated: 0
