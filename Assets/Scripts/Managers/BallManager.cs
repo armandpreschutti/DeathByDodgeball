@@ -19,13 +19,18 @@ public class BallManager : MonoBehaviour
     protected AudioSource _audio;
     public static Action onHit;
     public static Action onExplosion;
+    public Color normalAimColor;
+    public Color superAimColor;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _audio = GetComponent<AudioSource>();
     }
-
+    public void Update()
+    {
+        SetAimIndicator();
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.GetComponent<PlayerStateMachine>() != null)
@@ -113,5 +118,11 @@ public class BallManager : MonoBehaviour
 
     }
 
-    
+    public virtual void SetAimIndicator()
+    {
+
+    }
+
+
+
 }

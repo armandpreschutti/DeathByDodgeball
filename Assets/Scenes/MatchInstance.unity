@@ -1555,7 +1555,7 @@ PlayableDirector:
   m_GameObject: {fileID: 116818737}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 873d57865bbee2b4292314ad1e34facf, type: 2}
+  m_PlayableAsset: {fileID: 11400000, guid: 033b5dfee66b4be459692e68d6092a8e, type: 2}
   m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
@@ -11611,6 +11611,7 @@ MonoBehaviour:
   heart2: {fileID: 399994406}
   heart3: {fileID: 81015252}
   hasOwner: 0
+  border: {fileID: 1244661494}
 --- !u!114 &1244661494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14030,6 +14031,7 @@ MonoBehaviour:
   heart2: {fileID: 1260050766}
   heart3: {fileID: 1812984950}
   hasOwner: 0
+  border: {fileID: 1476711621}
 --- !u!114 &1476711621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16913,6 +16915,7 @@ MonoBehaviour:
   heart2: {fileID: 1192826410}
   heart3: {fileID: 876708441}
   hasOwner: 0
+  border: {fileID: 1682294508}
 --- !u!114 &1682294508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17512,6 +17515,7 @@ MonoBehaviour:
   heart2: {fileID: 1394083573}
   heart3: {fileID: 130524880}
   hasOwner: 0
+  border: {fileID: 1729410876}
 --- !u!114 &1729410876
 MonoBehaviour:
   m_ObjectHideFlags: 0

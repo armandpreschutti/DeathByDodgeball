@@ -13,6 +13,7 @@ public class PlayerManager : MonoBehaviour
     public int _playerId;
     public int _skinId;
     public int _slotId;
+    public Color playerColor;
 
     [Header("Components")]
     public PlayerInput playerInput;
@@ -41,12 +42,14 @@ public class PlayerManager : MonoBehaviour
     public void BroadcastJoin()
     {
         onJoin?.Invoke(_playerId, gameObject);
+
     }
 
     public void SetComponents()
     {
+
         playerInput= GetComponent<PlayerInput>();
-        userController= GetComponent<UserController>();
+        userController = GetComponent<UserController>();
         if (GetComponent<ControllerVibrationHandler>() != null)
         {
             controllerVibrationHandler = GetComponent<ControllerVibrationHandler>();
@@ -70,13 +73,15 @@ public class PlayerManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "PostMatch")
         {
             userController.enabled = false;
-          //  playerInput.enabled = false;
-           // controllerVibrationHandler.enabled = false;
         }
         else if (SceneManager.GetActiveScene().name == "MatchInstance")
         {
             userController.enabled = true;
-            //playerInput.enabled = true;
         }
+    }
+
+    public void SetPlayerColor()
+    {
+        Debug.Log("Player got a new color");
     }
 }

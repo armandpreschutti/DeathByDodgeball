@@ -81,6 +81,7 @@ MonoBehaviour:
   _playerId: 0
   _skinId: 0
   _slotId: 0
+  playerColor: {r: 0, g: 0, b: 0, a: 0}
   playerInput: {fileID: 0}
   userController: {fileID: 0}
   controllerVibrationHandler: {fileID: 0}
@@ -100,8 +101,7 @@ MonoBehaviour:
   playerManager: {fileID: 0}
   playerStateMachine: {fileID: 0}
   isActivated: 0
-  catchCooldownTime: 1
-  userInputActionAsset: {fileID: -944628639613478452, guid: 232aaa4fc64a85841bc4f54ba855ef60, type: 3}
+  catchCooldownTime: 0.5
 --- !u!114 &7121534899531451364
 MonoBehaviour:
   m_ObjectHideFlags: 0

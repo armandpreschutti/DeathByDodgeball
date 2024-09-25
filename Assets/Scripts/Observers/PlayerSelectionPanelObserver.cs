@@ -64,7 +64,7 @@ public class PlayerSelectionPanelObserver : MonoBehaviour
         }
     }
 
-    public void PreviewMatchConfigurationSlot(int playerId, int matchSlot, int skinId)
+    public void PreviewMatchConfigurationSlot(int playerId, int matchSlot, int skinId, Color color)
     {
         if(matchSlot == slotId)
         {
@@ -74,15 +74,13 @@ public class PlayerSelectionPanelObserver : MonoBehaviour
             if (playerId != 0)
             {
                 playerTagText.text = $"P{playerId}";
-                promptText.text = "Move";
-/*                buttonImage.enabled = false;*/
+                playerTagText.color = GameObject.Find($"Player{playerId}").GetComponent<PlayerManager>().playerColor;
+                promptText.text = "Change";
             }
             else
             {
                 playerTagText.text = $"CPU";
-                promptText.text = "Remove";
-
-/*                buttonImage.enabled = true;*/
+                promptText.text = "Change";
             }
 
             isFilled = true;
@@ -92,7 +90,7 @@ public class PlayerSelectionPanelObserver : MonoBehaviour
             if (!isFilled)
             {
                 buttonImage.sprite = xSymbol;
-                promptText.text = "Add AI";
+                promptText.text = "Add CPU";
             }
 
 
@@ -104,7 +102,7 @@ public class PlayerSelectionPanelObserver : MonoBehaviour
         onUpdateButton?.Invoke(slotId, isFilled);
     }
 
-    public void RemoveMatchConfigurationSlot(int playerId, int matchSlot, int skinId)
+    public void RemoveMatchConfigurationSlot(int playerId, int matchSlot, int skinId, Color color)
     {
         if (matchSlot == slotId)
         {

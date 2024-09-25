@@ -97,7 +97,8 @@ public class GameManager : MonoBehaviour
 
     public void ResetCurrentPlayers(Scene scene, LoadSceneMode mode)
     {
-        if(scene.name == "MainMenu"|| scene.name == "TitleMenu")
+        isPaused = false;
+        if (scene.name == "MainMenu"|| scene.name == "TitleMenu")
         {
             for(int i = 0; i < currentPlayers.Length; i++)
             {
@@ -111,7 +112,7 @@ public class GameManager : MonoBehaviour
             {
                 playerConfigurations[i] = null;
             }
-            isPaused = false;
+
             Time.timeScale = 1.0f;
         }
         else if(scene.name != "MatchInstance")

@@ -8,8 +8,8 @@ public class PlayerSelectionManager : MonoBehaviour
 {
     public PlayerConfigurationSO[] playerConfigurations;
 
-    public static Action<int, int, int> onSetMatchSlot;
-    public static Action<int, int, int> onRemoveMatchSlot;
+    public static Action<int, int, int, Color> onSetMatchSlot;
+    public static Action<int, int, int, Color> onRemoveMatchSlot;
     public static Action<int, bool> onResetPlayer;
     public static Action onMatchReady;
     public static Action onMatchInitiated;
@@ -55,7 +55,7 @@ public class PlayerSelectionManager : MonoBehaviour
         }
     }
 
-    public void AddPlayerToMatchConfiguration(int playerId, int slotId, int skinId)
+    public void AddPlayerToMatchConfiguration(int playerId, int slotId, int skinId, Color color)
     {
         // Create a new PlayerConfigurationSO object
         PlayerConfigurationSO newPlayerConfig = ScriptableObject.CreateInstance<PlayerConfigurationSO>();
@@ -65,13 +65,14 @@ public class PlayerSelectionManager : MonoBehaviour
         newPlayerConfig.skinID = skinId;
         newPlayerConfig.slotId = slotId;
         newPlayerConfig.playerName = $"Player{playerId}";
+        newPlayerConfig.playerColor = playerId == 0? Color.white : color;
 
         if(playerId != 0)
         {
             PlayerManager playerManager = GameObject.Find($"Player{playerId}").GetComponent<PlayerManager>();
             playerManager._playerId = playerId;
             playerManager._skinId = skinId;
-            playerManager._slotId = slotId; 
+            playerManager._slotId = slotId;
         }
 
         // Ensure the array has enough space
@@ -82,7 +83,7 @@ public class PlayerSelectionManager : MonoBehaviour
 
         // Assign the new object to the specified slot
         playerConfigurations[slotId - 1] = newPlayerConfig;
-        onSetMatchSlot?.Invoke(playerId, slotId, skinId);
+        onSetMatchSlot?.Invoke(playerId, slotId, skinId, color);
         CheckMatchReadyState();
 
     }
@@ -97,7 +98,7 @@ public class PlayerSelectionManager : MonoBehaviour
                     onResetPlayer?.Invoke(playerId, false);
                 }
                 playerConfigurations[slotId - 1] = null;
-                onRemoveMatchSlot?.Invoke(playerId, slotId, skinId);
+                onRemoveMatchSlot?.Invoke(playerId, slotId, skinId, Color.white);
                 CheckMatchReadyState();
             }
         }

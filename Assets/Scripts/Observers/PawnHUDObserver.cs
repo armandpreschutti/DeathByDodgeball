@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.VirtualTexturing;
 using UnityEngine.UI;
 
 public class PawnHUDObserver : MonoBehaviour
@@ -13,6 +14,8 @@ public class PawnHUDObserver : MonoBehaviour
     public Image heart2;
     public Image heart3;
     public bool hasOwner;
+    public Image border;
+    public HealthSystem healthSystem;
 
     private void Awake()
     {
@@ -46,16 +49,22 @@ public class PawnHUDObserver : MonoBehaviour
         {
             pawnName.text = newName;
             hasOwner = true;
-            
+            healthSystem = system;
         }
     }
 
     public IEnumerator DisableUnowned()
     {
         yield return new WaitForSeconds(.25f);
-        if(!hasOwner)
+        if(hasOwner)
+        {
+            border = GetComponent<Image>();
+            border.color = healthSystem.GetComponent<PawnManager>().pawnColor;
+        }
+        else
         {
             Destroy(gameObject);
+
         }
     }
 

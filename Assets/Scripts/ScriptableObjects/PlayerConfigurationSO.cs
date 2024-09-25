@@ -10,6 +10,7 @@ public class PlayerConfigurationSO : ScriptableObject
     public int skinID;
     public int slotId;
     public string playerName;
+    public Color playerColor;
    
 
     public void SetTeam()

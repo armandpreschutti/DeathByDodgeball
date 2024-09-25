@@ -7,6 +7,7 @@ public class HealthBallType : BallManager
     [Header("Health Ball Settings")]
     public GameObject healInteraction;
     public ParticleSystem healSymbols;
+    public GameObject aoeIndicator;
 
     public override void Launch(bool value, Vector2 direction, bool super, float power)
     {
@@ -38,6 +39,26 @@ public class HealthBallType : BallManager
             owner.OnHeal?.Invoke();
         }
         Destroy(gameObject);
+    }
+    public override void SetAimIndicator()
+    {
+        base.SetAimIndicator();
+        if (owner != null && owner.IsAiming)
+        {
+            aoeIndicator.SetActive(true);
+            if (owner.IsSuper)
+            {
+                aoeIndicator.GetComponent<SpriteRenderer>().color = superAimColor;
+            }
+            else
+            {
+                aoeIndicator.GetComponent<SpriteRenderer>().color = normalAimColor;
+            }
+        }
+        else
+        {
+            aoeIndicator.SetActive(false);
+        }
     }
 
     public void InstantiateVFX()

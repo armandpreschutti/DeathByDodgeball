@@ -10,7 +10,8 @@ public class EnergyBallType : BallManager
     public float energizedDodgeSpeed;
     public float energizedThrowRate;
     public float energizedTime;
-    public GameObject energizedInteraction; 
+    public GameObject energizedInteraction;
+    public GameObject aoeIndicator;
 
     public override void Launch(bool value, Vector2 direction, bool super, float power)
     {
@@ -34,4 +35,24 @@ public class EnergyBallType : BallManager
         Destroy(gameObject);
     }
 
+    public override void SetAimIndicator()
+    {
+        base.SetAimIndicator();
+        if (owner != null && owner.IsAiming)
+        {
+            aoeIndicator.SetActive(true);
+            if (owner.IsSuper)
+            {
+                aoeIndicator.GetComponent<SpriteRenderer>().color = superAimColor;
+            }
+            else
+            {
+                aoeIndicator.GetComponent<SpriteRenderer>().color = normalAimColor;
+            }
+        }
+        else
+        {
+            aoeIndicator.SetActive(false);
+        }
+    }
 }

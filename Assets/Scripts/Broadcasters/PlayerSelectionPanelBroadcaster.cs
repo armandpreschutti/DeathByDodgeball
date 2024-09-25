@@ -121,7 +121,7 @@ public class PlayerSelectionPanelBroadcaster : MonoBehaviour
         }
     }
 
-    public void SetAIPanelSelection(int pId, int currentSlot, int currentSkin)
+    public void SetAIPanelSelection(int pId, int currentSlot, int currentSkin, Color color)
     {
        
         if(currentSlot == slotId && !isFilled && !isLockedIn)
@@ -130,7 +130,7 @@ public class PlayerSelectionPanelBroadcaster : MonoBehaviour
             DisableButton(slotId);
         }
     }
-    public void SetPanelSelection(int pId, int currentSlot, int currentSkin)
+    public void SetPanelSelection(int pId, int currentSlot, int currentSkin, Color color)
     {
 
         if (currentSlot == slotId && !isLockedIn)
@@ -148,7 +148,7 @@ public class PlayerSelectionPanelBroadcaster : MonoBehaviour
         }
     }
 
-    public void ResetPanelSelection(int pId, int currentSlot, int currentSkin)
+    public void ResetPanelSelection(int pId, int currentSlot, int currentSkin, Color color)
     {
         if(currentSlot == slotId)
         {

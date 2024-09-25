@@ -32,6 +32,7 @@ public class SpawnPointHandler : MonoBehaviour
             {
                 pawnOwner = avaialiblePawns[i].gameObject;
                 avaialiblePawns[i].transform.position = transform.position;
+                pawnOwner.GetComponent<PlayerStateMachine>().SpriteRenderer.flipX = transform.position.x > 0 ? true : false;
             }
         }
     }

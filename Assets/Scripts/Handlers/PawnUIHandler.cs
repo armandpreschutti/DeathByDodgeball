@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,7 @@ public class PawnUIHandler : MonoBehaviour
 {
     private StaminaSystem staminaSystem;
     private PlayerStateMachine playerStateMachine;
+    private PawnManager pawnManager;
     public Animator anim;
     public GameObject dodgeContainer;
     public GameObject dodge1;
@@ -16,7 +18,8 @@ public class PawnUIHandler : MonoBehaviour
     public Slider throwPowerSlider;
     public float delayAfterReplenish = 1f;
     public Coroutine disableDodgeUI;
-
+    public TextMeshProUGUI playerTag;
+    public float playerTagDisplayTime;
 
     private void Awake()
     {
@@ -29,12 +32,15 @@ public class PawnUIHandler : MonoBehaviour
             Debug.LogError("PawnUIHandler requires a Stamina System component");
         }
         playerStateMachine = GetComponent<PlayerStateMachine>();
-        
+        pawnManager = GetComponent<PawnManager>();
+        playerTag.text = pawnManager.playerName;
+        playerTag.color = pawnManager.pawnColor;
     }
 
     private void OnEnable()
     {
-        if(staminaSystem!= null)
+
+        if (staminaSystem!= null)
         {
             staminaSystem.onDodgeAdded += AddDodgeValue;
             staminaSystem.onDodgeRemoved += RemoveDodgeValue;
@@ -43,6 +49,8 @@ public class PawnUIHandler : MonoBehaviour
         }
         playerStateMachine.OnAim += SetThrowBarState;
         playerStateMachine.OnSuperState += SetSuperThrowBarState;
+        playerStateMachine.OnRespawn += TriggerPlayerTagDisplay;
+        MatchInstanceManager.onEnablePawnControl += TriggerPlayerTagDisplay;
     }
 
     private void OnDisable()
@@ -53,10 +61,11 @@ public class PawnUIHandler : MonoBehaviour
             staminaSystem.onDodgeRemoved -= RemoveDodgeValue;
             staminaSystem.onDodgeDepeleted -= ActivateDodgeContainer;
             staminaSystem.onDodgeReset -= ResetDodgeValues;
-            playerStateMachine.OnAim -= SetThrowBarState;
         }
         playerStateMachine.OnAim -= SetThrowBarState;
         playerStateMachine.OnSuperState -= SetSuperThrowBarState;
+        playerStateMachine.OnRespawn -= TriggerPlayerTagDisplay;
+        MatchInstanceManager.onEnablePawnControl -= TriggerPlayerTagDisplay;
     }
 
     private void Update()
@@ -155,6 +164,18 @@ public class PawnUIHandler : MonoBehaviour
         {
             anim.Play("Idle");
         }
+    }
+
+    public void TriggerPlayerTagDisplay()
+    {
+        StartCoroutine(DisplayPlayerTagCoroutine());
+    }
+
+    public IEnumerator DisplayPlayerTagCoroutine()
+    {
+        playerTag.gameObject.SetActive(true);
+        yield return new WaitForSeconds(playerTagDisplayTime);
+        playerTag.gameObject.SetActive(false);
     }
 
 }

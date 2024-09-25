@@ -8,9 +8,11 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerConfigurationController : MonoBehaviour
 {
+    public Color playerColor;
     public PlayerInput playerInput;
     public PlayerSelectionManager playerSelectionManager;
     public int playerId;
@@ -29,8 +31,8 @@ public class PlayerConfigurationController : MonoBehaviour
     public Action onCyclePreviousSkin;
     public static Action<int, int, int> onRemoveSelection;
     public static Action<int, int, int, int> onAddAi;
-    public static Action<int, int, int> onSubmit;
-    public static Action<int, int, int> onSubmitAi;
+    public static Action<int, int, int, Color> onSubmit;
+    public static Action<int, int, int, Color> onSubmitAi;
     public static Action onInitiateMatchStart;
     public static Action onDestroyAllPlayers;
     public bool canSelectAI;
@@ -103,19 +105,18 @@ public class PlayerConfigurationController : MonoBehaviour
 
     public void SetInitialPlayerValues()
     {
-        transform.parent.name = $"Player{playerId}";
         playerSelectionManager = FindObjectOfType<PlayerSelectionManager>();
         playerInput = GetComponentInParent<PlayerInput>();
+        PlayerManager playerManager = GetComponentInParent<PlayerManager>();
         playerId = playerInput.playerIndex + 1 ;
-        Slot1.name = $"P{playerId}Button1";
-        Slot2.name = $"P{playerId}Button2";
-        Slot3.name = $"P{playerId}Button3";
-        Slot4.name = $"P{playerId}Button4";
+        playerManager.name = $"Player{playerId}";
+        playerManager._playerId = playerId;
         eventSystem.playerRoot = gameObject;
         inputModule.actionsAsset = playerInput.actions;
+        SetButtonsNameAndColor(playerId,playerManager);
         GetButtonAvailibility();
         SetInitialSlot();
-        transform.parent.name = $"Player{playerId}";
+       // transform.parent.name = $"Player{playerId}";
     }
 
     public void InitiateMatchStart()
@@ -180,14 +181,14 @@ public class PlayerConfigurationController : MonoBehaviour
         if (!isPlayerSelected)
         {
             isPlayerSelected = true;
-            onSubmit?.Invoke(playerId, currentSlot, currentSkin);
+            onSubmit?.Invoke(playerId, currentSlot, currentSkin, playerColor);
             selectedSlot = currentSlot;
         }
         else if(canSelectAI)
         {
             int oldId = playerId;
             playerId = 0;
-            onSubmitAi?.Invoke(playerId, currentSlot, currentSkin);
+            onSubmitAi?.Invoke(playerId, currentSlot, currentSkin, playerColor);
             playerId = oldId;
             canSelectAI = false;
         }
@@ -226,4 +227,62 @@ public class PlayerConfigurationController : MonoBehaviour
     {
         onCyclePreviousSkin?.Invoke();
     }
+
+    public void SetButtonsNameAndColor(int playerId, PlayerManager playerManager)
+    {
+        Slot1.name = $"P{playerId}Button1";
+        Slot2.name = $"P{playerId}Button2";
+        Slot3.name = $"P{playerId}Button3";
+        Slot4.name = $"P{playerId}Button4";
+
+        switch (playerId)
+        {
+            case 1:
+                Slot1.GetComponent<Image>().color = Color.green;
+                Slot2.GetComponent<Image>().color = Color.green;
+                Slot3.GetComponent<Image>().color = Color.green;
+                Slot4.GetComponent<Image>().color = Color.green;
+                playerManager.playerColor = Color.green;
+                playerColor = Color.green;
+                break;
+
+            case 2:
+                Slot1.GetComponent<Image>().color = Color.cyan;
+                Slot2.GetComponent<Image>().color = Color.cyan;
+                Slot3.GetComponent<Image>().color = Color.cyan;
+                Slot4.GetComponent<Image>().color = Color.cyan;
+                playerManager.playerColor = Color.cyan;
+                playerColor = Color.cyan;
+                break;
+
+            case 3:
+                Slot1.GetComponent<Image>().color = Color.magenta;
+                Slot2.GetComponent<Image>().color = Color.magenta;
+                Slot3.GetComponent<Image>().color = Color.magenta;
+                Slot4.GetComponent<Image>().color = Color.magenta;
+                playerManager.playerColor = Color.magenta;
+                playerColor = Color.magenta;
+                break;
+
+            case 4:
+
+                Slot1.GetComponent<Image>().color = Color.yellow;
+                Slot2.GetComponent<Image>().color = Color.yellow;
+                Slot3.GetComponent<Image>().color = Color.yellow;
+                Slot4.GetComponent<Image>().color = Color.yellow;
+                playerManager.playerColor = Color.yellow;
+                playerColor = Color.yellow;
+                break;
+
+            default:
+                Slot1.GetComponent<Image>().color = Color.white;
+                Slot2.GetComponent<Image>().color = Color.white;
+                Slot3.GetComponent<Image>().color = Color.white;
+                Slot4.GetComponent<Image>().color = Color.white;
+                break;
+        }
+
+
+    }
+
 }

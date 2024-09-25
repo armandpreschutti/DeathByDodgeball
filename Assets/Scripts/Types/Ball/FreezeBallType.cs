@@ -10,6 +10,8 @@ public class FreezeBallType : BallManager
     public ParticleSystem _normalTrail;
     public ParticleSystem _superTrail;
     public GameObject frozenInteraction;
+    public GameObject AimLeftPosition;
+    public GameObject AimRightPosition;
 
     public override void PawnCollision(PlayerStateMachine stateMachine)
     {
@@ -56,7 +58,46 @@ public class FreezeBallType : BallManager
         owner.OnBallContact?.Invoke();
         Destroy(gameObject);
     }
-
+    public override void SetAimIndicator()
+    {
+        base.SetAimIndicator();
+        bool flipped;
+        flipped = transform.position.x > 0f ? true : false;
+        if (owner != null && owner.IsAiming)
+        {
+            if (flipped)
+            {
+                AimRightPosition.SetActive(false);
+                AimLeftPosition.SetActive(true);
+                if (owner.IsSuper)
+                {
+                    AimLeftPosition.GetComponent<SpriteRenderer>().color = superAimColor;
+                }
+                else
+                {
+                    AimLeftPosition.GetComponent<SpriteRenderer>().color = normalAimColor;
+                }
+            }
+            else
+            {
+                AimRightPosition.SetActive(true);
+                AimLeftPosition.SetActive(false);
+                if (owner.IsSuper)
+                {
+                    AimRightPosition.GetComponent<SpriteRenderer>().color = superAimColor;
+                }
+                else
+                {
+                    AimRightPosition.GetComponent<SpriteRenderer>().color = normalAimColor;
+                }
+            }
+        }
+        else
+        {
+            AimRightPosition.SetActive(false);
+            AimLeftPosition.SetActive(false);
+        }
+    }
     public void SetBallTrailVFX(bool value)
     {
         ParticleSystem particleSystem = isSuperBall ? _superTrail : _normalTrail;

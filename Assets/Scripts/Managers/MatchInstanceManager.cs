@@ -90,6 +90,7 @@ public class MatchInstanceManager : MonoBehaviour
         pawnManager.skinId = so.skinID;
         pawnManager.playerId = so.playerId;
         pawnManager.teamId = so.teamId;
+        pawnManager.pawnColor = so.playerColor;
         Instantiate(pawn, transform.position, Quaternion.identity);
     }
 

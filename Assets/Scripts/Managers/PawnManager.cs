@@ -12,10 +12,12 @@ public class PawnManager : MonoBehaviour
     public int playerId;
     public int teamId;
     public string playerName;
+    public Color pawnColor;
     public bool isEliminated;
     public PlayerStateMachine playerStateMachine;
-    public TextMeshProUGUI playerTag;
-
+    public bool isCpu;
+   // public TextMeshProUGUI playerTag;
+   // public SpriteRenderer spriteRenderer;
     public static Action<int, int, GameObject> onPlayerLoaded;
     public static Action<int, int, GameObject> onPlayerUnloaded;
     public static Action<int> onRespawn;
@@ -25,6 +27,14 @@ public class PawnManager : MonoBehaviour
     {
         playerStateMachine = GetComponent<PlayerStateMachine>();
         playerName = playerId != 0 ? $"P{playerId}" : "CPU";
+        isCpu = playerName == "CPU" ? true : false;
+        if(isCpu)
+        {
+            GameObject instance = gameObject;
+            instance.AddComponent<CPUBrain>();
+        }
+
+     //   playerTag.text = playerName;
     }
 
     private void OnEnable()
@@ -61,12 +71,12 @@ public class PawnManager : MonoBehaviour
     public void EnableStateMachine()
     {
         playerStateMachine.enabled = true;
-        playerTag.gameObject.SetActive(true);
-        playerTag.text = playerName;
     }
 
     public void DisableStateMachine()
     {
         playerStateMachine.enabled = false;
     }
+
+    
 }

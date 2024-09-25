@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class PawnAimingController : MonoBehaviour
 {
-   /* public PlayerStateMachine playerStateMachine;
+    PlayerStateMachine playerStateMachine;
     public GameObject AimLeftPosition;
     public GameObject AimRightPosition;
 
     private void Awake()
     {
-        playerStateMachine= GetComponentInParent<PlayerStateMachine>();
+        playerStateMachine = GetComponentInParent<PlayerStateMachine>();
     }
     // Update is called once per frame
     void Update()
@@ -36,7 +36,7 @@ public class PawnAimingController : MonoBehaviour
             AimRightPosition.SetActive(false);
             AimLeftPosition.SetActive(false);
         }
-       
-      
-    }*/
+
+
+    }
 }
