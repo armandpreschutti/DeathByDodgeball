@@ -27,7 +27,7 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] Transform _holdRightPosition;
     [SerializeField] Transform _holdLeftPosition;
 
-    [SerializeField] bool _isFacingRight;
+    [SerializeField] bool _isFacingLeft;
     [SerializeField] bool _canRespawn;
     [SerializeField] float _respawnDelay;
     [SerializeField] bool _isSuper;
@@ -104,6 +104,7 @@ public class PlayerStateMachine : MonoBehaviour
     public Transform HoldRightPosition { get { return _holdRightPosition; } set { _holdRightPosition = value; } }
     public Transform HoldLeftPosition { get { return _holdLeftPosition; } set { _holdLeftPosition = value; } }
     
+   // public bool IsFacingLeft { get { return _isFacingLeft; } }
     public bool CanRespawn { get { return _canRespawn; } set { _canRespawn = value; } }
     public float RespawnDelay { get { return _respawnDelay; } set { _respawnDelay = value; } }
     public bool IsSuper { get { return _isSuper; } set { _isSuper= value; } }
@@ -224,22 +225,22 @@ public class PlayerStateMachine : MonoBehaviour
         {
             if (_isAiming || _isThrowing || _isCatching)
             {
-                _isFacingRight = transform.position.x > 0 ? true : false;
-                _spriteRenderer.flipX = _isFacingRight;
-                _holdPosition = _isFacingRight ? _holdRightPosition : _holdLeftPosition;
+                _isFacingLeft = transform.position.x > 0 ? true : false;
+                _spriteRenderer.flipX = _isFacingLeft;
+                _holdPosition = _isFacingLeft ? _holdRightPosition : _holdLeftPosition;
             }
             else
             {
-                _isFacingRight = _moveInput.x > 0 ? true : false;
-                _spriteRenderer.flipX = !_isFacingRight;
-                _holdPosition = _isFacingRight ? _holdLeftPosition : _holdRightPosition;
+                _isFacingLeft = _moveInput.x > 0 ? true : false;
+                _spriteRenderer.flipX = !_isFacingLeft;
+                _holdPosition = _isFacingLeft ? _holdLeftPosition : _holdRightPosition;
             }
         }
         else
         {
-            _isFacingRight = transform.position.x > 0 ? true : false;
-            _spriteRenderer.flipX = _isFacingRight;
-            _holdPosition = _isFacingRight ? _holdRightPosition : _holdLeftPosition;
+            _isFacingLeft = transform.position.x > 0 ? true : false;
+            _spriteRenderer.flipX = _isFacingLeft;
+            _holdPosition = _isFacingLeft ? _holdRightPosition : _holdLeftPosition;
         }
     }
 

@@ -8,11 +8,12 @@ public class CPUActiveState : CPUBaseState
     {
         IsRootState = true;
         InitializeSubState();
+
     }
 
     public override void EnterState()
     {
-
+        Debug.Log("CPU entered Active State");
 
     }
 
@@ -43,6 +44,7 @@ public class CPUActiveState : CPUBaseState
 
     public override void InitializeSubState()
     {
-        //SetSubState(Factory.Idle());
+        SetSubState(Factory.Idle());
+        SwitchState(Factory.Idle());
     }
 }

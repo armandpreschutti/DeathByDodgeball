@@ -15,6 +15,16 @@ public class CPUStateFactory
     {
         return new CPUActiveState(_context, this);
     }
+
+    public CPUBaseState Idle()
+    {
+        return new CPUIdleState(_context, this);
+    }
+
+    public CPUBaseState BallSearching()
+    {
+        return new CPUBallSearchingState(_context, this);
+    }
 }
 
 
