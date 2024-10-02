@@ -246,9 +246,12 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void ThrowBall()
     {
-       
-        _equippedBall.GetComponent<BallManager>().Launch(true, _aimDirection, _currentThrowPower <= _maxThrowPower ? false : true/*, _currentTarget*/, CurrentThrowPower);
-        UnequipBall(_equippedBall);
+        if(_equippedBall!= null)
+        {
+            _equippedBall.GetComponent<BallManager>().Launch(true, _aimDirection, _currentThrowPower <= _maxThrowPower ? false : true/*, _currentTarget*/, CurrentThrowPower);
+            UnequipBall(_equippedBall);
+        }
+
     }
 
     public void SetBallEquippedPosition(GameObject ball)
@@ -261,6 +264,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void SetPlayerInitialVariables()
     {
+        _col = GetComponent<Collider2D>();
         _currentThrowPower = _minThrowPower;
         _isDead = false;
         _isDodging =false;

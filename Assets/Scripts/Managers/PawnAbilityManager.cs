@@ -87,6 +87,7 @@ public class PawnAbilityManager : MonoBehaviour
             BroadCastEnergizedType(!isSuperBall, false);
         }
         playerStateMachine.DestroyBall();
+        playerStateMachine.IsThrowing = false;
         playerStateMachine.MoveSpeed = isSuperBall ? 0 : speed;
         playerStateMachine.IsExhausted = true;
         playerStateMachine.CanCatch= isSuperBall ? false : true;

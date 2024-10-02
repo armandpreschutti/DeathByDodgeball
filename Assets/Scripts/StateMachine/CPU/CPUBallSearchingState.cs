@@ -5,6 +5,7 @@ using UnityEngine;
 public class CPUBallSearchingState : CPUBaseState
 {
     Coroutine testRoutine;
+    int catchChance;
 
     public CPUBallSearchingState(CPUBrain currentContext, CPUStateFactory cpuStateFactory) : base(currentContext, cpuStateFactory)
     {
@@ -13,13 +14,13 @@ public class CPUBallSearchingState : CPUBaseState
 
     public override void EnterState()
     {
-
+        catchChance = Random.Range(1, 10);
     }
 
     public override void UpdateState()
     {
         CheckSwitchState();
-        Ctx.CurrentSubState = "Searching State";
+        Ctx.CurrentSubState = "Ball Searching State";
         SetVeritcalMovement();
         SetHorizontalMovement();
     }
@@ -32,15 +33,46 @@ public class CPUBallSearchingState : CPUBaseState
 
     public override void ExitState()
     {
-
+        Ctx.moveY = 0;
+        Ctx.moveX = 0;
     }
 
     public override void CheckSwitchState()
     {
-        if(Ctx.playerStateMachine.IsEquipped)
+        if (!Ctx.playerStateMachine.IsDead)
         {
-            SwitchState(Factory.Idle());
+            if (Ctx.playerStateMachine.IsEquipped)
+            {
+                SwitchState(Factory.EnemySearching());
+            }
+            else if (Ctx.closestDodgableBall != null && Ctx.dodgeChance <= Ctx.DodgeSkill)
+            {
+                if (!Ctx.playerStateMachine.IsDodging
+                    && !Ctx.playerStateMachine.IsCatching
+                    && !Ctx.playerStateMachine.IsThrowing)
+                {
+                    Ctx.moveY = 0;
+                    Ctx.moveX = 0;
+                    SwitchState(Factory.Dodging());
+                }
+            }
+            else if (Ctx.closestCatchableBall != null && Ctx.catchChance <= Ctx.CatchSkill)
+            {
+                if (!Ctx.playerStateMachine.IsCatching
+                    && !Ctx.playerStateMachine.IsThrowing
+                    && Ctx.playerStateMachine.CanCatch)
+                {
+                    SwitchState(Factory.Catching());
+                }
+
+            }
         }
+        else
+        {
+            SwitchState(Factory.Death());
+        }
+
+
     }
 
     public override void InitializeSubState()
@@ -49,45 +81,81 @@ public class CPUBallSearchingState : CPUBaseState
     }
     public void SetHorizontalMovement()
     {
-        if (Ctx.isFacingLeft)
+        if(Ctx.closestCatchableBall == null && Ctx.closestDodgableBall == null)
         {
-            if(Ctx.transform.position.x >= .5)
+            if (Ctx.closestFreeBall != null)
             {
-                Ctx.moveX = -1;
+                if (Ctx.isFacingLeft)
+                {
+                    if (Ctx.transform.position.x >= Ctx.courtCenter.position.x + .4)
+                    {
+                        Ctx.moveX = -1;
+                    }
+                    else
+                    {
+                        Ctx.moveX = 0;
+                    }
+                }
+                else
+                {
+                    if (Ctx.transform.position.x <= Ctx.courtCenter.position.x - .4)
+                    {
+                        Ctx.moveX = 1;
+                    }
+                    else
+                    {
+                        Ctx.moveX = 0;
+                    }
+                }
             }
             else
             {
-                Ctx.moveX = 0;
+                if (Ctx.isFacingLeft)
+                {
+                    if (Ctx.transform.position.x <= 3f)
+                    {
+                        Ctx.moveX = 1;
+                    }
+                    else
+                    {
+                        Ctx.moveX = 0;
+                    }
+                }
+                else
+                {
+                    if (Ctx.transform.position.x >= -3f)
+                    {
+                        Ctx.moveX = -1;
+                    }
+                    else
+                    {
+                        Ctx.moveX = 0;
+                    }
+                }
             }
         }
-        else
-        {
-            if (Ctx.transform.position.x <= - .5)
-            {
-                Ctx.moveX = 1;
-            }
-            else
-            {
-                Ctx.moveX = 0;
-            }
-        }
+
+       
     }
 
     public void SetVeritcalMovement()
     {
-        if (Ctx.closestFreeBall != null)
+        if (Ctx.closestCatchableBall == null && Ctx.closestDodgableBall == null)
         {
-            if (Ctx.closestFreeBall.transform.position.y >= Ctx.transform.position.y +.3)
+            if (Ctx.closestFreeBall != null)
             {
-                Ctx.moveY = 1;
-            }
-            else if (Ctx.closestFreeBall.transform.position.y <= Ctx.transform.position.y +.1)
-            {
-                Ctx.moveY = -1;
-            }
-            else
-            {
-                Ctx.moveY = 0;
+                if (Ctx.closestFreeBall.transform.position.y >= Ctx.transform.position.y + .3)
+                {
+                    Ctx.moveY = 1;
+                }
+                else if (Ctx.closestFreeBall.transform.position.y <= Ctx.transform.position.y + .1)
+                {
+                    Ctx.moveY = -1;
+                }
+                else
+                {
+                    Ctx.moveY = 0;
+                }
             }
         }
     }

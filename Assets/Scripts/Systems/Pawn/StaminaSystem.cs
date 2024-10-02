@@ -114,6 +114,7 @@ public class StaminaSystem : MonoBehaviour
         {
             onDodgeReset?.Invoke();
             currentDodges = maxDodges;
+            playerStateMachine.IsExhausted = false;
             playerStateMachine.OnExhausted?.Invoke(false);
             if (replenishDelayCoroutine != null)
             {

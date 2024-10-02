@@ -48,7 +48,7 @@ public class PlayerMoveState : PlayerBaseState
                 Ctx.DodgeDirection = Ctx.MoveDirection;
                 SwitchState(Factory.Dodge());
             }
-            else if (Ctx.IsThrowPressed)
+            else if (Ctx.IsThrowPressed && Ctx.IsEquipped)
             {
                 SwitchState(Factory.Aim());
             }

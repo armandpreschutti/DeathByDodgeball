@@ -13,7 +13,7 @@ public class CPUActiveState : CPUBaseState
 
     public override void EnterState()
     {
-        Debug.Log("CPU entered Active State");
+       // Debug.Log("CPU entered Active State");
 
     }
 
@@ -36,15 +36,12 @@ public class CPUActiveState : CPUBaseState
 
     public override void CheckSwitchState()
     {
-        /* if(Ctx.IsDead)
-         {
-             SwitchState(Factory.Death());
-         }*/
+
     }
 
     public override void InitializeSubState()
     {
         SetSubState(Factory.Idle());
-        SwitchState(Factory.Idle());
+       // SwitchState(Factory.Idle());
     }
 }

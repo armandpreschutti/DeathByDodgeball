@@ -34,6 +34,26 @@ public class FreezeBallType : BallManager
         Destroy(gameObject);
     }
 
+    public override void BallCollision(BallManager ballManager)
+    {
+        base.BallCollision(ballManager);
+        if (isSuperBall)
+        {
+            if (ballManager.isSuperBall)
+            {
+                Instantiate(frozenInteraction, transform.position, Quaternion.identity, null);
+                onExplosion?.Invoke();
+                Destroy(gameObject);
+            }
+        }
+        else
+        {
+            //Instantiate(_hitVfx, transform.position, Quaternion.identity, null);
+            //_rb.velocity = new Vector2(-_rb.velocity.x, 0);
+            _rb.velocity = new Vector2(_rb.velocity.x, ballManager.transform.position.y < transform.position.y ? 7.5f : -7.5f);
+        }
+    }
+
     public override void EquiptBall(PlayerStateMachine stateMachine)
     {
         base.EquiptBall(stateMachine);

@@ -24,6 +24,7 @@ public class PlayerDeathState: PlayerBaseState
         Ctx.IsDodging= false;
         Ctx.IsCatching = false;
         Ctx.IsSuper = false;
+        Ctx.Col.enabled = false;
         if (Ctx.CanRespawn)
         {
             Ctx.StartCoroutine(RespawnAfterDelay());
@@ -37,7 +38,7 @@ public class PlayerDeathState: PlayerBaseState
         CheckSwitchState();
         Ctx.CurrentSuperState = "Death State";
         stateTime += Time.deltaTime;
-        if(stateTime > .25)
+        if(stateTime > .1)
         {
             Ctx.Rb.velocity = Vector2.zero;
         }
@@ -51,6 +52,7 @@ public class PlayerDeathState: PlayerBaseState
 
     public override void ExitState() 
     {
+        Ctx.Col.enabled = true;
         Ctx.BaseAnim.SetBool("Die", false);
         Ctx.SkinAnim.SetBool("Die", false);
         Ctx.OnDeath?.Invoke(false);

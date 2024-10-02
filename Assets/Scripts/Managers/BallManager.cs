@@ -1,5 +1,4 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class BallManager : MonoBehaviour
@@ -8,7 +7,7 @@ public class BallManager : MonoBehaviour
     [HideInInspector] public bool hasOwner;
     [HideInInspector] public int owningTeam;
     protected bool isEquipped;
-    protected bool isBallActive;
+    public bool isBallActive;
     [HideInInspector] public bool isSuperBall;
     protected float currentPower;
     protected Vector2 originPoint;
@@ -87,7 +86,7 @@ public class BallManager : MonoBehaviour
         isSuperBall = false;
         _rb.velocity = Vector2.zero;
         currentDirection = Vector2.zero;
-        originPoint = stateMachine.transform.position;
+
     }
 
     public virtual void Launch(bool value, Vector2 direction, bool super, float power)
@@ -96,6 +95,7 @@ public class BallManager : MonoBehaviour
         isBallActive = value;
         isSuperBall = super;
         currentDirection = direction;
+        originPoint = transform.position;
     }
 
     public virtual void SetBallSuperState(bool value)

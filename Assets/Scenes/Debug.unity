@@ -896,6 +896,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player2
       objectReference: {fileID: 0}
+    - target: {fileID: 5200011997215567144, guid: d5ddbdf0b2958b943bf1632550ef0fe7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5960546502413962516, guid: d5ddbdf0b2958b943bf1632550ef0fe7, type: 3}
       propertyPath: _skinId
       value: 3
@@ -970,7 +974,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &157496410
 Transform:
   m_ObjectHideFlags: 0
@@ -2956,7 +2960,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.3, y: 1}
   m_EdgeRadius: 0
 --- !u!212 &991131984
 SpriteRenderer:
@@ -4530,7 +4534,7 @@ PrefabInstance:
     - target: {fileID: 8808849185306992032, guid: 9d75c95ea8874184287a5a372bec9b83, type: 3}
       propertyPath: playerConfigurations.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: b16fe6be2bb95944998924925c34afb3, type: 2}
+      objectReference: {fileID: 11400000, guid: 818e68574daa79d4ba034a9ffbb0f1fd, type: 2}
     - target: {fileID: 8808849185306992032, guid: 9d75c95ea8874184287a5a372bec9b83, type: 3}
       propertyPath: playerConfigurations.Array.data[1]
       value: 
@@ -4538,7 +4542,7 @@ PrefabInstance:
     - target: {fileID: 8808849185306992032, guid: 9d75c95ea8874184287a5a372bec9b83, type: 3}
       propertyPath: playerConfigurations.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: 2ea50f1f339781e41ab111dbc0c88616, type: 2}
+      objectReference: {fileID: 11400000, guid: 2dd248207bfae694fb51ed33e0b1555c, type: 2}
     - target: {fileID: 8808849185306992032, guid: 9d75c95ea8874184287a5a372bec9b83, type: 3}
       propertyPath: playerConfigurations.Array.data[3]
       value: 
@@ -5436,6 +5440,10 @@ PrefabInstance:
     - target: {fileID: 5200011997215567144, guid: d5ddbdf0b2958b943bf1632550ef0fe7, type: 3}
       propertyPath: m_Name
       value: Player1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5200011997215567144, guid: d5ddbdf0b2958b943bf1632550ef0fe7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5960546502413962516, guid: d5ddbdf0b2958b943bf1632550ef0fe7, type: 3}
       propertyPath: _skinId

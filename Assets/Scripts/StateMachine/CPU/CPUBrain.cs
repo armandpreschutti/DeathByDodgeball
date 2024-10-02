@@ -20,7 +20,20 @@ public class CPUBrain : MonoBehaviour
     public int moveY;
     public Vector2 moveInput;
     public GameObject closestFreeBall;
+    public GameObject closestEnemy;
+    public GameObject currentTarget;
+    public GameObject closestCatchableBall;
+    public GameObject closestDodgableBall;
 
+    public int DodgeSkill;
+    public int CatchSkill;
+    public int AgressionSkill;
+
+    public int dodgeChance;
+    public int catchChance;
+    public int agressionChance;
+
+    public Transform courtCenter;
     public CPUBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
 
 
@@ -30,6 +43,7 @@ public class CPUBrain : MonoBehaviour
         _currentState = _states.Active();
         _currentState.EnterState();
         transform.Find("CPUDetection").gameObject.SetActive(true);
+        courtCenter = GameObject.Find("DodgeballCourt").gameObject.transform;
     }
 
     private void OnEnable()
@@ -48,7 +62,9 @@ public class CPUBrain : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        AgressionSkill = 5;
+        CatchSkill = 5;
+        DodgeSkill = 5;
     }
 
     // Update is called once per frame

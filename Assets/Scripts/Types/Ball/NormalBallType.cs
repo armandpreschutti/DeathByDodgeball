@@ -46,7 +46,8 @@ public class NormalBallType : BallManager
         else
         {
             Instantiate(_hitVfx, transform.position, Quaternion.identity, null);
-            _rb.velocity = new Vector2(-_rb.velocity.x, 0);
+            //_rb.velocity = new Vector2(-_rb.velocity.x, 0);
+            _rb.velocity = new Vector2(_rb.velocity.x, ballManager.transform.position.y < transform.position.y ? 7.5f : -7.5f);
         }
     }
 
@@ -78,7 +79,7 @@ public class NormalBallType : BallManager
         base.SetAimIndicator();
         bool flipped;
         flipped = transform.position.x > 0f ? true : false;
-        if (owner!= null && owner.IsAiming)
+        if (owner!= null && owner.IsAiming && !isBallActive)
         {
             if (flipped)
             {

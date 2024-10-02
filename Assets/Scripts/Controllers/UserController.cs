@@ -27,7 +27,7 @@ public class UserController : MonoBehaviour
         MatchInstanceManager.onEnablePawnControl += EnableControl;
         MatchInstanceManager.onDisablePawnControl += DisableControl;
         SubscribeToActions();
-    }
+    } 
 
     private void OnDisable()
     {
