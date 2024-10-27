@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerId: 0
   teamId: 1
-  skinID: 6
+  skinID: 11
   slotId: 2
   playerName: CPU
   playerColor: {r: 0, g: 0, b: 0, a: 0}

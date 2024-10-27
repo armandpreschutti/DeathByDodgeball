@@ -772,11 +772,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotId: 4
-  skinId: 4
+  skinId: 8
   playerId: 0
   teamId: 2
   playerName: 
-  pawnColor: {r: 0, g: 0, b: 0, a: 0}
+  pawnColor: {r: 1, g: 1, b: 1, a: 1}
   isEliminated: 0
   playerStateMachine: {fileID: 0}
   isCpu: 0

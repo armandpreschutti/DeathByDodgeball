@@ -18,6 +18,7 @@ public class PlayerSelectionManager : MonoBehaviour
     public bool isMatchReady;
     public bool isMatchStarting;
     public PlayableDirector playableDirector;
+    public PlayableAsset matchCountdown;
     public GameObject matchStartPrompt;
     public GameObject matchInitiatedPrompt;
 
@@ -147,6 +148,7 @@ public class PlayerSelectionManager : MonoBehaviour
             isMatchStarting = true;
             matchStartPrompt.SetActive(false);
             matchInitiatedPrompt.SetActive(true);
+            playableDirector.playableAsset = matchCountdown;
             playableDirector.initialTime = 0.0f;
             playableDirector.Play();
             onMatchInitiated?.Invoke();
