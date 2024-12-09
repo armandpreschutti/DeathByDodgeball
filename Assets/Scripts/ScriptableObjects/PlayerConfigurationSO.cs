@@ -11,7 +11,11 @@ public class PlayerConfigurationSO : ScriptableObject
     public int slotId;
     public string playerName;
     public Color playerColor;
-   
+    public int matchStatKills;
+    public int matchStatHits;
+    public int matchStatCatches;
+    public int matchStatDodges;
+    public int matchStatAttempts;
 
     public void SetTeam()
     {

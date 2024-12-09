@@ -14,13 +14,15 @@ public class PlayerSelectionManager : MonoBehaviour
     public static Action onMatchReady;
     public static Action onMatchInitiated;
     public static Action onMatchAbort;
-    public static Action onMatchStart;
+    public static Action onLeavingPlayerSelection;
     public bool isMatchReady;
     public bool isMatchStarting;
     public PlayableDirector playableDirector;
     public PlayableAsset matchCountdown;
+    public PlayableAsset returnToMenu;
     public GameObject matchStartPrompt;
     public GameObject matchInitiatedPrompt;
+    public GameObject joinPrompt;
 
     private void Awake()
     {
@@ -30,22 +32,31 @@ public class PlayerSelectionManager : MonoBehaviour
 
     private void OnEnable()
     {
+        PlayerManager.onJoin += DisableJoinPrompt;
         PlayerConfigurationController.onSubmit += AddPlayerToMatchConfiguration;
         PlayerConfigurationController.onSubmitAi += AddPlayerToMatchConfiguration;
         PlayerConfigurationController.onRemoveSelection += RemovePlayerFromMatchConfiguration;
         PlayerConfigurationController.onInitiateMatchStart += InitiateMatch;
         PlayerConfigurationController.onRemoveSelection += AbortMatch;
+        PlayerConfigurationController.onDestroyAllPlayers += ReturnToMenu;
         SceneManager.sceneLoaded += DestroySelectionManager;
     }
 
     private void OnDisable()
     {
+        PlayerManager.onJoin -= DisableJoinPrompt;
         PlayerConfigurationController.onSubmit -= AddPlayerToMatchConfiguration;
         PlayerConfigurationController.onSubmitAi -= AddPlayerToMatchConfiguration;
         PlayerConfigurationController.onRemoveSelection -= RemovePlayerFromMatchConfiguration;
         PlayerConfigurationController.onInitiateMatchStart -= InitiateMatch;
         PlayerConfigurationController.onRemoveSelection -= AbortMatch;
+        PlayerConfigurationController.onDestroyAllPlayers -= ReturnToMenu;
         SceneManager.sceneLoaded -= DestroySelectionManager;
+    }
+
+    public void DisableJoinPrompt(int playerId, GameObject parObject)
+    {
+        joinPrompt.SetActive(false);
     }
 
     public void DestroySelectionManager(Scene scene, LoadSceneMode mode)
@@ -179,6 +190,7 @@ public class PlayerSelectionManager : MonoBehaviour
 
     public void StartMatch()
     {
+        onLeavingPlayerSelection?.Invoke();
         GameManager.gameInstance.playerConfigurations = playerConfigurations;
         PlayerConfigurationController[] controllers;
         controllers = FindObjectsOfType<PlayerConfigurationController>();
@@ -186,5 +198,12 @@ public class PlayerSelectionManager : MonoBehaviour
         {
             Destroy(controllers[i].gameObject);
         }
+    }
+
+    public void ReturnToMenu()
+    {
+        playableDirector.playableAsset = returnToMenu;
+        playableDirector.initialTime = 0.0f;
+        playableDirector.Play();
     }
 }

@@ -11,6 +11,7 @@ public class PawnSFXHandler : MonoBehaviour
     public AudioClip ThrowSfx;
     public AudioClip CatchSfx;
     public AudioClip DeathSFX;
+    public AudioClip EliminationSFX;
     public AudioClip SuperStateSfx;
 
     private void Awake()
@@ -61,7 +62,22 @@ public class PawnSFXHandler : MonoBehaviour
     {
         if (value)
         {
-            _audioSource.PlayOneShot(DeathSFX);
+            if(_playerStateMachine.GetComponent<HealthSystem>() != null)
+            {
+                if(_playerStateMachine.GetComponent<HealthSystem>().currentLives == 0)
+                {
+                    _audioSource.PlayOneShot(EliminationSFX);
+                }
+                else
+                {
+                    _audioSource.PlayOneShot(DeathSFX);
+                }
+            }
+            else
+            {
+                _audioSource.PlayOneShot(DeathSFX);
+            }
+
         }
 
     }

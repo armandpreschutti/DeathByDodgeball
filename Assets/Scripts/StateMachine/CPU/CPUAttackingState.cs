@@ -18,7 +18,6 @@ public class CPUAttackingState : CPUBaseState
     {
         randomPower = Random.Range(Ctx.playerStateMachine.MinThrowPower, Ctx.playerStateMachine.MaxThrowPower +2);
         randomState = Random.Range(1, 2);
-        Debug.LogError(randomState);
         Ctx.playerStateMachine.IsThrowPressed = true;
         randomDistance = Random.Range(3f, 7.2f);
         Ctx.dodgeChance = Random.Range(1, 10);

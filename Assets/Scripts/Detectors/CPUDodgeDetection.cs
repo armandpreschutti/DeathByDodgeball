@@ -50,7 +50,7 @@ public class CPUDodgeDetection : MonoBehaviour
         // Check for balls that have been owned and remove them
         for (int i = 0; i < objectCount; i++)
         {
-            if (objectsInArea[i].gameObject == _pawnManager.playerStateMachine.EquippedBall/*GetComponent<BallManager>().hasOwner*/)
+            if (objectsInArea[i].gameObject == _pawnManager.playerStateMachine.EquippedBall)
             {
                 RemoveObjectFromArea(objectsInArea[i]);
                 i--; // Adjust the index since the array is shifted after removal

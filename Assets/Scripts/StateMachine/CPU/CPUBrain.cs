@@ -63,8 +63,8 @@ public class CPUBrain : MonoBehaviour
     void Start()
     {
         AgressionSkill = 5;
-        CatchSkill = 5;
-        DodgeSkill = 5;
+        CatchSkill = 3;
+        DodgeSkill = 3;
     }
 
     // Update is called once per frame

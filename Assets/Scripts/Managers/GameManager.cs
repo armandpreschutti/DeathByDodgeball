@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     public string winningTeam;
     public bool isDebugging;
     public float idleTime;
-    public float restartTime; 
+    public float restartTime;
     public static GameManager GetInstance()
     {
         return gameInstance;
@@ -57,8 +57,9 @@ public class GameManager : MonoBehaviour
         PlayerManager.onJoin -= AddPlayerToGame;
         PauseMenuController.OnGamePaused -= PauseGame;
         SceneManager.sceneLoaded -= ResetCurrentPlayers;
-       // UserController.onInputTriggered -= ResetIdleTime;
+        // UserController.onInputTriggered -= ResetIdleTime;
     }
+
 
     public void AddPlayerToGame(int playerId, GameObject playerObject)
     {

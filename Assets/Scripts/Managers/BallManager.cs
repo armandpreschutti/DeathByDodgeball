@@ -20,6 +20,10 @@ public class BallManager : MonoBehaviour
     public static Action onExplosion;
     public Color normalAimColor;
     public Color superAimColor;
+    public static Action<int> onCaught;
+    public static Action<int> onPlayerHit;
+    public static Action<int> onPlayerKill;
+    public static Action<int> onPlayerThrowAttempt;
 
     private void Awake()
     {
@@ -49,11 +53,13 @@ public class BallManager : MonoBehaviour
                     if (stateMachine.IsCatching)
                     {
                         stateMachine.OnBallCaught?.Invoke();
+                        onCaught?.Invoke(stateMachine.GetComponent<PawnManager>().slotId);
                         EquiptBall(stateMachine);
                     }
                     else if (!stateMachine.IsDead && stateMachine.GetComponent<PawnManager>().teamId != owningTeam && !stateMachine.IsInvicible)
                     {
                         PawnCollision(stateMachine);
+                        onPlayerHit?.Invoke(owner.GetComponent<PawnManager>().slotId);                       
 
                     }
                 }
@@ -96,6 +102,7 @@ public class BallManager : MonoBehaviour
         isSuperBall = super;
         currentDirection = direction;
         originPoint = transform.position;
+        onPlayerThrowAttempt?.Invoke(owner.GetComponent<PawnManager>().slotId);
     }
 
     public virtual void SetBallSuperState(bool value)
@@ -122,7 +129,5 @@ public class BallManager : MonoBehaviour
     {
 
     }
-
-
 
 }

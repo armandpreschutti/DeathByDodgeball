@@ -93,7 +93,6 @@ public class ControllerVibrationHandler : MonoBehaviour
         gamepad = _playerInput.devices.OfType<Gamepad>().FirstOrDefault();
         if (gamepad == null)
         {
-            //this.enabled = false;
             Destroy(this);
         }
     }

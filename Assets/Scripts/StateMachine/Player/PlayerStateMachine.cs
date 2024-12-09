@@ -90,6 +90,8 @@ public class PlayerStateMachine : MonoBehaviour
     public Action OnHeal;
 
 
+    public static Action<int> onDodged;
+
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
 
     public Collider2D Col { get { return _col;} set { _col = value; } }
@@ -170,6 +172,11 @@ public class PlayerStateMachine : MonoBehaviour
     private void FixedUpdate()
     {
         _currentState.FixedUpdateStates();
+    }
+
+    public void BroadcastDodge()
+    {
+        onDodged?.Invoke(GetComponent<PawnManager>().slotId);
     }
 
     public void EquipBall(GameObject ball)

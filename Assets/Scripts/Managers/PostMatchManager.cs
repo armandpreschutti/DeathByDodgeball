@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PostMatchManager : MonoBehaviour
 {
@@ -13,6 +14,11 @@ public class PostMatchManager : MonoBehaviour
     public RectTransform panel2Transform;
     public RectTransform panel3Transform;
     public RectTransform panel4Transform;
+    public Image winnerBackground;
+    public Sprite blueBackground;
+    public Sprite redBackground;
+    public Sprite yellowBackground;
+
 
 
     private void Awake()
@@ -23,8 +29,10 @@ public class PostMatchManager : MonoBehaviour
             if (pawns[i] != null && pawns[i].slotId != 0)
             {
                 GameObject pawnPanel;
+                pawnPanelPosition(pawns[i]).gameObject.SetActive(true);
                 pawnPanel = Instantiate(PawnPanel, pawnPanelPosition(pawns[i]));
                 pawnPanel.GetComponent<PawnPostMatchObserver>().pawnConfig = pawns[i];
+
             }
         }
     }
@@ -37,15 +45,15 @@ public class PostMatchManager : MonoBehaviour
         {
             case "Red":
                 winnerText.text = $"{winner} team wins!";
-                winnerText.color = Color.red;
+                winnerBackground.sprite = redBackground;
                 break;
             case "Blue":
                 winnerText.text = $"{winner} team wins!";
-                winnerText.color = Color.blue;
+                winnerBackground.sprite = blueBackground ;
                 break;
             default:
                 winnerText.text = $"No contest!";
-                winnerText.color = Color.white;
+                winnerBackground.sprite = yellowBackground;
                 break;
         }
     }

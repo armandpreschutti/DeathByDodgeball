@@ -13,6 +13,7 @@ public class PlayerDodgeState : PlayerBaseState
 
     public override void EnterState()
     {
+        Ctx.BroadcastDodge();
         Ctx.IsDodgePressed = false;
         Ctx.IsDodging = true;
         Ctx.BaseAnim.SetBool("IsDodging", true);

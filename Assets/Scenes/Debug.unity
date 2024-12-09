@@ -720,7 +720,7 @@ PlayableDirector:
   m_GameObject: {fileID: 116818737}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 033b5dfee66b4be459692e68d6092a8e, type: 2}
+  m_PlayableAsset: {fileID: 11400000, guid: 873d57865bbee2b4292314ad1e34facf, type: 2}
   m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
@@ -746,6 +746,8 @@ PlayableDirector:
     value: {fileID: 479484638}
   - key: {fileID: 5735679409759957512, guid: 033b5dfee66b4be459692e68d6092a8e, type: 2}
     value: {fileID: 116818740}
+  - key: {fileID: 3912252593180451195, guid: 873d57865bbee2b4292314ad1e34facf, type: 2}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References: []
 --- !u!1 &130524878
@@ -4534,11 +4536,11 @@ PrefabInstance:
     - target: {fileID: 8808849185306992032, guid: 9d75c95ea8874184287a5a372bec9b83, type: 3}
       propertyPath: playerConfigurations.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 818e68574daa79d4ba034a9ffbb0f1fd, type: 2}
+      objectReference: {fileID: 11400000, guid: b16fe6be2bb95944998924925c34afb3, type: 2}
     - target: {fileID: 8808849185306992032, guid: 9d75c95ea8874184287a5a372bec9b83, type: 3}
       propertyPath: playerConfigurations.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 19668c8d8bf36274b9ccab3a9f657615, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 8808849185306992032, guid: 9d75c95ea8874184287a5a372bec9b83, type: 3}
       propertyPath: playerConfigurations.Array.data[2]
       value: 
@@ -4546,7 +4548,7 @@ PrefabInstance:
     - target: {fileID: 8808849185306992032, guid: 9d75c95ea8874184287a5a372bec9b83, type: 3}
       propertyPath: playerConfigurations.Array.data[3]
       value: 
-      objectReference: {fileID: 11400000, guid: ec383dfa5ad34ff4bbd88fda3b2714e7, type: 2}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5443,7 +5445,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5200011997215567144, guid: d5ddbdf0b2958b943bf1632550ef0fe7, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5960546502413962516, guid: d5ddbdf0b2958b943bf1632550ef0fe7, type: 3}
       propertyPath: _skinId
