@@ -15,7 +15,8 @@ public class PlayerThrowState : PlayerBaseState
         Ctx.SkinAnim.SetBool("IsThrowing", true);
         Ctx.IsThrowing = true;
         Ctx.OnThrow?.Invoke(true);
-        moveDirection = Ctx.MoveInput;
+        //moveDirection = Ctx.MoveInput;
+        moveDirection = Vector2.zero;
 
     }
 
@@ -27,7 +28,10 @@ public class PlayerThrowState : PlayerBaseState
 
     public override void FixedUpdateState()
     {
-        Ctx.Rb.velocity = Ctx.MoveDirection * Ctx.MoveSpeed;
+        //Ctx.Rb.velocity = Ctx.MoveDirection * Ctx.MoveSpeed;
+        Ctx.Rb.velocity = Vector2.zero;
+
+        
         //SetThrowDirection();
     }
 
@@ -40,7 +44,6 @@ public class PlayerThrowState : PlayerBaseState
         Ctx.IsThrowing = false;
         Ctx.CurrentThrowPower = Ctx.MinThrowPower;
         Ctx.OnThrow?.Invoke(false);
-        //Ctx.CurrentTarget = null;
         Ctx.IsSuper = false;
     }
 

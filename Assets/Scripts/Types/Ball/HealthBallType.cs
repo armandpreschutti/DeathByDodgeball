@@ -8,6 +8,9 @@ public class HealthBallType : BallManager
     public GameObject healInteraction;
     public ParticleSystem healSymbols;
     public GameObject aoeIndicator;
+    public float aoeTriggerRadius;
+    public float aoeNormalSize;
+    public float aoeSuperSize;
 
     public override void Launch(bool value, Vector2 direction, bool super, float power)
     {
@@ -16,8 +19,7 @@ public class HealthBallType : BallManager
         {
             if(isSuperBall)
             {
-                healthSystem.RefillLives();
-                Instantiate(healInteraction, owner.transform.position, Quaternion.identity, null);
+                HealNearbyPlayers();
             }
             else
             {
@@ -35,7 +37,7 @@ public class HealthBallType : BallManager
         base.SelfDestruct();
         if (owner.TryGetComponent(out HealthSystem healthSystem))
         {
-            healthSystem.AddLife();
+            HealNearbyPlayers();
             owner.OnHeal?.Invoke();
         }
         Destroy(gameObject);
@@ -49,15 +51,50 @@ public class HealthBallType : BallManager
             if (owner.IsSuper)
             {
                 aoeIndicator.GetComponent<SpriteRenderer>().color = superAimColor;
+                aoeIndicator.transform.localScale = new Vector3(aoeSuperSize, aoeSuperSize, aoeSuperSize);
             }
             else
             {
                 aoeIndicator.GetComponent<SpriteRenderer>().color = normalAimColor;
+                aoeIndicator.transform.localScale = new Vector3(aoeNormalSize, aoeNormalSize, aoeNormalSize);
             }
         }
         else
         {
             aoeIndicator.SetActive(false);
+        }
+    }
+
+    void HealNearbyPlayers()
+    {
+        // Perform the OverlapSphere to detect all nearby colliders
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(aoeIndicator.transform.position, aoeTriggerRadius);
+
+        // Create an array to hold players with the PawnManager component
+        PawnManager[] playersToHeal = new PawnManager[colliders.Length];
+        int count = 0;
+
+        foreach (Collider2D collider in colliders)
+        {
+            // Check if the object has a PawnManager component
+            PawnManager pawn = collider.GetComponent<PawnManager>();
+            if (pawn != null)
+            {
+                playersToHeal[count] = pawn;
+                count++;
+            }
+        }
+
+        // Call Heal() on each detected player
+        for (int i = 0; i < count; i++)
+        {
+            if (playersToHeal[i].GetComponent<HealthSystem>() != null && playersToHeal[i].teamId == owningTeam)
+            {
+
+                playersToHeal[i].GetComponent<HealthSystem>().AddLife();
+                Instantiate(healInteraction, playersToHeal[i].transform.position + new Vector3(0f,.5f,0f), Quaternion.identity, null);
+            }
+
         }
     }
 

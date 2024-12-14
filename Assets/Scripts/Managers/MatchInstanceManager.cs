@@ -44,6 +44,8 @@ public class MatchInstanceManager : MonoBehaviour
         SceneManager.sceneLoaded += ConfigureMatchInstance;
         PawnManager.onPlayerLoaded += AddPlayerToMatch;
         HealthSystem.onPlayerElimination += CheckMatchStatus;
+        MatchTimer.onMatchTimeOut += MatchTimeOut;
+        PauseMenuController.OnExitGame += ExitMatch;
     }
 
     private void OnDisable()
@@ -51,7 +53,10 @@ public class MatchInstanceManager : MonoBehaviour
         SceneManager.sceneLoaded -= ConfigureMatchInstance;
         PawnManager.onPlayerLoaded -= AddPlayerToMatch;
         HealthSystem.onPlayerElimination -= CheckMatchStatus;
+        MatchTimer.onMatchTimeOut -= MatchTimeOut;
+        PauseMenuController.OnExitGame -= ExitMatch;
     }
+
 
     public void ConfigureMatchInstance(Scene scene, LoadSceneMode mode)
     {
@@ -192,8 +197,6 @@ public class MatchInstanceManager : MonoBehaviour
             GameManager.gameInstance.winningTeam = "Blue";
             PlayCutScene(matchOverCS);
         }
-
-
     }
 
     public void PlayCutScene(PlayableAsset asset)
@@ -201,6 +204,19 @@ public class MatchInstanceManager : MonoBehaviour
         playableDirector.playableAsset = asset;
         playableDirector.initialTime = 0.0f;
         playableDirector.Play();
+    }
+    
+    public void MatchTimeOut()
+    {
+        matchWinner = "Draw";
+        GameManager.gameInstance.winningTeam = "Draw";
+        PlayCutScene(matchOverCS);
+    }
+    public void ExitMatch()
+    {
+        matchWinner = "Draw";
+        GameManager.gameInstance.winningTeam = "Draw";
+        PlayCutScene(matchOverCS);
     }
 
 }

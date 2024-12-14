@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -32,6 +33,7 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] float _respawnDelay;
     [SerializeField] bool _isSuper;
     [SerializeField] bool _canCatch;
+    [SerializeField] bool _isNoMansArea;
 
     [Header("Melee")]
     [SerializeField] Vector3 _aimDirection;
@@ -111,6 +113,8 @@ public class PlayerStateMachine : MonoBehaviour
     public float RespawnDelay { get { return _respawnDelay; } set { _respawnDelay = value; } }
     public bool IsSuper { get { return _isSuper; } set { _isSuper= value; } }
     public bool CanCatch { get { return _canCatch; } set { _canCatch = value; } }
+    public bool IsNoBuildArea { get { return _isNoMansArea; } set { _isNoMansArea = value; } }
+
 
     public Vector3 AimDirection { get { return _aimDirection; } set { _aimDirection = value; } }
     //public GameObject CurrentTarget { get { return _currentTarget; } set { _currentTarget = value; } }
@@ -136,6 +140,8 @@ public class PlayerStateMachine : MonoBehaviour
     public bool IsCatching { get { return _isCatching; } set { _isCatching = value; } }
     public bool IsExhausted { get { return _isExhausted; } set { _isExhausted = value; } }
     public bool IsInvicible { get { return _isInvicible; } set { _isInvicible = value; } }
+    public GameObject[] currentTargets = new GameObject[2];
+    public Transform mainTarget;
 
     public Vector2 AimInput { get { return _aimInput; } set { _aimInput = value; } }
     public Vector2 MoveInput { get { return _moveInput; } set { _moveInput = value; } }
@@ -167,6 +173,7 @@ public class PlayerStateMachine : MonoBehaviour
         _currentState.UpdateStates();
         SetBallEquippedPosition(_equippedBall);
         SetPlayerOrientation();
+        GetTargets();
     }
 
     private void FixedUpdate()
@@ -178,6 +185,91 @@ public class PlayerStateMachine : MonoBehaviour
     {
         onDodged?.Invoke(GetComponent<PawnManager>().slotId);
     }
+    private void GetTargets()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        // Ensure "currentTargets" is defined as a fixed-size array somewhere in your script
+        // Example: public GameObject[] currentTargets = new GameObject[maxTargets];
+        int targetIndex = 0;
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            // Validate that the player reference is not null
+            if (players[i] != null)
+            {
+                PawnManager targetPawnManager = players[i].GetComponent<PawnManager>();
+                PawnManager thisPawnManager = GetComponent<PawnManager>();
+
+                if (targetPawnManager != null && thisPawnManager != null)
+                {
+                    PlayerStateMachine targetStateMachine = targetPawnManager.GetComponent<PlayerStateMachine>();
+                    // Compare team IDs to check if the player is an enemy
+                    if (targetPawnManager.teamId != thisPawnManager.teamId && !targetStateMachine.IsDead && !targetStateMachine.IsInvicible)
+                    {
+                        if (targetIndex < currentTargets.Length)
+                        {
+                            currentTargets[targetIndex] = players[i];
+                            targetIndex++;
+                        }
+                        else
+                        {
+                            Debug.LogWarning("CurrentTargets array is full, cannot add more targets.");
+                        }
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning($"PawnManager missing on {players[i].name} or on this object.");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("A null player reference was encountered.");
+            }
+        }
+
+        // Optional: Clear any unused slots in the currentTargets array
+        for (int i = targetIndex; i < currentTargets.Length; i++)
+        {
+            currentTargets[i] = null;
+        }
+        mainTarget = GetClosestTargetToPlayerAndCenter(0.5f, 0.5f);
+
+    }
+
+    private Transform GetClosestTargetToPlayerAndCenter(float weightY, float weightPlayer)
+    {
+        Transform closest = null;
+        float minScore = Mathf.Infinity;
+
+        for (int i = 0; i < currentTargets.Length; i++)
+        {
+            if (currentTargets[i] != null)
+            {
+                // Get the collider's center position
+                Vector3 targetCenter = currentTargets[i].transform.position;
+
+                // Calculate y-axis distance and player distance
+                float distanceY = Mathf.Abs(transform.position.y - targetCenter.y);
+                float distanceToPlayer = Vector3.Distance(transform.position, currentTargets[i].transform.position);
+
+                // Combine the two distances into a single score using weights
+                float score = (distanceY * weightY) + (distanceToPlayer * weightPlayer);
+
+                // Check if this object is valid and has a lower score (closer) than the current closest target
+                var playerStateMachine = currentTargets[i].GetComponent<PlayerStateMachine>();
+                if (score < minScore && playerStateMachine != null/* && !playerStateMachine.IsDead*/)
+                {
+                    minScore = score;
+                    closest = currentTargets[i].transform;
+                }
+            }
+           
+        }
+
+        return closest;
+    }
 
     public void EquipBall(GameObject ball)
     {
@@ -187,6 +279,7 @@ public class PlayerStateMachine : MonoBehaviour
             ball.transform.position = _holdRightPosition.position;
             _equippedBall = ball;
             _isEquipped = true;
+            _isSuper = false;
         }
         else
         {

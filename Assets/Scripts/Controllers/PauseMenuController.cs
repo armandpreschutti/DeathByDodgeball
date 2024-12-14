@@ -14,6 +14,7 @@ public class PauseMenuController : MonoBehaviour
     public EventSystem eventSystem;
 
     public static Action<bool> OnGamePaused;
+    public static Action OnExitGame;
 
     private void Awake()
     {
@@ -41,6 +42,12 @@ public class PauseMenuController : MonoBehaviour
             Buttons.SetActive(true);
             ControllerMap.SetActive(false);
         }
+    }
+    public void ExitGame()
+    {
+        OnExitGame?.Invoke();
+        OnGamePaused?.Invoke(false);
+        Destroy(gameObject);
     }
 
 }

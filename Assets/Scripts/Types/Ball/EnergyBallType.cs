@@ -12,15 +12,26 @@ public class EnergyBallType : BallManager
     public float energizedTime;
     public GameObject energizedInteraction;
     public GameObject aoeIndicator;
+    public float aoeTriggerRadius;
+    public float aoeNormalSize;
+    public float aoeSuperSize;
 
     public override void Launch(bool value, Vector2 direction, bool super, float power)
     {
         base.Launch(value, direction, super, power);
         if (owner.TryGetComponent(out PawnAbilityManager pawnAbilityHandler))
         {
-            pawnAbilityHandler.SetEnergizedState(isSuperBall, energizedSpeed, energizedDodgeSpeed, energizedThrowRate, energizedTime);
+            if (isSuperBall)
+            {
+                EnergizeNearbyPlayers();
+            }
+            else
+            {
+                pawnAbilityHandler.SetEnergizedState(false, energizedSpeed, energizedDodgeSpeed, energizedThrowRate, energizedTime);
+            }
+            
         }
-        Instantiate(energizedInteraction, owner.transform.position, Quaternion.identity, null);
+        //Instantiate(energizedInteraction, owner.transform.position + new Vector3(0f, .5f, 0f), Quaternion.identity, null);
         Destroy(gameObject);
     }
 
@@ -30,9 +41,44 @@ public class EnergyBallType : BallManager
         base.SelfDestruct();
         if (owner.TryGetComponent(out PawnAbilityManager pawnAbilityHandler))
         {
-            pawnAbilityHandler.SetEnergizedState(isSuperBall, energizedSpeed, energizedDodgeSpeed, energizedThrowRate, energizedTime);
+            owner.GetComponent<PlayerStateMachine>().IsThrowPressed= false;
+            //EnergizeNearbyPlayers();
+            //pawnAbilityHandler.SetEnergizedState(false, energizedSpeed, energizedDodgeSpeed, energizedThrowRate, energizedTime);
         }
         Destroy(gameObject);
+    }
+
+    void EnergizeNearbyPlayers()
+    {
+        // Perform the OverlapSphere to detect all nearby colliders
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(aoeIndicator.transform.position, aoeTriggerRadius);
+
+        // Create an array to hold players with the PawnManager component
+        PawnManager[] playersToHeal = new PawnManager[colliders.Length];
+        int count = 0;
+
+        foreach (Collider2D collider in colliders)
+        {
+            // Check if the object has a PawnManager component
+            PawnManager pawn = collider.GetComponent<PawnManager>();
+            if (pawn != null)
+            {
+                playersToHeal[count] = pawn;
+                count++;
+            }
+        }
+
+        // Call Heal() on each detected player
+        for (int i = 0; i < count; i++)
+        {
+            if (playersToHeal[i].GetComponent<HealthSystem>() != null && playersToHeal[i].teamId == owningTeam)
+            {
+
+                playersToHeal[i].GetComponent<PawnAbilityManager>().SetEnergizedState(false, energizedSpeed, energizedDodgeSpeed, energizedThrowRate, energizedTime);
+                Instantiate(energizedInteraction, playersToHeal[i].transform.position, Quaternion.identity, null);
+            }
+
+        }
     }
 
     public override void SetAimIndicator()
@@ -44,10 +90,12 @@ public class EnergyBallType : BallManager
             if (owner.IsSuper)
             {
                 aoeIndicator.GetComponent<SpriteRenderer>().color = superAimColor;
+                aoeIndicator.transform.localScale = new Vector3(aoeSuperSize, aoeSuperSize, aoeSuperSize);
             }
             else
             {
                 aoeIndicator.GetComponent<SpriteRenderer>().color = normalAimColor;
+                aoeIndicator.transform.localScale = new Vector3(aoeNormalSize, aoeNormalSize, aoeNormalSize);
             }
         }
         else

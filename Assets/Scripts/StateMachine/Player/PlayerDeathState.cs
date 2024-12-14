@@ -25,6 +25,7 @@ public class PlayerDeathState: PlayerBaseState
         Ctx.IsCatching = false;
         Ctx.IsSuper = false;
         Ctx.Col.enabled = false;
+        Ctx.IsNoBuildArea= false;
         if (Ctx.CanRespawn)
         {
             Ctx.StartCoroutine(RespawnAfterDelay());

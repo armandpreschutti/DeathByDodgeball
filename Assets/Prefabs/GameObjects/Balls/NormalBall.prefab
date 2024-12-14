@@ -168,10 +168,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasOwner: 0
   owningTeam: 0
+  isBallActive: 0
+  isBallCatchable: 0
   isSuperBall: 0
   superStateVFX: {fileID: 2932472910916891076}
   normalAimColor: {r: 1, g: 1, b: 1, a: 0.5019608}
-  superAimColor: {r: 0.6745098, g: 0.19607845, b: 0.19607845, a: 1}
+  superAimColor: {r: 0.6745098, g: 0.19607845, b: 0.19607845, a: 0.7490196}
   _hitVfx: {fileID: 5024009746357069194, guid: ec3f674830402cc45bce805cf6493db7, type: 3}
   _explosionVfx: {fileID: 1021809899100821560, guid: 9aa9159bc6bb91743b42ffd9fdc8ce36, type: 3}
   _normalTrail: {fileID: 8415722646236332487}

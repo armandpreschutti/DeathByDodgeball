@@ -9,6 +9,7 @@ TagManager:
   - GameElement
   - Ball
   - Destructable
+  - Barrier
   layers:
   - Default
   - TransparentFX

@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: EnergyBalls
   m_EditorClassIdentifier: 
   ballTypes:
-  - {fileID: 1461552479495024368, guid: 3a7e1831f6952be4a896100cb7f1e80c, type: 3}
+  - {fileID: 1461552479495024368, guid: e39acabc392e4c74891decdbc0c94d98, type: 3}
+  - {fileID: 1461552479495024368, guid: e39acabc392e4c74891decdbc0c94d98, type: 3}
+  - {fileID: 1461552479495024368, guid: e39acabc392e4c74891decdbc0c94d98, type: 3}

@@ -63,6 +63,10 @@ public class PlayerDodgeState : PlayerBaseState
                     SwitchState(Factory.Idle());
                 }
             }
+            else if(Ctx.IsCatching == true)
+            {
+                SwitchState(Factory.Catch());
+            }
         }       
     }
 

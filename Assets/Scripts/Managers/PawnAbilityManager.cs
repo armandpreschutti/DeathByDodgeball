@@ -143,13 +143,13 @@ public class PawnAbilityManager : MonoBehaviour
         }
         playerStateMachine.MoveSpeed = speed;
         playerStateMachine.DodgeSpeed = dodgeSpeed;
-        playerStateMachine.ThrowPowerIncreaseRate = isSuperBall? throwRate : originalThrowRate;
+        //playerStateMachine.ThrowPowerIncreaseRate = originalThrowRate;
         if(isSuperBall)
         {
             playerStateMachine.OnEnergized?.Invoke(true);
         }
         yield return new WaitForSeconds(time);
-        playerStateMachine.ThrowPowerIncreaseRate = originalThrowRate;
+        //playerStateMachine.ThrowPowerIncreaseRate = originalThrowRate;
         playerStateMachine.DodgeSpeed = originalDodgeSpeed;
         playerStateMachine.MoveSpeed = originalMoveSpeed;
         if (isSuperBall)

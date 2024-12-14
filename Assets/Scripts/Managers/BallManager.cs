@@ -8,6 +8,7 @@ public class BallManager : MonoBehaviour
     [HideInInspector] public int owningTeam;
     protected bool isEquipped;
     public bool isBallActive;
+    public bool isBallCatchable;
     [HideInInspector] public bool isSuperBall;
     protected float currentPower;
     protected Vector2 originPoint;
@@ -30,7 +31,7 @@ public class BallManager : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _audio = GetComponent<AudioSource>();
     }
-    public void Update()
+    public virtual void Update()
     {
         SetAimIndicator();
     }
@@ -48,7 +49,7 @@ public class BallManager : MonoBehaviour
             }
             else
             {
-                if (isBallActive)
+                if (isBallActive || isBallCatchable)
                 {
                     if (stateMachine.IsCatching)
                     {
@@ -67,12 +68,46 @@ public class BallManager : MonoBehaviour
         }
         else if(collision.GetComponent<BallManager>() != null && isBallActive)
         {
+
             BallManager ballManager = collision.GetComponent<BallManager>();
-            if(collision.GetComponent<BallManager>().isBallActive)
+            if(collision.GetComponent<BallManager>().isBallActive && collision.GetComponent<BallManager>().owningTeam != owningTeam)
             {
                 BallCollision(ballManager);
             }
 
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.GetComponent<PlayerStateMachine>() != null)
+        {
+            PlayerStateMachine stateMachine = collision.GetComponent<PlayerStateMachine>();
+            if (!hasOwner)
+            {
+                if (!stateMachine.IsEquipped && !stateMachine.IsDead)
+                {
+                    EquiptBall(stateMachine);
+                }
+            }
+/*            else
+            {
+                if (isBallActive || isBallCatchable)
+                {
+                    if (stateMachine.IsCatching)
+                    {
+                        stateMachine.OnBallCaught?.Invoke();
+                        onCaught?.Invoke(stateMachine.GetComponent<PawnManager>().slotId);
+                        EquiptBall(stateMachine);
+                    }
+                    else if (!stateMachine.IsDead && stateMachine.GetComponent<PawnManager>().teamId != owningTeam && !stateMachine.IsInvicible)
+                    {
+                        PawnCollision(stateMachine);
+                        onPlayerHit?.Invoke(owner.GetComponent<PawnManager>().slotId);
+
+                    }
+                }
+            }*/
         }
     }
 
@@ -89,6 +124,7 @@ public class BallManager : MonoBehaviour
         isEquipped = true;
         owningTeam = stateMachine.GetComponent<PawnManager>().teamId;
         isBallActive = false;
+        isBallCatchable = false;
         isSuperBall = false;
         _rb.velocity = Vector2.zero;
         currentDirection = Vector2.zero;

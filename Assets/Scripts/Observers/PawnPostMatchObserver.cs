@@ -83,6 +83,9 @@ public class PawnPostMatchObserver : MonoBehaviour
                     pawnBg.sprite = loseSprite;
                 }
                 break;
+            case "Draw":
+                pawnBg.sprite = loseSprite;
+                break;
             default:
                 Debug.LogError("Could not find winner in gamemanager");
                 break;

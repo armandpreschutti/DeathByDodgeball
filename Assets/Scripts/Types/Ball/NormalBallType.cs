@@ -24,7 +24,7 @@ public class NormalBallType : BallManager
             }
         }
         stateMachine.IsDead = true;
-        stateMachine.Rb.AddForce(new Vector2(stateMachine.transform.position.x - transform.position.x, 0).normalized * currentPower, ForceMode2D.Impulse);
+        //stateMachine.Rb.AddForce(new Vector2(stateMachine.transform.position.x - transform.position.x, 0).normalized * currentPower, ForceMode2D.Impulse);
         isBallActive = false;
 
         if (isSuperBall)
@@ -79,7 +79,7 @@ public class NormalBallType : BallManager
     public override void SelfDestruct()
     {
         owner.IsDead = true;
-        owner.Rb.AddForce(new Vector2(owner.transform.position.x - transform.position.x, 0).normalized * currentPower, ForceMode2D.Impulse);
+       // owner.Rb.AddForce(new Vector2(owner.transform.position.x - transform.position.x, 0).normalized * currentPower, ForceMode2D.Impulse);
         isBallActive = false;
         Instantiate(_explosionVfx, transform.position, Quaternion.identity, null);
         onExplosion?.Invoke();

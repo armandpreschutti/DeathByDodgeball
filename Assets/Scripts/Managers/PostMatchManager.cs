@@ -40,7 +40,7 @@ public class PostMatchManager : MonoBehaviour
     private void Start()
     {
         string winner = GameManager.gameInstance.winningTeam;
-        winnerText.text = $"{winner} team wins!";
+        //winnerText.text = $"{winner} team wins!";
         switch (winner)
         {
             case "Red":
@@ -50,6 +50,10 @@ public class PostMatchManager : MonoBehaviour
             case "Blue":
                 winnerText.text = $"{winner} team wins!";
                 winnerBackground.sprite = blueBackground ;
+                break;
+            case "Draw":
+                winnerText.text = "Draw!";
+                winnerBackground.sprite = yellowBackground;
                 break;
             default:
                 winnerText.text = $"No contest!";

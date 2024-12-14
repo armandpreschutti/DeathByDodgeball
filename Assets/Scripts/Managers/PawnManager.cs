@@ -75,6 +75,10 @@ public class PawnManager : MonoBehaviour
 
     public void DisableStateMachine()
     {
+
+        playerStateMachine.IsCatchPressed= false;
+        playerStateMachine.IsDodgePressed= false;
+        playerStateMachine.IsThrowPressed= false;
         playerStateMachine.enabled = false;
     }
 

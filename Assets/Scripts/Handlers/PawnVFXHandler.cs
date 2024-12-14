@@ -84,13 +84,14 @@ public class PawnVFXHandler : MonoBehaviour
     public void SetEnergizedVFX(bool value)
     {
         anim.speed = value ? 2 : 1;
-        energizedVfx.gameObject.SetActive(value);
+       // energizedVfx.gameObject.SetActive(value);
+        superEnergizedVfx.gameObject.SetActive(value);
     }
 
     public void SetSuperEnergizedVFX(bool value)
     {
         SetEnergizedVFX(value);
-        superEnergizedVfx.gameObject.SetActive(value);
+       // superEnergizedVfx.gameObject.SetActive(value);
     }
 
     public void SetInvicibleVFX(bool value)

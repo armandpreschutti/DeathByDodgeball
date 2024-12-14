@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: HealBalls
   m_EditorClassIdentifier: 
   ballTypes:
-  - {fileID: 1461552479495024368, guid: 3a7e1831f6952be4a896100cb7f1e80c, type: 3}
+  - {fileID: 1461552479495024368, guid: 01eaa21500d1e3a4eb49592dffaa3c31, type: 3}
+  - {fileID: 1461552479495024368, guid: 01eaa21500d1e3a4eb49592dffaa3c31, type: 3}
+  - {fileID: 1461552479495024368, guid: 01eaa21500d1e3a4eb49592dffaa3c31, type: 3}
