@@ -44,16 +44,18 @@ public class CPUCatchDetection : MonoBehaviour
         RemoveObjectFromArea(collision);
     }
 
-    // Update is called once per frame
     private void Update()
     {
         // Check for balls that have been owned and remove them
         for (int i = 0; i < objectCount; i++)
         {
-            if (objectsInArea[i].gameObject == _pawnManager.playerStateMachine.EquippedBall/*GetComponent<BallManager>().hasOwner*/)
+            if (objectsInArea[i] != null && objectsInArea[i].gameObject != null && _pawnManager.playerStateMachine.EquippedBall != null)
             {
-                RemoveObjectFromArea(objectsInArea[i]);
-                i--; // Adjust the index since the array is shifted after removal
+                if (objectsInArea[i].gameObject == _pawnManager.playerStateMachine.EquippedBall)
+                {
+                    RemoveObjectFromArea(objectsInArea[i]);
+                    i--; // Adjust the index since the array is shifted after removal
+                }
             }
         }
 
@@ -69,6 +71,37 @@ public class CPUCatchDetection : MonoBehaviour
             cpuBrain.closestCatchableBall = null;
         }
     }
+
+
+    /*// Update is called once per frame
+    private void Update()
+    {
+        // Check for balls that have been owned and remove them
+        for (int i = 0; i < objectCount; i++)
+        {
+            if(objectsInArea[i].gameObject != null && _pawnManager.playerStateMachine.EquippedBall != null)
+            {
+                if (objectsInArea[i].gameObject == _pawnManager.playerStateMachine.EquippedBall)
+                {
+                    RemoveObjectFromArea(objectsInArea[i]);
+                    i--; // Adjust the index since the array is shifted after removal
+                }
+            }
+
+        }
+
+        closestBall = GetClosestTarget(); // Get the closest target (ball)
+
+        if (objectCount > 0 && closestBall != null)
+        {
+            cpuBrain.closestCatchableBall = closestBall.gameObject; // Set the ClosestBall
+        }
+        else
+        {
+            closestBall = null;
+            cpuBrain.closestCatchableBall = null;
+        }
+    }*/
 
     // Function to get the closest ball to the player's circle collider
     private Transform GetClosestTarget()

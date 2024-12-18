@@ -90,24 +90,6 @@ public class BallManager : MonoBehaviour
                     EquiptBall(stateMachine);
                 }
             }
-/*            else
-            {
-                if (isBallActive || isBallCatchable)
-                {
-                    if (stateMachine.IsCatching)
-                    {
-                        stateMachine.OnBallCaught?.Invoke();
-                        onCaught?.Invoke(stateMachine.GetComponent<PawnManager>().slotId);
-                        EquiptBall(stateMachine);
-                    }
-                    else if (!stateMachine.IsDead && stateMachine.GetComponent<PawnManager>().teamId != owningTeam && !stateMachine.IsInvicible)
-                    {
-                        PawnCollision(stateMachine);
-                        onPlayerHit?.Invoke(owner.GetComponent<PawnManager>().slotId);
-
-                    }
-                }
-            }*/
         }
     }
 

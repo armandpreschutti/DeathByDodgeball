@@ -10066,6 +10066,7 @@ MonoBehaviour:
   AimRightPosition: {fileID: 1916594491585038632}
   originalOwner: {fileID: 0}
   isRebounding: 0
+  knockBackForce: 1.5
 --- !u!1 &8114732956666960053
 GameObject:
   m_ObjectHideFlags: 0

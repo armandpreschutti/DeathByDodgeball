@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
@@ -22,6 +23,8 @@ public class MatchInstanceManager : MonoBehaviour
     public static Action onEndMatch;
     public static Action onDisablePawnControl;
     public static Action onEnablePawnControl;
+    public static Action onStopMatchElements;
+    public bool isMatchOver;
 
     public string matchWinner;
 
@@ -34,8 +37,8 @@ public class MatchInstanceManager : MonoBehaviour
             return;
         }
         Instance = this;
-       
 
+        isMatchOver = false;
         playableDirector = GetComponent<PlayableDirector>();
     }
 
@@ -186,6 +189,8 @@ public class MatchInstanceManager : MonoBehaviour
         // Log which team is empty
         if (isBlueTeamEmpty)
         {
+            isMatchOver = true;
+            onStopMatchElements?.Invoke();
             matchWinner = "Red";
             GameManager.gameInstance.winningTeam = "Red";
             PlayCutScene(matchOverCS);
@@ -193,6 +198,8 @@ public class MatchInstanceManager : MonoBehaviour
 
         if (isRedTeamEmpty)
         {
+            isMatchOver = true;
+            onStopMatchElements?.Invoke();
             matchWinner = "Blue";
             GameManager.gameInstance.winningTeam = "Blue";
             PlayCutScene(matchOverCS);
@@ -208,12 +215,109 @@ public class MatchInstanceManager : MonoBehaviour
     
     public void MatchTimeOut()
     {
-        matchWinner = "Draw";
-        GameManager.gameInstance.winningTeam = "Draw";
+        isMatchOver = true;
+
+        // Check if the blue team is fully empty
+        int blueTeamKills = 0;
+        int redTeamKills = 0;
+        int blueTeamHits = 0;
+        int redTeamHits = 0;
+        int blueTeamCatches = 0;
+        int redTeamCatches = 0;
+        PlayerConfigurationSO[] blueTeam = new PlayerConfigurationSO[2];
+        PlayerConfigurationSO[] redTeam = new PlayerConfigurationSO[2];
+
+        int blueTeamCount = 0;
+        int redTeamCount = 0;
+
+        for (int i = 0; i < GameManager.gameInstance.playerConfigurations.Length; i++)
+        {
+            if (GameManager.gameInstance.playerConfigurations[i] != null)
+            {
+                if (GameManager.gameInstance.playerConfigurations[i].teamId == 1)
+                {
+                    blueTeam[blueTeamCount] = GameManager.gameInstance.playerConfigurations[i];
+                    blueTeamCount++;
+                }
+                else
+                {
+                    redTeam[redTeamCount] = GameManager.gameInstance.playerConfigurations[i];
+                    redTeamCount++;
+                }
+            }
+        }
+
+
+
+        for (int i = 0; i < blueTeam.Length; i++)
+        {
+            if (blueTeam[i] != null)
+            {
+                blueTeamKills += blueTeam[i].matchStatKills;
+                blueTeamHits += blueTeam[i].matchStatHits;
+                blueTeamCatches += blueTeam[i].matchStatCatches;
+            }
+        }
+
+        for (int i = 0; i < redTeam.Length; i++)
+        {
+            if (redTeam[i] != null)
+            {
+                redTeamKills += redTeam[i].matchStatKills;
+                redTeamHits += redTeam[i].matchStatHits;
+                redTeamCatches += redTeam[i].matchStatCatches;
+            }
+        }
+
+        if (blueTeamKills > redTeamKills)
+        {
+            matchWinner = "Blue";
+            GameManager.gameInstance.winningTeam = "Blue";
+        }
+        else if(blueTeamKills < redTeamKills)
+        {
+            matchWinner = "Red";
+            GameManager.gameInstance.winningTeam = "Red";
+        }
+        else
+        {
+            if (blueTeamHits > redTeamHits)
+            {
+                matchWinner = "Blue";
+                GameManager.gameInstance.winningTeam = "Blue";
+            }
+            else if (blueTeamHits < redTeamHits)
+            {
+                matchWinner = "Red";
+                GameManager.gameInstance.winningTeam = "Red";
+            }
+            else
+            {
+                if (blueTeamCatches > redTeamCatches)
+                {
+                    matchWinner = "Blue";
+                    GameManager.gameInstance.winningTeam = "Blue";
+                }
+                else if (blueTeamCatches < redTeamCatches)
+                {
+                    matchWinner = "Red";
+                    GameManager.gameInstance.winningTeam = "Red";
+                }
+                else
+                {
+                    matchWinner = "Draw";
+                    GameManager.gameInstance.winningTeam = "Draw";
+                }
+            }
+        }
+
         PlayCutScene(matchOverCS);
+
     }
     public void ExitMatch()
     {
+        isMatchOver = true;
+        onStopMatchElements?.Invoke();
         matchWinner = "Draw";
         GameManager.gameInstance.winningTeam = "Draw";
         PlayCutScene(matchOverCS);

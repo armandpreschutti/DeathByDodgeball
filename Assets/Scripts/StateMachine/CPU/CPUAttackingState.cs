@@ -16,7 +16,7 @@ public class CPUAttackingState : CPUBaseState
 
     public override void EnterState()
     {
-        randomPower = Random.Range(Ctx.playerStateMachine.MinThrowPower, Ctx.playerStateMachine.MaxThrowPower +5);
+        randomPower = Random.Range(Ctx.playerStateMachine.MinThrowPower + 3, Ctx.playerStateMachine.MaxThrowPower + 10);
         randomState = Random.Range(1, 2);
         Ctx.playerStateMachine.IsThrowPressed = true;
         randomDistance = Random.Range(3f, 7.2f);

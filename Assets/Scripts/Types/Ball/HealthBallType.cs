@@ -40,6 +40,8 @@ public class HealthBallType : BallManager
             HealNearbyPlayers();
             owner.OnHeal?.Invoke();
         }
+        InstantiateVFX();
+
         Destroy(gameObject);
     }
     public override void SetAimIndicator()

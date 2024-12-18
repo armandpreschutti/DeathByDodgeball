@@ -118,6 +118,7 @@ public class UserController : MonoBehaviour
 
     public void SetThrowInput(bool value)
     {
+        Debug.LogError(value ? "Throw started" : "Throw ended");
         if (playerStateMachine != null && isActivated && !GameManager.gameInstance.isPaused)
         {
             if (!playerStateMachine.IsDodging && !playerStateMachine.IsHurt && !playerStateMachine.IsThrowing && playerStateMachine.IsEquipped)
@@ -202,6 +203,10 @@ public class UserController : MonoBehaviour
     public void DisableControl()
     {
         isActivated = false;
+        playerStateMachine.DestroyBall();
+        playerStateMachine.IsCatchPressed = false;
+        playerStateMachine.IsDodgePressed = false;
+        playerStateMachine.IsThrowPressed = false;
         playerStateMachine.MoveInput = Vector2.zero;
     }
 }

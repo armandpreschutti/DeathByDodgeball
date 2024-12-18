@@ -13,6 +13,7 @@ public class BoomerangType : BallManager
     public GameObject AimRightPosition;
     public GameObject originalOwner;
     public bool isRebounding;
+    public float knockBackForce = 1f;
 
 
     public override void PawnCollision(PlayerStateMachine stateMachine)
@@ -27,11 +28,9 @@ public class BoomerangType : BallManager
             }
         }
         stateMachine.IsDead = true;
-        //stateMachine.Rb.AddForce(new Vector2(stateMachine.transform.position.x - transform.position.x, 0).normalized * currentPower, ForceMode2D.Impulse);
-
-        if (isSuperBall)
+        stateMachine.Rb.AddForce(new Vector2(stateMachine.transform.position.x > 0 ? 1 : -1, 0).normalized * currentPower / knockBackForce, ForceMode2D.Impulse); if (isSuperBall)
         {
-            Instantiate(_hitVfx, transform.position, Quaternion.identity, null);
+            Instantiate(_hitVfx, stateMachine.transform.position, Quaternion.identity, null);
             onExplosion?.Invoke();
             _rb.velocity = new Vector2(-_rb.velocity.x /4, 0);
             isRebounding = true;
@@ -39,7 +38,7 @@ public class BoomerangType : BallManager
         }
         else
         {
-            Instantiate(_hitVfx, transform.position, Quaternion.identity, null);
+            Instantiate(_hitVfx, stateMachine.transform.position, Quaternion.identity, null);
             owner.OnBallContact?.Invoke();
             _rb.velocity = new Vector2(-_rb.velocity.x / 1.5f, 0);
             isBallCatchable= true;
@@ -54,7 +53,7 @@ public class BoomerangType : BallManager
         {
             if (ballManager.isSuperBall)
             {
-                Instantiate(_explosionVfx, transform.position, Quaternion.identity, null);
+                Instantiate(_hitVfx, transform.position, Quaternion.identity, null);
                 onExplosion?.Invoke();
                 Destroy(gameObject);
             }

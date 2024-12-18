@@ -42,6 +42,12 @@ public class BarrierBallType : BallManager
 
     }
 
+    public override void SelfDestruct()
+    {
+        base.SelfDestruct();
+        Launch(true, Vector2.zero, true, currentPower);
+    }
+
     public override void SetAimIndicator()
     {
         base.SetAimIndicator();

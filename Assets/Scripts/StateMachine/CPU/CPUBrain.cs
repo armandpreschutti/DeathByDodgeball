@@ -100,11 +100,16 @@ public class CPUBrain : MonoBehaviour
     public void DisableControl()
     {
         isActivated = false;
+        playerStateMachine.DestroyBall();
+        playerStateMachine.IsCatchPressed = false;
+        playerStateMachine.IsDodgePressed = false;
+        playerStateMachine.IsThrowPressed = false;
         playerStateMachine.MoveInput = Vector2.zero;
     }
     public void SetMoveInput()
     {
         moveInput = new Vector2(moveX, moveY).normalized;
+
         playerStateMachine.MoveInput = moveInput;
     }
 

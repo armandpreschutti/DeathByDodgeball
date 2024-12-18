@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MatchStatsManager : MonoBehaviour
 {
+    public bool isMatchOver;
+
     private void OnEnable()
     {
         BallManager.onPlayerHit += LogPlayerHit;
@@ -12,6 +15,7 @@ public class MatchStatsManager : MonoBehaviour
         MatchInstanceManager.onStartMatch += ResetMatchStats;
         BallManager.onCaught += LogPlayerCatch;
         PlayerStateMachine.onDodged += LogPlayerDodge;
+        MatchInstanceManager.onStopMatchElements += SetMatchOverState;
     }
     private void OnDisable()
     {
@@ -21,69 +25,97 @@ public class MatchStatsManager : MonoBehaviour
         MatchInstanceManager.onStartMatch -= ResetMatchStats;
         BallManager.onCaught -= LogPlayerCatch;
         PlayerStateMachine.onDodged -= LogPlayerDodge;
+        MatchInstanceManager.onStopMatchElements -= SetMatchOverState;
+    }
+
+    public void SetMatchOverState()
+    {
+        isMatchOver = true;
     }
 
     public void LogPlayerThrowAttempt(int slotId)
     {
-        PlayerConfigurationSO[] pawns = GameManager.gameInstance.playerConfigurations;
-        for (int i = 0; i < pawns.Length; i++)
+        if(!isMatchOver)
         {
-            if (pawns[i] != null && i == slotId - 1)
+            PlayerConfigurationSO[] pawns = GameManager.gameInstance.playerConfigurations;
+            for (int i = 0; i < pawns.Length; i++)
             {
-                pawns[i].matchStatAttempts++;
+                if (pawns[i] != null && i == slotId - 1)
+                {
+
+                    pawns[i].matchStatAttempts++;
+                }
             }
         }
+      
     }
 
     public void LogPlayerKill(int slotId)
     {
-        PlayerConfigurationSO[] pawns = GameManager.gameInstance.playerConfigurations;
-        for (int i = 0; i < pawns.Length; i++)
+        if(!isMatchOver)
         {
-            if (pawns[i] != null && i == slotId - 1)
+            PlayerConfigurationSO[] pawns = GameManager.gameInstance.playerConfigurations;
+            for (int i = 0; i < pawns.Length; i++)
             {
-                pawns[i].matchStatKills++;
+                if (pawns[i] != null && i == slotId - 1)
+                {
+                    pawns[i].matchStatKills++;
+                }
             }
         }
+       
     }
 
     public void LogPlayerHit(int slotId)
     {
-        PlayerConfigurationSO[] pawns = GameManager.gameInstance.playerConfigurations;
-        for (int i = 0; i < pawns.Length; i++)
+        if (!isMatchOver)
         {
-            if (pawns[i] != null && i == slotId-1)
+            PlayerConfigurationSO[] pawns = GameManager.gameInstance.playerConfigurations;
+            for (int i = 0; i < pawns.Length; i++)
             {
-                pawns[i].matchStatHits++;
+                if (pawns[i] != null && i == slotId - 1)
+                {
+                    pawns[i].matchStatHits++;
+                }
             }
         }
+        
     }
 
     public void LogPlayerCatch(int slotId)
     {
-        PlayerConfigurationSO[] pawns = GameManager.gameInstance.playerConfigurations;
-        for (int i = 0; i < pawns.Length; i++)
+        if (!isMatchOver)
         {
-            if (pawns[i] != null && i == slotId - 1)
+            PlayerConfigurationSO[] pawns = GameManager.gameInstance.playerConfigurations;
+            for (int i = 0; i < pawns.Length; i++)
             {
-                pawns[i].matchStatCatches++;
+                if (pawns[i] != null && i == slotId - 1)
+                {
+                    pawns[i].matchStatCatches++;
+                }
             }
         }
+
     }
     public void LogPlayerDodge(int slotId)
     {
-        PlayerConfigurationSO[] pawns = GameManager.gameInstance.playerConfigurations;
-        for (int i = 0; i < pawns.Length; i++)
+        if (!isMatchOver)
         {
-            if (pawns[i] != null && i == slotId - 1)
+            PlayerConfigurationSO[] pawns = GameManager.gameInstance.playerConfigurations;
+            for (int i = 0; i < pawns.Length; i++)
             {
-                pawns[i].matchStatDodges++;
+                if (pawns[i] != null && i == slotId - 1)
+                {
+                    pawns[i].matchStatDodges++;
+                }
             }
         }
+
     }
 
     public void ResetMatchStats()
     {
+        isMatchOver = false;
         PlayerConfigurationSO[] pawns = GameManager.gameInstance.playerConfigurations;
         for (int i = 0; i < pawns.Length; i++)
         {

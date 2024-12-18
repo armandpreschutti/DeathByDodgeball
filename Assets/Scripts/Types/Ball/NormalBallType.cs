@@ -10,6 +10,7 @@ public class NormalBallType : BallManager
     public ParticleSystem _superTrail;
     public GameObject AimLeftPosition;
     public GameObject AimRightPosition;
+    public float knockBackForce = 1f;
     
 
     public override void PawnCollision(PlayerStateMachine stateMachine)
@@ -24,8 +25,8 @@ public class NormalBallType : BallManager
             }
         }
         stateMachine.IsDead = true;
-        //stateMachine.Rb.AddForce(new Vector2(stateMachine.transform.position.x - transform.position.x, 0).normalized * currentPower, ForceMode2D.Impulse);
-        isBallActive = false;
+        stateMachine.Rb.AddForce(new Vector2(stateMachine.transform.position.x > 0 ? 1 : -1, 0).normalized * currentPower / knockBackForce, ForceMode2D.Impulse);
+        //isBallActive = false;
 
         if (isSuperBall)
         {

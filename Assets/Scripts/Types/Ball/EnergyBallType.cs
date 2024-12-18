@@ -39,13 +39,7 @@ public class EnergyBallType : BallManager
     public override void SelfDestruct()
     {
         base.SelfDestruct();
-        if (owner.TryGetComponent(out PawnAbilityManager pawnAbilityHandler))
-        {
-            owner.GetComponent<PlayerStateMachine>().IsThrowPressed= false;
-            //EnergizeNearbyPlayers();
-            //pawnAbilityHandler.SetEnergizedState(false, energizedSpeed, energizedDodgeSpeed, energizedThrowRate, energizedTime);
-        }
-        Destroy(gameObject);
+        Launch(true, Vector2.zero, true, currentPower);
     }
 
     void EnergizeNearbyPlayers()

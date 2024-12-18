@@ -11,9 +11,8 @@ public class HomingBallType : BallManager
     public ParticleSystem _normalTrail;
     public ParticleSystem _superTrail;
     public GameObject currentTarget;
-/*    public GameObject AimLeftPosition;
-    public GameObject AimRightPosition;*/
     public GameObject CrossHair;
+    public float knockBackForce = 1f;
 
     public override void PawnCollision(PlayerStateMachine stateMachine)
     {
@@ -27,21 +26,21 @@ public class HomingBallType : BallManager
             }
         }
         stateMachine.IsDead = true;
-        isBallActive = false;
-
+        //isBallActive = false;
+        stateMachine.Rb.AddForce(new Vector2(stateMachine.transform.position.x > 0 ? 1 : -1, 0).normalized * currentPower/ knockBackForce, ForceMode2D.Impulse);
         if (isSuperBall)
         {
             Instantiate(_explosionVfx, transform.position, Quaternion.identity, null);
             onExplosion?.Invoke();
-            //_rb.velocity = new Vector2(-_rb.velocity.x /3, 0);            
             isSuperBall = false;
+            _rb.velocity = new Vector2(_rb.velocity.x, originPoint.y < transform.position.y ? 7.5f : -7.5f);
             Destroy(gameObject);
         }
         else
         {
             Instantiate(_hitVfx, transform.position, Quaternion.identity, null);
             owner.OnBallContact?.Invoke();
-            //_rb.velocity = new Vector2(_rb.velocity.x, originPoint.y < transform.position.y ? 7.5f : -7.5f);
+            _rb.velocity = new Vector2(_rb.velocity.x, originPoint.y < transform.position.y ? 7.5f : -7.5f);
             Destroy(gameObject, 1f);
         }
     }

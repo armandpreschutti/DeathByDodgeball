@@ -328,6 +328,7 @@ MonoBehaviour:
   _superTrail: {fileID: 6912687827665624984}
   currentTarget: {fileID: 0}
   CrossHair: {fileID: 6469298934247963728}
+  knockBackForce: 1.5
 --- !u!1 &2736079202983866126
 GameObject:
   m_ObjectHideFlags: 0
