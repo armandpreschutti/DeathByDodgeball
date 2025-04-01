@@ -16,6 +16,7 @@ public class PawnManager : MonoBehaviour
     public bool isEliminated;
     public PlayerStateMachine playerStateMachine;
     public bool isCpu;
+    public Sprite playerIcon;
    // public TextMeshProUGUI playerTag;
    // public SpriteRenderer spriteRenderer;
     public static Action<int, int, GameObject> onPlayerLoaded;

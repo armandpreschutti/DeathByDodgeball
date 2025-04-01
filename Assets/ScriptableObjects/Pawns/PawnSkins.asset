@@ -27,6 +27,8 @@ MonoBehaviour:
   - {fileID: 22100000, guid: 8135b34f8c670454ebb74e99b2c32ea9, type: 2}
   - {fileID: 22100000, guid: c774bff013560a949aa62a562798b2d6, type: 2}
   - {fileID: 22100000, guid: 384e3b9467160334a8213f81efd27f50, type: 2}
+  - {fileID: 22100000, guid: 68eda987a9a706a488a3a4ac0cc4c8a7, type: 2}
+  - {fileID: 22100000, guid: c5af72b1c1f75c446b8587f106ee1989, type: 2}
   redTeamSkins:
   - {fileID: 22100000, guid: 789cbef4640e26d4b90dfef52586bdb3, type: 2}
   - {fileID: 22100000, guid: 00f7915267989ab47ad164309a4a646b, type: 2}
@@ -42,3 +44,5 @@ MonoBehaviour:
   - {fileID: 22100000, guid: fe27089c2e5fd5449b23b7597e0d7a1a, type: 2}
   - {fileID: 22100000, guid: 1b64e9c7f77f0af41a3679c58b9137b8, type: 2}
   - {fileID: 22100000, guid: 9994ba6f917672e45b0d88565614d8d7, type: 2}
+  - {fileID: 22100000, guid: d7ab164bba4240640acd71ecf9dfdec9, type: 2}
+  - {fileID: 22100000, guid: a0b8efac623cb2841a951d1290a41884, type: 2}

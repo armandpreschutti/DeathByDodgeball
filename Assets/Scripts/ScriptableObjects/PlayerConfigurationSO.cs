@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(menuName = "DBDB/Configurations/PlayerConfiguration")]
 public class PlayerConfigurationSO : ScriptableObject
@@ -16,6 +17,7 @@ public class PlayerConfigurationSO : ScriptableObject
     public int matchStatCatches;
     public int matchStatDodges;
     public int matchStatAttempts;
+    public Image playerIcon;
 
     public void SetTeam()
     {

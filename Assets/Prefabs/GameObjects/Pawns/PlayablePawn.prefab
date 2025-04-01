@@ -536,15 +536,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad43722eaace87f4d8f771153eef5c2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotId: 4
-  skinId: 11
-  playerId: 0
+  slotId: 3
+  skinId: 8
+  playerId: 1
   teamId: 2
   playerName: 
-  pawnColor: {r: 0, g: 0, b: 0, a: 0}
+  pawnColor: {r: 0, g: 1, b: 0, a: 1}
   isEliminated: 0
   playerStateMachine: {fileID: 0}
   isCpu: 0
+  playerIcon: {fileID: 0}
 --- !u!114 &868135169106175682
 MonoBehaviour:
   m_ObjectHideFlags: 0

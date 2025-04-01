@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.VirtualTexturing;
 using UnityEngine.UI;
 
 public class PawnHUDObserver : MonoBehaviour
@@ -15,6 +16,8 @@ public class PawnHUDObserver : MonoBehaviour
     public bool hasOwner;
     public Image border;
     public HealthSystem healthSystem;
+    public Image playerIcon;
+    public PreviewSkinsSO playerIcons;
 
     private void Awake()
     {
@@ -59,6 +62,8 @@ public class PawnHUDObserver : MonoBehaviour
         {
             border = GetComponent<Image>();
             border.color = healthSystem.GetComponent<PawnManager>().pawnColor;
+            pawnName.color = healthSystem.GetComponent<PawnManager>().pawnColor;
+            playerIcon.sprite = playerIcons.skins[healthSystem.GetComponent<PawnManager>().skinId];
         }
         else
         {

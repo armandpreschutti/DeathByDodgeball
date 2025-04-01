@@ -118,7 +118,6 @@ public class UserController : MonoBehaviour
 
     public void SetThrowInput(bool value)
     {
-        Debug.LogError(value ? "Throw started" : "Throw ended");
         if (playerStateMachine != null && isActivated && !GameManager.gameInstance.isPaused)
         {
             if (!playerStateMachine.IsDodging && !playerStateMachine.IsHurt && !playerStateMachine.IsThrowing && playerStateMachine.IsEquipped)

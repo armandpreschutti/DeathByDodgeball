@@ -16,7 +16,7 @@ public class BarrierHandler : MonoBehaviour
         {
             BallManager ball = collision.gameObject.GetComponent<BallManager>(); 
             if(ball.owningTeam != owningTeam)
-            {
+            {                
                 Instantiate(selfDestructVFX, collision.transform.position, Quaternion.identity, null);
 
                 health--;
@@ -26,7 +26,6 @@ public class BarrierHandler : MonoBehaviour
                     Destroy(gameObject);
                 }
                 Destroy(collision.gameObject);
-
             }
 
         }

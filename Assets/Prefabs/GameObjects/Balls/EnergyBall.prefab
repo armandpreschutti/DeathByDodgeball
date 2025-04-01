@@ -172,7 +172,7 @@ MonoBehaviour:
   normalAimColor: {r: 1, g: 1, b: 1, a: 0.5019608}
   superAimColor: {r: 0.9803922, g: 0.9490197, b: 0.21176472, a: 0.7490196}
   energizedSpeed: 4.5
-  energizedDodgeSpeed: 13
+  energizedDodgeSpeed: 7
   energizedThrowRate: 15
   energizedTime: 4
   energizedInteraction: {fileID: 2810386672412869085, guid: bf4568e9857b6394db66e99c26da8ee7, type: 3}
